@@ -1,1 +1,80 @@
+---
+title: "TestVersionThesis"
+params:
+  viridis_palette: viridis
+output:
+  html_document:
+    highlighter: null
+    theme: "flatly"
+    code_download: TRUE
+    toc: true
+    toc_float: true
+    code_folding: "hide"
+    keep_md: true
+---
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+library(haven)
+library(tidyverse)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(stargazer)
+library(qwraps2)
+options(qwraps2_markup = "markdown")
+```
+rameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r, results="asis"}
+stata_data <- read_dta("~/GitHub/BA/thesis_code_rep/thesis_code_rep/kz_demandelasts_aer08.dta")
+
+testfunction <- function(stata_data1){
+  list("Panel A: Experimental variables" =
+         list("Interest rate" = ~ mean_sd(stata_data1$offer4)),
+         list("Dynamic repayment incentive" = ~ mean_sd(stata_data1$yearlong)),
+         list("Example loan term = 4 months" = ~ mean_sd(stata_data1$termshown4, na_rm = TRUE)),
+         list("Example loan term = 6 months" = ~ mean_sd(stata_data1$termshown6, na_rm = TRUE)),
+         list("Example loan term = 12 months" = ~ mean_sd(stata_data1$termshown12, na_rm = TRUE)),
+         list("Borrowed" = ~ mean_sd(stata_data1$tookup)),
+         list("Applied" = ~ mean_sd(stata_data1$applied)),
+         list("Loan size" = ~ mean_sd(stata_data1$loansize)),
+       "Panel B: Demographic characteristics" =
+         list("Female" = ~ mean_sd(stata_data1$female)),
+         list("Married" = ~ mean_sd(stata_data1$married, na_rm = TRUE)),
+         list("Age" = ~ mean_sd(stata_data1$age)),
+         list("More educated" = ~ mean_sd(stata_data1$edhi)),
+         list("Rural" = ~ mean_sd(stata_data1$rural)),
+         list("Number of dependents" = ~ mean_sd(stata_data1$dependants, na_rm = TRUE)),
+         list("Gross monthly income (000s of rand)" = ~ mean_sd(stata_data1$grossincome, na_rm = TRUE)),
+         list("Number of loans with the lender" = ~ mean_sd(stata_data1$trcount, na_rm = TRUE))
+  )
+}
+
+
+all_data <- testfunction(stata_data)
+summary_all <- summary_table(stata_data, all_data)
+
+applied_data <- stata_data %>% filter(applied == 1)
+applied_list <- testfunction(applied_data) 
+summary_applied <- summary_table(applied_data, applied_list)
+
+borrowed_data <- stata_data %>% filter(tookup == 1)
+borrowed_list <- testfunction(borrowed_data) 
+summary_borrowed <- summary_table(borrowed_data, borrowed_list)
+
+maturity_data <- stata_data %>% filter(onetermshown == 1)
+maturity_list <- testfunction(maturity_data) 
+summary_maturity <- summary_table(maturity_data, maturity_list)
+
+summary <- cbind(summary_all, summary_applied, summary_borrowed, summary_maturity)
+summary
+
+```
