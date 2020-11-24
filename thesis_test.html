@@ -1620,32 +1620,24 @@ div.tocify {
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
 <pre class="r"><code>library(haven)
-library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages ------------------------------------------------------------- tidyverse 1.3.0 --</code></pre>
-<pre><code>## v ggplot2 3.3.1     v purrr   0.3.4
-## v tibble  3.0.1     v dplyr   0.8.5
-## v tidyr   1.0.2     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.5.0</code></pre>
-<pre><code>## -- Conflicts ---------------------------------------------------------------- tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(readr)
+library(tidyverse)
+library(readr)
 library(dplyr)
 library(ggplot2)
 library(knitr)
-library(stargazer)</code></pre>
-<pre><code>## 
-## Please cite as:</code></pre>
-<pre><code>##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</code></pre>
-<pre><code>##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</code></pre>
-<pre class="r"><code>library(qwraps2)
+library(stargazer)
+library(qwraps2)
+library(summarytools)
 options(qwraps2_markup = &quot;markdown&quot;)</code></pre>
-<p>rameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
-<pre class="r"><code>stata_data &lt;- read_dta(&quot;~/GitHub/BA/thesis_code_rep/thesis_code_rep/kz_demandelasts_aer08.dta&quot;)
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<div id="table-1---summary-statistics" class="section level4">
+<h4>TABLE 1 - SUMMARY STATISTICS</h4>
+<pre class="r"><code># Einlesen der Stata-Daten
+stata_data &lt;- read_dta(&quot;~/GitHub/BA/thesis_code_rep/thesis_code_rep/kz_demandelasts_aer08.dta&quot;)
 
+# FunctionTable1 - Übersicht und Kontrolle des Datensatzes
 testfunction &lt;- function(stata_data1){
   list(&quot;Panel A: Experimental variables&quot; =
          list(&quot;Interest rate&quot; = ~ mean_sd(stata_data1$offer4)),
@@ -1669,21 +1661,26 @@ testfunction &lt;- function(stata_data1){
 }
 
 
+# Spalte1 - All
 all_data &lt;- testfunction(stata_data)
 summary_all &lt;- summary_table(stata_data, all_data)
 
+# Spalte2 - Applied
 applied_data &lt;- stata_data %&gt;% filter(applied == 1)
 applied_list &lt;- testfunction(applied_data) 
 summary_applied &lt;- summary_table(applied_data, applied_list)
 
+# Spalte3 - Borrowed
 borrowed_data &lt;- stata_data %&gt;% filter(tookup == 1)
 borrowed_list &lt;- testfunction(borrowed_data) 
 summary_borrowed &lt;- summary_table(borrowed_data, borrowed_list)
 
+# Spalte4 - Eligible for maturity suggestion randomizition
 maturity_data &lt;- stata_data %&gt;% filter(onetermshown == 1)
 maturity_list &lt;- testfunction(maturity_data) 
 summary_maturity &lt;- summary_table(maturity_data, maturity_list)
 
+# Zusammenfassen der Listen
 summary &lt;- cbind(summary_all, summary_applied, summary_borrowed, summary_maturity)
 summary</code></pre>
 <table style="width:100%;">
@@ -1930,9 +1927,1356 @@ summary</code></pre>
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>table1_1 &lt;- descr(stata_data, stats = c(&quot;mean&quot;, &quot;sd&quot;), transpose = TRUE, headings = FALSE)
+table1_2 &lt;- descr(filter(stata_data,applied == 1), stats = c(&quot;mean&quot;, &quot;sd&quot;), transpose = TRUE, headings = FALSE)
+
+# Alternative - was ist besser?</code></pre>
+</div>
+<div id="table-2---experimental-validation-regressions" class="section level4">
+<h4>TABLE 2 - EXPERIMENTAL VALIDATION REGRESSIONS</h4>
+<pre class="r"><code># Table 2 - Experimetal validation Regressions
+stata_data$lnitcscore[is.na(stata_data$lnitcscore)] &lt;- 0
+stata_data$lnappscore[is.na(stata_data$lnappscore)] &lt;- 0
+stata_data$lntrcount[is.na(stata_data$lntrcount)] &lt;- 0
+
+
+# Regression kürzt viele Werte raus, daher NAs = 0?
+
+reg2_1 &lt;- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + lnitcscore + itcany + lnappscore, data=stata_data)
+
+# Ergebnis nicht komplett richtig, woran liegt es? Falsch regressiert?
+
+# teilweise inkorrekte Werte, was ist mit itczero(Wert deutlich zu groß) ?
+
+reg2_2 &lt;- glm(tookup_afterdead_enforced ~ offer4, family = binomial(link = &quot;probit&quot;), data=stata_data)
+
+stata_data_reg3 &lt;- stata_data %&gt;% filter(applied == 1)
+reg2_3 &lt;- glm(rejected ~ offer4, family = binomial(link = &quot;probit&quot;), data=stata_data_reg3)
+
+stargazer(reg2_1, reg2_2, reg2_3, type=&quot;html&quot;, header=FALSE)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+offer4
+</td>
+<td>
+tookup_afterdead_enforced
+</td>
+<td>
+rejected
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>OLS</em>
+</td>
+<td>
+<em>probit</em>
+</td>
+<td>
+<em>probit</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dormancy
+</td>
+<td>
+0.066<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.002)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+lntrcount
+</td>
+<td>
+-0.269<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.013)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+female
+</td>
+<td>
+0.018
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.023)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+dependants
+</td>
+<td>
+0.023<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.007)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+married
+</td>
+<td>
+0.010
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.024)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+lnage
+</td>
+<td>
+-0.092<sup>*</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.049)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+rural
+</td>
+<td>
+-0.070<sup>**</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.029)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+edhi
+</td>
+<td>
+-0.011
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.023)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+lnitcscore
+</td>
+<td>
+-0.262<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.090)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+itcany
+</td>
+<td>
+1.567<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.583)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+lnappscore
+</td>
+<td>
+-0.020
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.036)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+offer4
+</td>
+<td>
+</td>
+<td>
+-0.041<sup>***</sup>
+</td>
+<td>
+0.043<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(0.003)
+</td>
+<td>
+(0.010)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+8.086<sup>***</sup>
+</td>
+<td>
+-0.724<sup>***</sup>
+</td>
+<td>
+-1.389<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.185)
+</td>
+<td>
+(0.022)
+</td>
+<td>
+(0.077)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+53,554
+</td>
+<td>
+53,810
+</td>
+<td>
+4,540
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.043
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.043
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Log Likelihood
+</td>
+<td>
+</td>
+<td>
+-22,361.210
+</td>
+<td>
+-1,859.831
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Akaike Inf. Crit.
+</td>
+<td>
+</td>
+<td>
+44,726.420
+</td>
+<td>
+3,723.661
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+2.416 (df = 53542)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+217.948<sup>***</sup> (df = 11; 53542)
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="table-3---the-extensive-margin-price-sensitives-of-loan-take-up" class="section level4">
+<h4>TABLE 3 - THE EXTENSIVE MARGIN: PRICE SENSITIVES OF LOAN TAKE-UP</h4>
+<pre class="r"><code>reg3_1 &lt;- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 1))
+
+reg3_2 &lt;- lm(applied ~ normrate_more, data=stata_data)
+
+reg3_3 &lt;- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 0))
+
+reg3_4 &lt;- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 1))
+
+reg3_5 &lt;- lm(tookup_outside_only ~ normrate_more, data = stata_data)
+
+reg3_6 &lt;- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 0))
+
+reg3_7 &lt;- lm(tookup_afterdead_enforced ~ offer4, data=filter(stata_data, normrate_less == 1))
+
+reg3_8 &lt;- lm(tookup_afterdead_enforced ~ normrate_more, data = stata_data)
+
+reg3_9 &lt;- lm(tookup_afterdead_enforced ~ offer4, data = filter(stata_data, normrate_less == 0))
+
+stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type=&quot;html&quot;, header = FALSE, align=TRUE)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="9">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="9" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+applied
+</td>
+<td colspan="3">
+tookup_outside_only
+</td>
+<td colspan="3">
+tookup_afterdead_enforced
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+<td>
+(4)
+</td>
+<td>
+(5)
+</td>
+<td>
+(6)
+</td>
+<td>
+(7)
+</td>
+<td>
+(8)
+</td>
+<td>
+(9)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+offer4
+</td>
+<td>
+-0.009<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+-0.025<sup>***</sup>
+</td>
+<td>
+-0.001
+</td>
+<td>
+</td>
+<td>
+-0.012
+</td>
+<td>
+-0.010<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+-0.047<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.0005)
+</td>
+<td>
+</td>
+<td>
+(0.006)
+</td>
+<td>
+(0.001)
+</td>
+<td>
+</td>
+<td>
+(0.011)
+</td>
+<td>
+(0.001)
+</td>
+<td>
+</td>
+<td>
+(0.009)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+normrate_more
+</td>
+<td>
+</td>
+<td>
+-0.018
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+0.057<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+0.034<sup>**</sup>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+(0.011)
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+(0.017)
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+(0.014)
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+0.154<sup>***</sup>
+</td>
+<td>
+0.085<sup>***</sup>
+</td>
+<td>
+0.392<sup>***</sup>
+</td>
+<td>
+0.228<sup>***</sup>
+</td>
+<td>
+0.223<sup>***</sup>
+</td>
+<td>
+0.432<sup>***</sup>
+</td>
+<td>
+0.226<sup>***</sup>
+</td>
+<td>
+0.147<sup>***</sup>
+</td>
+<td>
+0.781<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.004)
+</td>
+<td>
+(0.001)
+</td>
+<td>
+(0.076)
+</td>
+<td>
+(0.006)
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.138)
+</td>
+<td>
+(0.005)
+</td>
+<td>
+(0.002)
+</td>
+<td>
+(0.116)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+53,178
+</td>
+<td>
+53,810
+</td>
+<td>
+632
+</td>
+<td>
+53,178
+</td>
+<td>
+53,810
+</td>
+<td>
+632
+</td>
+<td>
+53,178
+</td>
+<td>
+53,810
+</td>
+<td>
+632
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.006
+</td>
+<td>
+0.00005
+</td>
+<td>
+0.029
+</td>
+<td>
+0.00001
+</td>
+<td>
+0.0002
+</td>
+<td>
+0.002
+</td>
+<td>
+0.005
+</td>
+<td>
+0.0001
+</td>
+<td>
+0.041
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.006
+</td>
+<td>
+0.00003
+</td>
+<td>
+0.027
+</td>
+<td>
+-0.00001
+</td>
+<td>
+0.0002
+</td>
+<td>
+0.0004
+</td>
+<td>
+0.005
+</td>
+<td>
+0.0001
+</td>
+<td>
+0.040
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+0.277 (df = 53176)
+</td>
+<td>
+0.278 (df = 53808)
+</td>
+<td>
+0.246 (df = 630)
+</td>
+<td>
+0.416 (df = 53176)
+</td>
+<td>
+0.417 (df = 53808)
+</td>
+<td>
+0.449 (df = 630)
+</td>
+<td>
+0.353 (df = 53176)
+</td>
+<td>
+0.354 (df = 53808)
+</td>
+<td>
+0.377 (df = 630)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+304.878<sup>***</sup> (df = 1; 53176)
+</td>
+<td>
+2.657 (df = 1; 53808)
+</td>
+<td>
+18.750<sup>***</sup> (df = 1; 630)
+</td>
+<td>
+0.534 (df = 1; 53176)
+</td>
+<td>
+11.620<sup>***</sup> (df = 1; 53808)
+</td>
+<td>
+1.222 (df = 1; 630)
+</td>
+<td>
+249.115<sup>***</sup> (df = 1; 53176)
+</td>
+<td>
+5.628<sup>**</sup> (df = 1; 53808)
+</td>
+<td>
+27.214<sup>***</sup> (df = 1; 630)
+</td>
+</tr>
+<tr>
+<td colspan="10" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="9" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
+<div id="table-4---price-sensitivities-of-loan-size" class="section level4">
+<h4>TABLE 4 - PRICE SENSITIVITIES OF LOAN SIZE</h4>
+<pre class="r"><code># (1) -&gt; r(interest rate) = rc (contract rate) -&gt; offer4 = final4
+# Conditional on borrowing? -&gt; tookup
+
+reg4_1 &lt;- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
+
+reg4_2 &lt;- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_more==1))
+
+reg4_3 &lt;- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+stargazer(reg4_1, reg4_2, reg4_3, type=&quot;html&quot;, header = FALSE)</code></pre>
+<table style="text-align:center">
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+loansize
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+offer4
+</td>
+<td>
+-15.923<sup>***</sup>
+</td>
+<td>
+-4.372
+</td>
+<td>
+-72.792<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1.168)
+</td>
+<td>
+(6.613)
+</td>
+<td>
+(11.181)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+230.979<sup>***</sup>
+</td>
+<td>
+93.497
+</td>
+<td>
+1,951.646<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(9.592)
+</td>
+<td>
+(86.653)
+</td>
+<td>
+(84.673)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+31,231
+</td>
+<td>
+388
+</td>
+<td>
+2,325
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.006
+</td>
+<td>
+0.001
+</td>
+<td>
+0.018
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.006
+</td>
+<td>
+-0.001
+</td>
+<td>
+0.017
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error
+</td>
+<td>
+513.345 (df = 31229)
+</td>
+<td>
+196.757 (df = 386)
+</td>
+<td>
+1,282.195 (df = 2323)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic
+</td>
+<td>
+185.935<sup>***</sup> (df = 1; 31229)
+</td>
+<td>
+0.437 (df = 1; 386)
+</td>
+<td>
+42.388<sup>***</sup> (df = 1; 2323)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+</div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRlc3RWZXJzaW9uVGhlc2lzIg0KcGFyYW1zOg0KICB2aXJpZGlzX3BhbGV0dGU6IHZpcmlkaXMNCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICBoaWdobGlnaHRlcjogbnVsbA0KICAgIHRoZW1lOiAiZmxhdGx5Ig0KICAgIGNvZGVfZG93bmxvYWQ6IFRSVUUNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZmxvYXQ6IHRydWUNCiAgICBjb2RlX2ZvbGRpbmc6ICJoaWRlIg0KICAgIGtlZXBfbWQ6IHRydWUNCi0tLQ0KDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0KYGBgDQoNCiMjIFIgTWFya2Rvd24NCg0KYGBge3J9DQpsaWJyYXJ5KGhhdmVuKQ0KbGlicmFyeSh0aWR5dmVyc2UpDQpsaWJyYXJ5KHJlYWRyKQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkoZ2dwbG90MikNCmxpYnJhcnkoa25pdHIpDQpsaWJyYXJ5KHN0YXJnYXplcikNCmxpYnJhcnkocXdyYXBzMikNCm9wdGlvbnMocXdyYXBzMl9tYXJrdXAgPSAibWFya2Rvd24iKQ0KYGBgDQpyYW1ldGVyIHdhcyBhZGRlZCB0byB0aGUgY29kZSBjaHVuayB0byBwcmV2ZW50IHByaW50aW5nIG9mIHRoZSBSIGNvZGUgdGhhdCBnZW5lcmF0ZWQgdGhlIHBsb3QuDQoNCmBgYHtyLCByZXN1bHRzPSJhc2lzIn0NCnN0YXRhX2RhdGEgPC0gcmVhZF9kdGEoIn4vR2l0SHViL0JBL3RoZXNpc19jb2RlX3JlcC90aGVzaXNfY29kZV9yZXAva3pfZGVtYW5kZWxhc3RzX2FlcjA4LmR0YSIpDQoNCnRlc3RmdW5jdGlvbiA8LSBmdW5jdGlvbihzdGF0YV9kYXRhMSl7DQogIGxpc3QoIlBhbmVsIEE6IEV4cGVyaW1lbnRhbCB2YXJpYWJsZXMiID0NCiAgICAgICAgIGxpc3QoIkludGVyZXN0IHJhdGUiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJG9mZmVyNCkpLA0KICAgICAgICAgbGlzdCgiRHluYW1pYyByZXBheW1lbnQgaW5jZW50aXZlIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSR5ZWFybG9uZykpLA0KICAgICAgICAgbGlzdCgiRXhhbXBsZSBsb2FuIHRlcm0gPSA0IG1vbnRocyIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkdGVybXNob3duNCwgbmFfcm0gPSBUUlVFKSksDQogICAgICAgICBsaXN0KCJFeGFtcGxlIGxvYW4gdGVybSA9IDYgbW9udGhzIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSR0ZXJtc2hvd242LCBuYV9ybSA9IFRSVUUpKSwNCiAgICAgICAgIGxpc3QoIkV4YW1wbGUgbG9hbiB0ZXJtID0gMTIgbW9udGhzIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSR0ZXJtc2hvd24xMiwgbmFfcm0gPSBUUlVFKSksDQogICAgICAgICBsaXN0KCJCb3Jyb3dlZCIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkdG9va3VwKSksDQogICAgICAgICBsaXN0KCJBcHBsaWVkIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSRhcHBsaWVkKSksDQogICAgICAgICBsaXN0KCJMb2FuIHNpemUiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJGxvYW5zaXplKSksDQogICAgICAgIlBhbmVsIEI6IERlbW9ncmFwaGljIGNoYXJhY3RlcmlzdGljcyIgPQ0KICAgICAgICAgbGlzdCgiRmVtYWxlIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSRmZW1hbGUpKSwNCiAgICAgICAgIGxpc3QoIk1hcnJpZWQiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJG1hcnJpZWQsIG5hX3JtID0gVFJVRSkpLA0KICAgICAgICAgbGlzdCgiQWdlIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSRhZ2UpKSwNCiAgICAgICAgIGxpc3QoIk1vcmUgZWR1Y2F0ZWQiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJGVkaGkpKSwNCiAgICAgICAgIGxpc3QoIlJ1cmFsIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSRydXJhbCkpLA0KICAgICAgICAgbGlzdCgiTnVtYmVyIG9mIGRlcGVuZGVudHMiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJGRlcGVuZGFudHMsIG5hX3JtID0gVFJVRSkpLA0KICAgICAgICAgbGlzdCgiR3Jvc3MgbW9udGhseSBpbmNvbWUgKDAwMHMgb2YgcmFuZCkiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJGdyb3NzaW5jb21lLCBuYV9ybSA9IFRSVUUpKSwNCiAgICAgICAgIGxpc3QoIk51bWJlciBvZiBsb2FucyB3aXRoIHRoZSBsZW5kZXIiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJHRyY291bnQsIG5hX3JtID0gVFJVRSkpDQogICkNCn0NCg0KDQphbGxfZGF0YSA8LSB0ZXN0ZnVuY3Rpb24oc3RhdGFfZGF0YSkNCnN1bW1hcnlfYWxsIDwtIHN1bW1hcnlfdGFibGUoc3RhdGFfZGF0YSwgYWxsX2RhdGEpDQoNCmFwcGxpZWRfZGF0YSA8LSBzdGF0YV9kYXRhICU+JSBmaWx0ZXIoYXBwbGllZCA9PSAxKQ0KYXBwbGllZF9saXN0IDwtIHRlc3RmdW5jdGlvbihhcHBsaWVkX2RhdGEpIA0Kc3VtbWFyeV9hcHBsaWVkIDwtIHN1bW1hcnlfdGFibGUoYXBwbGllZF9kYXRhLCBhcHBsaWVkX2xpc3QpDQoNCmJvcnJvd2VkX2RhdGEgPC0gc3RhdGFfZGF0YSAlPiUgZmlsdGVyKHRvb2t1cCA9PSAxKQ0KYm9ycm93ZWRfbGlzdCA8LSB0ZXN0ZnVuY3Rpb24oYm9ycm93ZWRfZGF0YSkgDQpzdW1tYXJ5X2JvcnJvd2VkIDwtIHN1bW1hcnlfdGFibGUoYm9ycm93ZWRfZGF0YSwgYm9ycm93ZWRfbGlzdCkNCg0KbWF0dXJpdHlfZGF0YSA8LSBzdGF0YV9kYXRhICU+JSBmaWx0ZXIob25ldGVybXNob3duID09IDEpDQptYXR1cml0eV9saXN0IDwtIHRlc3RmdW5jdGlvbihtYXR1cml0eV9kYXRhKSANCnN1bW1hcnlfbWF0dXJpdHkgPC0gc3VtbWFyeV90YWJsZShtYXR1cml0eV9kYXRhLCBtYXR1cml0eV9saXN0KQ0KDQpzdW1tYXJ5IDwtIGNiaW5kKHN1bW1hcnlfYWxsLCBzdW1tYXJ5X2FwcGxpZWQsIHN1bW1hcnlfYm9ycm93ZWQsIHN1bW1hcnlfbWF0dXJpdHkpDQpzdW1tYXJ5DQoNCmBgYA==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlRlc3RWZXJzaW9uVGhlc2lzIg0KcGFyYW1zOg0KICB2aXJpZGlzX3BhbGV0dGU6IHZpcmlkaXMNCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICBoaWdobGlnaHRlcjogbnVsbA0KICAgIHRoZW1lOiAiZmxhdGx5Ig0KICAgIGNvZGVfZG93bmxvYWQ6IFRSVUUNCiAgICB0b2M6IHRydWUNCiAgICB0b2NfZmxvYXQ6IHRydWUNCiAgICBjb2RlX2ZvbGRpbmc6ICJoaWRlIg0KICAgIGtlZXBfbWQ6IHRydWUNCi0tLQ0KDQoNCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQ0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQ0KYGBgDQoNCmBgYHtyLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCByZXN1bHRzPSdhc2lzJ30NCmxpYnJhcnkoaGF2ZW4pDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkocmVhZHIpDQpsaWJyYXJ5KGRwbHlyKQ0KbGlicmFyeShnZ3Bsb3QyKQ0KbGlicmFyeShrbml0cikNCmxpYnJhcnkoc3RhcmdhemVyKQ0KbGlicmFyeShxd3JhcHMyKQ0KbGlicmFyeShzdW1tYXJ5dG9vbHMpDQpvcHRpb25zKHF3cmFwczJfbWFya3VwID0gIm1hcmtkb3duIikNCmBgYA0KDQojIyBSIE1hcmtkb3duDQoNCiMjIyMgVEFCTEUgMSAtIFNVTU1BUlkgU1RBVElTVElDUw0KDQpgYGB7ciwgcmVzdWx0cz0iYXNpcyIsIHdhcm5pbmc9RkFMU0V9DQoNCiMgRWlubGVzZW4gZGVyIFN0YXRhLURhdGVuDQpzdGF0YV9kYXRhIDwtIHJlYWRfZHRhKCJ+L0dpdEh1Yi9CQS90aGVzaXNfY29kZV9yZXAvdGhlc2lzX2NvZGVfcmVwL2t6X2RlbWFuZGVsYXN0c19hZXIwOC5kdGEiKQ0KDQojIEZ1bmN0aW9uVGFibGUxIC0gw5xiZXJzaWNodCB1bmQgS29udHJvbGxlIGRlcyBEYXRlbnNhdHplcw0KdGVzdGZ1bmN0aW9uIDwtIGZ1bmN0aW9uKHN0YXRhX2RhdGExKXsNCiAgbGlzdCgiUGFuZWwgQTogRXhwZXJpbWVudGFsIHZhcmlhYmxlcyIgPQ0KICAgICAgICAgbGlzdCgiSW50ZXJlc3QgcmF0ZSIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkb2ZmZXI0KSksDQogICAgICAgICBsaXN0KCJEeW5hbWljIHJlcGF5bWVudCBpbmNlbnRpdmUiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJHllYXJsb25nKSksDQogICAgICAgICBsaXN0KCJFeGFtcGxlIGxvYW4gdGVybSA9IDQgbW9udGhzIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSR0ZXJtc2hvd240LCBuYV9ybSA9IFRSVUUpKSwNCiAgICAgICAgIGxpc3QoIkV4YW1wbGUgbG9hbiB0ZXJtID0gNiBtb250aHMiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJHRlcm1zaG93bjYsIG5hX3JtID0gVFJVRSkpLA0KICAgICAgICAgbGlzdCgiRXhhbXBsZSBsb2FuIHRlcm0gPSAxMiBtb250aHMiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJHRlcm1zaG93bjEyLCBuYV9ybSA9IFRSVUUpKSwNCiAgICAgICAgIGxpc3QoIkJvcnJvd2VkIiA9IH4gbWVhbl9zZChzdGF0YV9kYXRhMSR0b29rdXApKSwNCiAgICAgICAgIGxpc3QoIkFwcGxpZWQiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJGFwcGxpZWQpKSwNCiAgICAgICAgIGxpc3QoIkxvYW4gc2l6ZSIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkbG9hbnNpemUpKSwNCiAgICAgICAiUGFuZWwgQjogRGVtb2dyYXBoaWMgY2hhcmFjdGVyaXN0aWNzIiA9DQogICAgICAgICBsaXN0KCJGZW1hbGUiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJGZlbWFsZSkpLA0KICAgICAgICAgbGlzdCgiTWFycmllZCIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkbWFycmllZCwgbmFfcm0gPSBUUlVFKSksDQogICAgICAgICBsaXN0KCJBZ2UiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJGFnZSkpLA0KICAgICAgICAgbGlzdCgiTW9yZSBlZHVjYXRlZCIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkZWRoaSkpLA0KICAgICAgICAgbGlzdCgiUnVyYWwiID0gfiBtZWFuX3NkKHN0YXRhX2RhdGExJHJ1cmFsKSksDQogICAgICAgICBsaXN0KCJOdW1iZXIgb2YgZGVwZW5kZW50cyIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkZGVwZW5kYW50cywgbmFfcm0gPSBUUlVFKSksDQogICAgICAgICBsaXN0KCJHcm9zcyBtb250aGx5IGluY29tZSAoMDAwcyBvZiByYW5kKSIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkZ3Jvc3NpbmNvbWUsIG5hX3JtID0gVFJVRSkpLA0KICAgICAgICAgbGlzdCgiTnVtYmVyIG9mIGxvYW5zIHdpdGggdGhlIGxlbmRlciIgPSB+IG1lYW5fc2Qoc3RhdGFfZGF0YTEkdHJjb3VudCwgbmFfcm0gPSBUUlVFKSkNCiAgKQ0KfQ0KDQoNCiMgU3BhbHRlMSAtIEFsbA0KYWxsX2RhdGEgPC0gdGVzdGZ1bmN0aW9uKHN0YXRhX2RhdGEpDQpzdW1tYXJ5X2FsbCA8LSBzdW1tYXJ5X3RhYmxlKHN0YXRhX2RhdGEsIGFsbF9kYXRhKQ0KDQojIFNwYWx0ZTIgLSBBcHBsaWVkDQphcHBsaWVkX2RhdGEgPC0gc3RhdGFfZGF0YSAlPiUgZmlsdGVyKGFwcGxpZWQgPT0gMSkNCmFwcGxpZWRfbGlzdCA8LSB0ZXN0ZnVuY3Rpb24oYXBwbGllZF9kYXRhKSANCnN1bW1hcnlfYXBwbGllZCA8LSBzdW1tYXJ5X3RhYmxlKGFwcGxpZWRfZGF0YSwgYXBwbGllZF9saXN0KQ0KDQojIFNwYWx0ZTMgLSBCb3Jyb3dlZA0KYm9ycm93ZWRfZGF0YSA8LSBzdGF0YV9kYXRhICU+JSBmaWx0ZXIodG9va3VwID09IDEpDQpib3Jyb3dlZF9saXN0IDwtIHRlc3RmdW5jdGlvbihib3Jyb3dlZF9kYXRhKSANCnN1bW1hcnlfYm9ycm93ZWQgPC0gc3VtbWFyeV90YWJsZShib3Jyb3dlZF9kYXRhLCBib3Jyb3dlZF9saXN0KQ0KDQojIFNwYWx0ZTQgLSBFbGlnaWJsZSBmb3IgbWF0dXJpdHkgc3VnZ2VzdGlvbiByYW5kb21peml0aW9uDQptYXR1cml0eV9kYXRhIDwtIHN0YXRhX2RhdGEgJT4lIGZpbHRlcihvbmV0ZXJtc2hvd24gPT0gMSkNCm1hdHVyaXR5X2xpc3QgPC0gdGVzdGZ1bmN0aW9uKG1hdHVyaXR5X2RhdGEpIA0Kc3VtbWFyeV9tYXR1cml0eSA8LSBzdW1tYXJ5X3RhYmxlKG1hdHVyaXR5X2RhdGEsIG1hdHVyaXR5X2xpc3QpDQoNCiMgWnVzYW1tZW5mYXNzZW4gZGVyIExpc3Rlbg0Kc3VtbWFyeSA8LSBjYmluZChzdW1tYXJ5X2FsbCwgc3VtbWFyeV9hcHBsaWVkLCBzdW1tYXJ5X2JvcnJvd2VkLCBzdW1tYXJ5X21hdHVyaXR5KQ0Kc3VtbWFyeQ0KDQoNCmBgYA0KDQoNCmBgYHtyLCB3YXJuaW5nPUZBTFNFLCByZXN1bHRzPSdhc2lzJ30NCg0KdGFibGUxXzEgPC0gZGVzY3Ioc3RhdGFfZGF0YSwgc3RhdHMgPSBjKCJtZWFuIiwgInNkIiksIHRyYW5zcG9zZSA9IFRSVUUsIGhlYWRpbmdzID0gRkFMU0UpDQp0YWJsZTFfMiA8LSBkZXNjcihmaWx0ZXIoc3RhdGFfZGF0YSxhcHBsaWVkID09IDEpLCBzdGF0cyA9IGMoIm1lYW4iLCAic2QiKSwgdHJhbnNwb3NlID0gVFJVRSwgaGVhZGluZ3MgPSBGQUxTRSkNCg0KIyBBbHRlcm5hdGl2ZSAtIHdhcyBpc3QgYmVzc2VyPw0KDQpgYGANCg0KDQojIyMjIFRBQkxFIDIgLSBFWFBFUklNRU5UQUwgVkFMSURBVElPTiBSRUdSRVNTSU9OUw0KDQpgYGB7ciwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0nYXNpcyd9DQoNCiMgVGFibGUgMiAtIEV4cGVyaW1ldGFsIHZhbGlkYXRpb24gUmVncmVzc2lvbnMNCnN0YXRhX2RhdGEkbG5pdGNzY29yZVtpcy5uYShzdGF0YV9kYXRhJGxuaXRjc2NvcmUpXSA8LSAwDQpzdGF0YV9kYXRhJGxuYXBwc2NvcmVbaXMubmEoc3RhdGFfZGF0YSRsbmFwcHNjb3JlKV0gPC0gMA0Kc3RhdGFfZGF0YSRsbnRyY291bnRbaXMubmEoc3RhdGFfZGF0YSRsbnRyY291bnQpXSA8LSAwDQoNCg0KIyBSZWdyZXNzaW9uIGvDvHJ6dCB2aWVsZSBXZXJ0ZSByYXVzLCBkYWhlciBOQXMgPSAwPw0KDQpyZWcyXzEgPC0gbG0ob2ZmZXI0IH4gZG9ybWFuY3kgKyBsbnRyY291bnQgKyBmZW1hbGUgKyBkZXBlbmRhbnRzICsgbWFycmllZCArIGxuYWdlICsgcnVyYWwgKyBlZGhpICsgbG5pdGNzY29yZSArIGl0Y2FueSArIGxuYXBwc2NvcmUsIGRhdGE9c3RhdGFfZGF0YSkNCg0KIyBFcmdlYm5pcyBuaWNodCBrb21wbGV0dCByaWNodGlnLCB3b3JhbiBsaWVndCBlcz8gRmFsc2NoIHJlZ3Jlc3NpZXJ0Pw0KDQojIHRlaWx3ZWlzZSBpbmtvcnJla3RlIFdlcnRlLCB3YXMgaXN0IG1pdCBpdGN6ZXJvKFdlcnQgZGV1dGxpY2ggenUgZ3Jvw58pID8NCg0KcmVnMl8yIDwtIGdsbSh0b29rdXBfYWZ0ZXJkZWFkX2VuZm9yY2VkIH4gb2ZmZXI0LCBmYW1pbHkgPSBiaW5vbWlhbChsaW5rID0gInByb2JpdCIpLCBkYXRhPXN0YXRhX2RhdGEpDQoNCnN0YXRhX2RhdGFfcmVnMyA8LSBzdGF0YV9kYXRhICU+JSBmaWx0ZXIoYXBwbGllZCA9PSAxKQ0KcmVnMl8zIDwtIGdsbShyZWplY3RlZCB+IG9mZmVyNCwgZmFtaWx5ID0gYmlub21pYWwobGluayA9ICJwcm9iaXQiKSwgZGF0YT1zdGF0YV9kYXRhX3JlZzMpDQoNCnN0YXJnYXplcihyZWcyXzEsIHJlZzJfMiwgcmVnMl8zLCB0eXBlPSJodG1sIiwgaGVhZGVyPUZBTFNFKQ0KDQpgYGANCg0KDQojIyMjIFRBQkxFIDMgLSBUSEUgRVhURU5TSVZFIE1BUkdJTjogUFJJQ0UgU0VOU0lUSVZFUyBPRiBMT0FOIFRBS0UtVVANCg0KDQpgYGB7ciwgd2FybmluZz1GQUxTRSwgcmVzdWx0cz0nYXNpcyd9DQoNCnJlZzNfMSA8LSBsbShhcHBsaWVkIH4gb2ZmZXI0LCBkYXRhPWZpbHRlcihzdGF0YV9kYXRhLCBub3JtcmF0ZV9sZXNzID09IDEpKQ0KDQpyZWczXzIgPC0gbG0oYXBwbGllZCB+IG5vcm1yYXRlX21vcmUsIGRhdGE9c3RhdGFfZGF0YSkNCg0KcmVnM18zIDwtIGxtKGFwcGxpZWQgfiBvZmZlcjQsIGRhdGE9ZmlsdGVyKHN0YXRhX2RhdGEsIG5vcm1yYXRlX2xlc3MgPT0gMCkpDQoNCnJlZzNfNCA8LSBsbSh0b29rdXBfb3V0c2lkZV9vbmx5IH4gb2ZmZXI0LCBkYXRhID0gZmlsdGVyKHN0YXRhX2RhdGEsIG5vcm1yYXRlX2xlc3MgPT0gMSkpDQoNCnJlZzNfNSA8LSBsbSh0b29rdXBfb3V0c2lkZV9vbmx5IH4gbm9ybXJhdGVfbW9yZSwgZGF0YSA9IHN0YXRhX2RhdGEpDQoNCnJlZzNfNiA8LSBsbSh0b29rdXBfb3V0c2lkZV9vbmx5IH4gb2ZmZXI0LCBkYXRhID0gZmlsdGVyKHN0YXRhX2RhdGEsIG5vcm1yYXRlX2xlc3MgPT0gMCkpDQoNCnJlZzNfNyA8LSBsbSh0b29rdXBfYWZ0ZXJkZWFkX2VuZm9yY2VkIH4gb2ZmZXI0LCBkYXRhPWZpbHRlcihzdGF0YV9kYXRhLCBub3JtcmF0ZV9sZXNzID09IDEpKQ0KDQpyZWczXzggPC0gbG0odG9va3VwX2FmdGVyZGVhZF9lbmZvcmNlZCB+IG5vcm1yYXRlX21vcmUsIGRhdGEgPSBzdGF0YV9kYXRhKQ0KDQpyZWczXzkgPC0gbG0odG9va3VwX2FmdGVyZGVhZF9lbmZvcmNlZCB+IG9mZmVyNCwgZGF0YSA9IGZpbHRlcihzdGF0YV9kYXRhLCBub3JtcmF0ZV9sZXNzID09IDApKQ0KDQpzdGFyZ2F6ZXIocmVnM18xLCByZWczXzIsIHJlZzNfMywgcmVnM180LCByZWczXzUsIHJlZzNfNiwgcmVnM183LCByZWczXzgsIHJlZzNfOSwgdHlwZT0iaHRtbCIsIGhlYWRlciA9IEZBTFNFLCBhbGlnbj1UUlVFKQ0KDQpgYGANCg0KIyMjIyBUQUJMRSA0IC0gUFJJQ0UgU0VOU0lUSVZJVElFUyBPRiBMT0FOIFNJWkUNCg0KYGBge3IsIHdhcm5pbmc9RkFMU0UsIHJlc3VsdHM9J2FzaXMnfQ0KDQojICgxKSAtPiByKGludGVyZXN0IHJhdGUpID0gcmMgKGNvbnRyYWN0IHJhdGUpIC0+IG9mZmVyNCA9IGZpbmFsNA0KIyBDb25kaXRpb25hbCBvbiBib3Jyb3dpbmc/IC0+IHRvb2t1cA0KDQpyZWc0XzEgPC0gbG0obG9hbnNpemUgfiBvZmZlcjQsIGRhdGEgPSBmaWx0ZXIoc3RhdGFfZGF0YSwgb2ZmZXI0PT1maW5hbDQsIG5vcm1yYXRlX2xlc3M9PTEpKQ0KDQpyZWc0XzIgPC0gbG0obG9hbnNpemUgfiBvZmZlcjQsIGRhdGEgPSBmaWx0ZXIoc3RhdGFfZGF0YSwgb2ZmZXI0PT1maW5hbDQsIG5vcm1yYXRlX21vcmU9PTEpKQ0KDQpyZWc0XzMgPC0gbG0obG9hbnNpemUgfiBvZmZlcjQsIGRhdGEgPSBmaWx0ZXIoc3RhdGFfZGF0YSwgb2ZmZXI0PT1maW5hbDQsIHRvb2t1cD09MSwgbm9ybXJhdGVfbGVzcz09MSkpDQoNCnN0YXJnYXplcihyZWc0XzEsIHJlZzRfMiwgcmVnNF8zLCB0eXBlPSJodG1sIiwgaGVhZGVyID0gRkFMU0UpDQpgYGA=</div>
 
 
 </div>

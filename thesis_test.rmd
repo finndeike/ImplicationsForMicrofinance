@@ -18,9 +18,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-```{r}
+```{r, message=FALSE, warning=FALSE, results='asis'}
 library(haven)
 library(tidyverse)
 library(readr)
@@ -29,13 +27,20 @@ library(ggplot2)
 library(knitr)
 library(stargazer)
 library(qwraps2)
+library(summarytools)
 options(qwraps2_markup = "markdown")
 ```
-rameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
-```{r, results="asis"}
+## R Markdown
+
+#### TABLE 1 - SUMMARY STATISTICS
+
+```{r, results="asis", warning=FALSE}
+
+# Einlesen der Stata-Daten
 stata_data <- read_dta("~/GitHub/BA/thesis_code_rep/thesis_code_rep/kz_demandelasts_aer08.dta")
 
+# FunctionTable1 - Übersicht und Kontrolle des Datensatzes
 testfunction <- function(stata_data1){
   list("Panel A: Experimental variables" =
          list("Interest rate" = ~ mean_sd(stata_data1$offer4)),
@@ -59,22 +64,110 @@ testfunction <- function(stata_data1){
 }
 
 
+# Spalte1 - All
 all_data <- testfunction(stata_data)
 summary_all <- summary_table(stata_data, all_data)
 
+# Spalte2 - Applied
 applied_data <- stata_data %>% filter(applied == 1)
 applied_list <- testfunction(applied_data) 
 summary_applied <- summary_table(applied_data, applied_list)
 
+# Spalte3 - Borrowed
 borrowed_data <- stata_data %>% filter(tookup == 1)
 borrowed_list <- testfunction(borrowed_data) 
 summary_borrowed <- summary_table(borrowed_data, borrowed_list)
 
+# Spalte4 - Eligible for maturity suggestion randomizition
 maturity_data <- stata_data %>% filter(onetermshown == 1)
 maturity_list <- testfunction(maturity_data) 
 summary_maturity <- summary_table(maturity_data, maturity_list)
 
+# Zusammenfassen der Listen
 summary <- cbind(summary_all, summary_applied, summary_borrowed, summary_maturity)
 summary
 
+
+```
+
+
+```{r, warning=FALSE, results='asis'}
+
+table1_1 <- descr(stata_data, stats = c("mean", "sd"), transpose = TRUE, headings = FALSE)
+table1_2 <- descr(filter(stata_data,applied == 1), stats = c("mean", "sd"), transpose = TRUE, headings = FALSE)
+
+# Alternative - was ist besser?
+
+```
+
+
+#### TABLE 2 - EXPERIMENTAL VALIDATION REGRESSIONS
+
+```{r, warning=FALSE, results='asis'}
+
+# Table 2 - Experimetal validation Regressions
+stata_data$lnitcscore[is.na(stata_data$lnitcscore)] <- 0
+stata_data$lnappscore[is.na(stata_data$lnappscore)] <- 0
+stata_data$lntrcount[is.na(stata_data$lntrcount)] <- 0
+
+
+# Regression kürzt viele Werte raus, daher NAs = 0?
+
+reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + lnitcscore + itcany + lnappscore, data=stata_data)
+
+# Ergebnis nicht komplett richtig, woran liegt es? Falsch regressiert?
+
+# teilweise inkorrekte Werte, was ist mit itczero(Wert deutlich zu groß) ?
+
+reg2_2 <- glm(tookup_afterdead_enforced ~ offer4, family = binomial(link = "probit"), data=stata_data)
+
+stata_data_reg3 <- stata_data %>% filter(applied == 1)
+reg2_3 <- glm(rejected ~ offer4, family = binomial(link = "probit"), data=stata_data_reg3)
+
+stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
+
+```
+
+
+#### TABLE 3 - THE EXTENSIVE MARGIN: PRICE SENSITIVES OF LOAN TAKE-UP
+
+
+```{r, warning=FALSE, results='asis'}
+
+reg3_1 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 1))
+
+reg3_2 <- lm(applied ~ normrate_more, data=stata_data)
+
+reg3_3 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 0))
+
+reg3_4 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 1))
+
+reg3_5 <- lm(tookup_outside_only ~ normrate_more, data = stata_data)
+
+reg3_6 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 0))
+
+reg3_7 <- lm(tookup_afterdead_enforced ~ offer4, data=filter(stata_data, normrate_less == 1))
+
+reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more, data = stata_data)
+
+reg3_9 <- lm(tookup_afterdead_enforced ~ offer4, data = filter(stata_data, normrate_less == 0))
+
+stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE, align=TRUE)
+
+```
+
+#### TABLE 4 - PRICE SENSITIVITIES OF LOAN SIZE
+
+```{r, warning=FALSE, results='asis'}
+
+# (1) -> r(interest rate) = rc (contract rate) -> offer4 = final4
+# Conditional on borrowing? -> tookup
+
+reg4_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
+
+reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_more==1))
+
+reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+stargazer(reg4_1, reg4_2, reg4_3, type="html", header = FALSE)
 ```

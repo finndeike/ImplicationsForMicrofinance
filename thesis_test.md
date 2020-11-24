@@ -16,62 +16,30 @@ output:
 
 
 
-## R Markdown
-
 
 ```r
 library(haven)
 library(tidyverse)
-```
-
-```
-## -- Attaching packages ------------------------------------------------------------- tidyverse 1.3.0 --
-```
-
-```
-## v ggplot2 3.3.1     v purrr   0.3.4
-## v tibble  3.0.1     v dplyr   0.8.5
-## v tidyr   1.0.2     v stringr 1.4.0
-## v readr   1.3.1     v forcats 0.5.0
-```
-
-```
-## -- Conflicts ---------------------------------------------------------------- tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
-
-```r
 library(readr)
 library(dplyr)
 library(ggplot2)
 library(knitr)
 library(stargazer)
-```
-
-```
-## 
-## Please cite as:
-```
-
-```
-##  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.
-```
-
-```
-##  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer
-```
-
-```r
 library(qwraps2)
+library(summarytools)
 options(qwraps2_markup = "markdown")
 ```
-rameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## R Markdown
+
+#### TABLE 1 - SUMMARY STATISTICS
 
 
 ```r
+# Einlesen der Stata-Daten
 stata_data <- read_dta("~/GitHub/BA/thesis_code_rep/thesis_code_rep/kz_demandelasts_aer08.dta")
 
+# FunctionTable1 - Übersicht und Kontrolle des Datensatzes
 testfunction <- function(stata_data1){
   list("Panel A: Experimental variables" =
          list("Interest rate" = ~ mean_sd(stata_data1$offer4)),
@@ -95,21 +63,26 @@ testfunction <- function(stata_data1){
 }
 
 
+# Spalte1 - All
 all_data <- testfunction(stata_data)
 summary_all <- summary_table(stata_data, all_data)
 
+# Spalte2 - Applied
 applied_data <- stata_data %>% filter(applied == 1)
 applied_list <- testfunction(applied_data) 
 summary_applied <- summary_table(applied_data, applied_list)
 
+# Spalte3 - Borrowed
 borrowed_data <- stata_data %>% filter(tookup == 1)
 borrowed_list <- testfunction(borrowed_data) 
 summary_borrowed <- summary_table(borrowed_data, borrowed_list)
 
+# Spalte4 - Eligible for maturity suggestion randomizition
 maturity_data <- stata_data %>% filter(onetermshown == 1)
 maturity_list <- testfunction(maturity_data) 
 summary_maturity <- summary_table(maturity_data, maturity_list)
 
+# Zusammenfassen der Listen
 summary <- cbind(summary_all, summary_applied, summary_borrowed, summary_maturity)
 summary
 ```
@@ -150,3 +123,178 @@ summary
 |&nbsp;&nbsp; Gross monthly income (000s of rand) |48,852; 3.41 &plusmn; 20.50 |3,996; 3.37 &plusmn; 2.12  |3,455; 3.41 &plusmn; 2.16  |3.55 &plusmn; 4.71        |
 |****                                             |&nbsp;&nbsp;                |&nbsp;&nbsp;               |&nbsp;&nbsp;               |&nbsp;&nbsp;              |
 |&nbsp;&nbsp; Number of loans with the lender     |53,554; 4.20 &plusmn; 3.85  |4,503; 4.82 &plusmn; 4.23  |3,855; 4.79 &plusmn; 4.23  |5.96 &plusmn; 4.18        |
+
+
+
+```r
+table1_1 <- descr(stata_data, stats = c("mean", "sd"), transpose = TRUE, headings = FALSE)
+table1_2 <- descr(filter(stata_data,applied == 1), stats = c("mean", "sd"), transpose = TRUE, headings = FALSE)
+
+# Alternative - was ist besser?
+```
+
+
+#### TABLE 2 - EXPERIMENTAL VALIDATION REGRESSIONS
+
+
+```r
+# Table 2 - Experimetal validation Regressions
+stata_data$lnitcscore[is.na(stata_data$lnitcscore)] <- 0
+stata_data$lnappscore[is.na(stata_data$lnappscore)] <- 0
+stata_data$lntrcount[is.na(stata_data$lntrcount)] <- 0
+
+
+# Regression kürzt viele Werte raus, daher NAs = 0?
+
+reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + lnitcscore + itcany + lnappscore, data=stata_data)
+
+# Ergebnis nicht komplett richtig, woran liegt es? Falsch regressiert?
+
+# teilweise inkorrekte Werte, was ist mit itczero(Wert deutlich zu groß) ?
+
+reg2_2 <- glm(tookup_afterdead_enforced ~ offer4, family = binomial(link = "probit"), data=stata_data)
+
+stata_data_reg3 <- stata_data %>% filter(applied == 1)
+reg2_3 <- glm(rejected ~ offer4, family = binomial(link = "probit"), data=stata_data_reg3)
+
+stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
+```
+
+
+<table style="text-align:center"><tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="3"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="3" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td>offer4</td><td>tookup_afterdead_enforced</td><td>rejected</td></tr>
+<tr><td style="text-align:left"></td><td><em>OLS</em></td><td><em>probit</em></td><td><em>probit</em></td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">dormancy</td><td>0.066<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.002)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">lntrcount</td><td>-0.269<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.013)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">female</td><td>0.018</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.023)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">dependants</td><td>0.023<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.007)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">married</td><td>0.010</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.024)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnage</td><td>-0.092<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.049)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">rural</td><td>-0.070<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.029)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">edhi</td><td>-0.011</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.023)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnitcscore</td><td>-0.262<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.090)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">itcany</td><td>1.567<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.583)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnappscore</td><td>-0.020</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.036)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">offer4</td><td></td><td>-0.041<sup>***</sup></td><td>0.043<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.003)</td><td>(0.010)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>8.086<sup>***</sup></td><td>-0.724<sup>***</sup></td><td>-1.389<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.185)</td><td>(0.022)</td><td>(0.077)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>53,554</td><td>53,810</td><td>4,540</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.043</td><td></td><td></td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.043</td><td></td><td></td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td></td><td>-22,361.210</td><td>-1,859.831</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td></td><td>44,726.420</td><td>3,723.661</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>2.416 (df = 53542)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>217.948<sup>***</sup> (df = 11; 53542)</td><td></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+</table>
+
+
+#### TABLE 3 - THE EXTENSIVE MARGIN: PRICE SENSITIVES OF LOAN TAKE-UP
+
+
+
+```r
+reg3_1 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 1))
+
+reg3_2 <- lm(applied ~ normrate_more, data=stata_data)
+
+reg3_3 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 0))
+
+reg3_4 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 1))
+
+reg3_5 <- lm(tookup_outside_only ~ normrate_more, data = stata_data)
+
+reg3_6 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 0))
+
+reg3_7 <- lm(tookup_afterdead_enforced ~ offer4, data=filter(stata_data, normrate_less == 1))
+
+reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more, data = stata_data)
+
+reg3_9 <- lm(tookup_afterdead_enforced ~ offer4, data = filter(stata_data, normrate_less == 0))
+
+stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE, align=TRUE)
+```
+
+
+<table style="text-align:center"><tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="9"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="9" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="3">applied</td><td colspan="3">tookup_outside_only</td><td colspan="3">tookup_afterdead_enforced</td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td><td>(8)</td><td>(9)</td></tr>
+<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.009<sup>***</sup></td><td></td><td>-0.025<sup>***</sup></td><td>-0.001</td><td></td><td>-0.012</td><td>-0.010<sup>***</sup></td><td></td><td>-0.047<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.0005)</td><td></td><td>(0.006)</td><td>(0.001)</td><td></td><td>(0.011)</td><td>(0.001)</td><td></td><td>(0.009)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">normrate_more</td><td></td><td>-0.018</td><td></td><td></td><td>0.057<sup>***</sup></td><td></td><td></td><td>0.034<sup>**</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.011)</td><td></td><td></td><td>(0.017)</td><td></td><td></td><td>(0.014)</td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>0.154<sup>***</sup></td><td>0.085<sup>***</sup></td><td>0.392<sup>***</sup></td><td>0.228<sup>***</sup></td><td>0.223<sup>***</sup></td><td>0.432<sup>***</sup></td><td>0.226<sup>***</sup></td><td>0.147<sup>***</sup></td><td>0.781<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.004)</td><td>(0.001)</td><td>(0.076)</td><td>(0.006)</td><td>(0.002)</td><td>(0.138)</td><td>(0.005)</td><td>(0.002)</td><td>(0.116)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.006</td><td>0.00005</td><td>0.029</td><td>0.00001</td><td>0.0002</td><td>0.002</td><td>0.005</td><td>0.0001</td><td>0.041</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.006</td><td>0.00003</td><td>0.027</td><td>-0.00001</td><td>0.0002</td><td>0.0004</td><td>0.005</td><td>0.0001</td><td>0.040</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>0.277 (df = 53176)</td><td>0.278 (df = 53808)</td><td>0.246 (df = 630)</td><td>0.416 (df = 53176)</td><td>0.417 (df = 53808)</td><td>0.449 (df = 630)</td><td>0.353 (df = 53176)</td><td>0.354 (df = 53808)</td><td>0.377 (df = 630)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>304.878<sup>***</sup> (df = 1; 53176)</td><td>2.657 (df = 1; 53808)</td><td>18.750<sup>***</sup> (df = 1; 630)</td><td>0.534 (df = 1; 53176)</td><td>11.620<sup>***</sup> (df = 1; 53808)</td><td>1.222 (df = 1; 630)</td><td>249.115<sup>***</sup> (df = 1; 53176)</td><td>5.628<sup>**</sup> (df = 1; 53808)</td><td>27.214<sup>***</sup> (df = 1; 630)</td></tr>
+<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="9" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+</table>
+
+#### TABLE 4 - PRICE SENSITIVITIES OF LOAN SIZE
+
+
+```r
+# (1) -> r(interest rate) = rc (contract rate) -> offer4 = final4
+# Conditional on borrowing? -> tookup
+
+reg4_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
+
+reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_more==1))
+
+reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+stargazer(reg4_1, reg4_2, reg4_3, type="html", header = FALSE)
+```
+
+
+<table style="text-align:center"><tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="3"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="3" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="3">loansize</td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-15.923<sup>***</sup></td><td>-4.372</td><td>-72.792<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(1.168)</td><td>(6.613)</td><td>(11.181)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>230.979<sup>***</sup></td><td>93.497</td><td>1,951.646<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(9.592)</td><td>(86.653)</td><td>(84.673)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>31,231</td><td>388</td><td>2,325</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.006</td><td>0.001</td><td>0.018</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.006</td><td>-0.001</td><td>0.017</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>513.345 (df = 31229)</td><td>196.757 (df = 386)</td><td>1,282.195 (df = 2323)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>185.935<sup>***</sup> (df = 1; 31229)</td><td>0.437 (df = 1; 386)</td><td>42.388<sup>***</sup> (df = 1; 2323)</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+</table>
