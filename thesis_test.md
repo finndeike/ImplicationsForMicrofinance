@@ -27,6 +27,7 @@ library(knitr)
 library(stargazer)
 library(qwraps2)
 library(summarytools)
+library(AER)
 options(qwraps2_markup = "markdown")
 ```
 
@@ -46,7 +47,7 @@ testfunction <- function(stata_data1){
          list("Dynamic repayment incentive" = ~ mean_sd(stata_data1$yearlong)),
          list("Example loan term = 4 months" = ~ mean_sd(stata_data1$termshown4, na_rm = TRUE)),
          list("Example loan term = 6 months" = ~ mean_sd(stata_data1$termshown6, na_rm = TRUE)),
-         list("Example loan term = 12 months" = ~ mean_sd(stata_data1$termshown12, na_rm = TRUE)),
+         list("Example loan term = 12 months" = ~ mean_sd(stata_data1$termshown12, na_rm =TRUE)),
          list("Borrowed" = ~ mean_sd(stata_data1$tookup)),
          list("Applied" = ~ mean_sd(stata_data1$applied)),
          list("Loan size" = ~ mean_sd(stata_data1$loansize)),
@@ -239,7 +240,7 @@ reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more, data = stata_data)
 
 reg3_9 <- lm(tookup_afterdead_enforced ~ offer4, data = filter(stata_data, normrate_less == 0))
 
-stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE, align=TRUE)
+stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE)
 ```
 
 
@@ -268,33 +269,92 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 
 
 ```r
-# (1) -> r(interest rate) = rc (contract rate) -> offer4 = final4
+# Dataset -> r(interest rate) = rc (contract rate) -> offer4 = final4, normrate_less == 1
 # Conditional on borrowing? -> tookup
+# Additional controls? + Branch fixed effects? -> grossincome != 0
+# Additional controls? -> ???
+# Branch fixed effects? -> ???
 
 reg4_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_more==1))
+reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
 
-reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-stargazer(reg4_1, reg4_2, reg4_3, type="html", header = FALSE)
+reg4_4 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg4_5 <- tobit(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg4_6 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+reg4_7 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+
+reg4_8 <- tobit(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+
+
+stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
+```
+
+
+<table style="text-align:center"><tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="8"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="8" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="5">loansize</td><td colspan="3">lnloansize</td></tr>
+<tr><td style="text-align:left"></td><td colspan="4"><em>OLS</em></td><td><em>Tobit</em></td><td colspan="2"><em>OLS</em></td><td><em>Tobit</em></td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td><td>(8)</td></tr>
+<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-15.923<sup>***</sup></td><td>-15.857<sup>***</sup></td><td>-72.792<sup>***</sup></td><td>-72.792<sup>***</sup></td><td>-72.792<sup>***</sup></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(1.168)</td><td>(1.232)</td><td>(11.181)</td><td>(11.181)</td><td>(11.176)</td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnoffer4</td><td></td><td></td><td></td><td></td><td></td><td>-0.242<sup>***</sup></td><td>-0.268<sup>***</sup></td><td>-0.268<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td>(0.043)</td><td>(0.045)</td><td>(0.045)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>230.979<sup>***</sup></td><td>229.812<sup>***</sup></td><td>1,951.646<sup>***</sup></td><td>1,951.646<sup>***</sup></td><td>1,951.646<sup>***</sup></td><td>7.444<sup>***</sup></td><td>7.507<sup>***</sup></td><td>7.507<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(9.592)</td><td>(10.230)</td><td>(84.673)</td><td>(84.673)</td><td>(84.636)</td><td>(0.083)</td><td>(0.089)</td><td>(0.089)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>31,231</td><td>28,197</td><td>2,325</td><td>2,325</td><td>2,325</td><td>2,325</td><td>2,035</td><td>2,035</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.006</td><td>0.006</td><td>0.018</td><td>0.018</td><td></td><td>0.014</td><td>0.017</td><td></td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.006</td><td>0.006</td><td>0.017</td><td>0.017</td><td></td><td>0.013</td><td>0.016</td><td></td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td></td><td></td><td></td><td></td><td>-19,936.500</td><td></td><td></td><td>-2,234.956</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>513.345 (df = 31229)</td><td>512.703 (df = 28195)</td><td>1,282.195 (df = 2323)</td><td>1,282.195 (df = 2323)</td><td></td><td>0.730 (df = 2323)</td><td>0.726 (df = 2033)</td><td></td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>185.935<sup>***</sup> (df = 1; 31229)</td><td>165.751<sup>***</sup> (df = 1; 28195)</td><td>42.388<sup>***</sup> (df = 1; 2323)</td><td>42.388<sup>***</sup> (df = 1; 2323)</td><td></td><td>32.427<sup>***</sup> (df = 1; 2323)</td><td>34.928<sup>***</sup> (df = 1; 2033)</td><td></td></tr>
+<tr><td style="text-align:left">Wald Test (df = 1)</td><td></td><td></td><td></td><td></td><td>42.424<sup>***</sup></td><td></td><td></td><td>34.962<sup>***</sup></td></tr>
+<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="8" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+</table>
+
+##### TABLE 5 - GROSS REVENUE AND REPAYMENT SENSITIVITIES TO INTEREST RATES
+
+
+```r
+reg5_1 <- lm(grossinterest ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
+
+reg5_2 <- lm(pstdue_average ~ offer4,data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg5_3 <- tobit(pstdue_average ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+
+stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
 ```
 
 
 <table style="text-align:center"><tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="3"><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="3" style="border-bottom: 1px solid black"></td></tr>
-<tr><td style="text-align:left"></td><td colspan="3">loansize</td></tr>
+<tr><td style="text-align:left"></td><td>Gross interest revenue</td><td colspan="2">Average past due</td></tr>
+<tr><td style="text-align:left"></td><td><em>OLS</em></td><td><em>OLS</em></td><td><em>Tobit</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-15.923<sup>***</sup></td><td>-4.372</td><td>-72.792<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(1.168)</td><td>(6.613)</td><td>(11.181)</td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>230.979<sup>***</sup></td><td>93.497</td><td>1,951.646<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(9.592)</td><td>(86.653)</td><td>(84.673)</td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>31,231</td><td>388</td><td>2,325</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.006</td><td>0.001</td><td>0.018</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.006</td><td>-0.001</td><td>0.017</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>513.345 (df = 31229)</td><td>196.757 (df = 386)</td><td>1,282.195 (df = 2323)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>185.935<sup>***</sup> (df = 1; 31229)</td><td>0.437 (df = 1; 386)</td><td>42.388<sup>***</sup> (df = 1; 2323)</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">interest rate in pp terms (e.g., 8.2)</td><td>-2.374<sup>***</sup></td><td>21.880<sup>***</sup></td><td>40.048<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.607)</td><td>(3.234)</td><td>(5.514)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>56.286<sup>***</sup></td><td>4.062</td><td>-355.864<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(4.985)</td><td>(24.493)</td><td>(43.080)</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>31,231</td><td>2,325</td><td>2,325</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.0005</td><td>0.019</td><td></td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.0005</td><td>0.019</td><td></td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td></td><td></td><td>-10,250.390</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>266.777 (df = 31229)</td><td>370.893 (df = 2323)</td><td></td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>15.307<sup>***</sup> (df = 1; 31229)</td><td>45.771<sup>***</sup> (df = 1; 2323)</td><td></td></tr>
+<tr><td style="text-align:left">Wald Test</td><td></td><td></td><td>52.752<sup>***</sup> (df = 1)</td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
+
+#### TABLE 6 - PRICE SENSITIVITY OF LOAN SIZE FOR GROUPS ASSUMED MOST LIKELY TO READ THE SOLICIATION
+
+
+

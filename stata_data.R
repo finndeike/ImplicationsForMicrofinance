@@ -36,7 +36,7 @@ table1 <-
          "sd" = sd(stata_data$yearlong))
   )
 
-
+jjjjj
 statistics_table <- summary_table(stata_data, table1)
 
 test232 <- 

@@ -28,6 +28,7 @@ library(knitr)
 library(stargazer)
 library(qwraps2)
 library(summarytools)
+library(AER)
 options(qwraps2_markup = "markdown")
 ```
 
@@ -47,7 +48,7 @@ testfunction <- function(stata_data1){
          list("Dynamic repayment incentive" = ~ mean_sd(stata_data1$yearlong)),
          list("Example loan term = 4 months" = ~ mean_sd(stata_data1$termshown4, na_rm = TRUE)),
          list("Example loan term = 6 months" = ~ mean_sd(stata_data1$termshown6, na_rm = TRUE)),
-         list("Example loan term = 12 months" = ~ mean_sd(stata_data1$termshown12, na_rm = TRUE)),
+         list("Example loan term = 12 months" = ~ mean_sd(stata_data1$termshown12, na_rm =TRUE)),
          list("Borrowed" = ~ mean_sd(stata_data1$tookup)),
          list("Applied" = ~ mean_sd(stata_data1$applied)),
          list("Loan size" = ~ mean_sd(stata_data1$loansize)),
@@ -152,7 +153,7 @@ reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more, data = stata_data)
 
 reg3_9 <- lm(tookup_afterdead_enforced ~ offer4, data = filter(stata_data, normrate_less == 0))
 
-stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE, align=TRUE)
+stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE)
 
 ```
 
@@ -160,14 +161,52 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 
 ```{r, warning=FALSE, results='asis'}
 
-# (1) -> r(interest rate) = rc (contract rate) -> offer4 = final4
+# Dataset -> r(interest rate) = rc (contract rate) -> offer4 = final4, normrate_less == 1
 # Conditional on borrowing? -> tookup
+# Additional controls? + Branch fixed effects? -> grossincome != 0
+# Additional controls? -> ???
+# Branch fixed effects? -> ???
 
 reg4_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_more==1))
+reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
 
-reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-stargazer(reg4_1, reg4_2, reg4_3, type="html", header = FALSE)
+reg4_4 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg4_5 <- tobit(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg4_6 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+reg4_7 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+
+reg4_8 <- tobit(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+
+
+stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
+
+
 ```
+
+##### TABLE 5 - GROSS REVENUE AND REPAYMENT SENSITIVITIES TO INTEREST RATES
+
+```{r, warning=FALSE, results='asis'}
+
+reg5_1 <- lm(grossinterest ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
+
+reg5_2 <- lm(pstdue_average ~ offer4,data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg5_3 <- tobit(pstdue_average ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+
+stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
+
+```
+
+#### TABLE 6 - PRICE SENSITIVITY OF LOAN SIZE FOR GROUPS ASSUMED MOST LIKELY TO READ THE SOLICIATION
+
+```{r, warning=FALSE, results='asis'}
+
+```
+
