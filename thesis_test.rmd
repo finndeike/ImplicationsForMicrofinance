@@ -208,5 +208,20 @@ stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gros
 
 ```{r, warning=FALSE, results='asis'}
 
+# grossincome -> additional controls
+reg6_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
+
+# edhi=1 -> High education
+reg6_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, edhi==1))
+
+# dormancy<=9 -> Borrowed in last 9 months
+reg6_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, dormancy<=9))
+
+# trcount>2 -> #Past loans more than 2
+reg6_4 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, trcount>2))
+
+
+stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
+
 ```
 

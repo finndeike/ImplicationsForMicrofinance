@@ -357,4 +357,39 @@ stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gros
 #### TABLE 6 - PRICE SENSITIVITY OF LOAN SIZE FOR GROUPS ASSUMED MOST LIKELY TO READ THE SOLICIATION
 
 
+```r
+# grossincome -> additional controls
+reg6_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
+
+# edhi=1 -> High education
+reg6_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, edhi==1))
+
+# dormancy<=9 -> Borrowed in last 9 months
+reg6_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, dormancy<=9))
+
+# trcount>2 -> #Past loans more than 2
+reg6_4 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, trcount>2))
+
+
+stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
+```
+
+
+<table style="text-align:center"><tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="4"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="4" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="4">loansize</td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-15.857<sup>***</sup></td><td>-21.034<sup>***</sup></td><td>-23.274<sup>***</sup></td><td>-21.697<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(1.232)</td><td>(2.412)</td><td>(2.500)</td><td>(2.050)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>229.812<sup>***</sup></td><td>303.509<sup>***</sup></td><td>349.405<sup>***</sup></td><td>295.054<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(10.230)</td><td>(20.070)</td><td>(19.702)</td><td>(16.604)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>28,197</td><td>11,275</td><td>13,201</td><td>14,806</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.006</td><td>0.007</td><td>0.007</td><td>0.008</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.006</td><td>0.007</td><td>0.006</td><td>0.007</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>512.703 (df = 28195)</td><td>631.689 (df = 11273)</td><td>686.115 (df = 13199)</td><td>612.113 (df = 14804)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>165.751<sup>***</sup> (df = 1; 28195)</td><td>76.040<sup>***</sup> (df = 1; 11273)</td><td>86.634<sup>***</sup> (df = 1; 13199)</td><td>112.015<sup>***</sup> (df = 1; 14804)</td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="4" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+</table>
 
