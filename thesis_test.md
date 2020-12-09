@@ -26,7 +26,6 @@ library(ggplot2)
 library(knitr)
 library(stargazer)
 library(qwraps2)
-library(summarytools)
 library(AER)
 options(qwraps2_markup = "markdown")
 ```
@@ -37,8 +36,16 @@ options(qwraps2_markup = "markdown")
 
 
 ```r
+#  panel A
+# for var offer4 yearlong termshown4 termshown6 termshown12 tookup applied loansize: sum X \ sum X if applied==1 \ sum X if tookup==1 \ sum X if ((low==1 | med==1) & onetermshown==1)
+# 
+# * panel B
+# for var female married age edhi rural dependants grossincome trcount dormancy low med high: sum X \ sum X if applied==1 \ sum X if tookup==1 \ sum X if ((low==1 | med==1) & onetermshown==1)
+
+
+
 # Einlesen der Stata-Daten
-stata_data <- read_dta("~/GitHub/BA/thesis_code_rep/thesis_code_rep/kz_demandelasts_aer08.dta")
+stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 
 # FunctionTable1 - Übersicht und Kontrolle des Datensatzes
 testfunction <- function(stata_data1){
@@ -127,12 +134,6 @@ summary
 
 
 
-```r
-table1_1 <- descr(stata_data, stats = c("mean", "sd"), transpose = TRUE, headings = FALSE)
-table1_2 <- descr(filter(stata_data,applied == 1), stats = c("mean", "sd"), transpose = TRUE, headings = FALSE)
-
-# Alternative - was ist besser?
-```
 
 
 #### TABLE 2 - EXPERIMENTAL VALIDATION REGRESSIONS
@@ -140,14 +141,25 @@ table1_2 <- descr(filter(stata_data,applied == 1), stats = c("mean", "sd"), tran
 
 ```r
 # Table 2 - Experimetal validation Regressions
-stata_data$lnitcscore[is.na(stata_data$lnitcscore)] <- 0
-stata_data$lnappscore[is.na(stata_data$lnappscore)] <- 0
-stata_data$lntrcount[is.na(stata_data$lntrcount)] <- 0
 
+# en itcscore_100 = itcscore/100
+# gen appscore_100 = appscore/100
+# 
+# reg offer4 dormancy lntrcount female dependants married lnage rural edhi itcscore_100 itczero appscore_100 low med waved2 waved3, cluster(branchuse)
+# estimates store m1, title((1))
+# sum offer4 if e(sample)
+# 
+# dprobit tookup_afterdead_enforced offer4 low med waved2 waved3, cluster(branchuse)
+# estimates store m2, title((2))
+# sum tookup_afterdead if e(sample)
+# 
+# dprobit reject offer4 low med waved2 waved3 if applied==1, cluster(branchuse)
+# estimates store m3, title((3))
+# sum reject if e(sample)
 
 # Regression kürzt viele Werte raus, daher NAs = 0?
 
-reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + lnitcscore + itcany + lnappscore, data=stata_data)
+reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + lnitcscore + itczero + lnappscore + low + med + waved2 + waved3, data=stata_data)
 
 # Ergebnis nicht komplett richtig, woran liegt es? Falsch regressiert?
 
@@ -167,52 +179,64 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 <tr><td style="text-align:left"></td><td>offer4</td><td>tookup_afterdead_enforced</td><td>rejected</td></tr>
 <tr><td style="text-align:left"></td><td><em>OLS</em></td><td><em>probit</em></td><td><em>probit</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">dormancy</td><td>0.066<sup>***</sup></td><td></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">dormancy</td><td>0.002</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td>(0.002)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lntrcount</td><td>-0.269<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.013)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">lntrcount</td><td>0.001</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.015)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">female</td><td>0.018</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.023)</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">dependants</td><td>0.023<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.007)</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">married</td><td>0.010</td><td></td><td></td></tr>
+<tr><td style="text-align:left">female</td><td>0.027</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td>(0.024)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lnage</td><td>-0.092<sup>*</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.049)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">dependants</td><td>-0.001</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.007)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">rural</td><td>-0.070<sup>**</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.029)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">married</td><td>0.030</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.024)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">edhi</td><td>-0.011</td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnage</td><td>0.013</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.052)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">rural</td><td>0.011</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.031)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">edhi</td><td>0.007</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td>(0.023)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lnitcscore</td><td>-0.262<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.090)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnitcscore</td><td>0.035</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.088)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">itcany</td><td>1.567<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.583)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">itczero</td><td></td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lnappscore</td><td>-0.020</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.036)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnappscore</td><td>-0.034</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.038)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">low</td><td>-2.480<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.041)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">med</td><td>-1.060<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.043)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved2</td><td>-0.302<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.045)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved3</td><td>-0.316<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.043)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
 <tr><td style="text-align:left">offer4</td><td></td><td>-0.041<sup>***</sup></td><td>0.043<sup>***</sup></td></tr>
 <tr><td style="text-align:left"></td><td></td><td>(0.003)</td><td>(0.010)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>8.086<sup>***</sup></td><td>-0.724<sup>***</sup></td><td>-1.389<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.185)</td><td>(0.022)</td><td>(0.077)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>8.495<sup>***</sup></td><td>-0.724<sup>***</sup></td><td>-1.389<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.569)</td><td>(0.022)</td><td>(0.077)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>53,554</td><td>53,810</td><td>4,540</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.043</td><td></td><td></td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.043</td><td></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>47,033</td><td>53,810</td><td>4,540</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.111</td><td></td><td></td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.110</td><td></td><td></td></tr>
 <tr><td style="text-align:left">Log Likelihood</td><td></td><td>-22,361.210</td><td>-1,859.831</td></tr>
 <tr><td style="text-align:left">Akaike Inf. Crit.</td><td></td><td>44,726.420</td><td>3,723.661</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>2.416 (df = 53542)</td><td></td><td></td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>217.948<sup>***</sup> (df = 11; 53542)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>2.320 (df = 47018)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>417.757<sup>***</sup> (df = 14; 47018)</td><td></td><td></td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 
@@ -222,6 +246,35 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 
 
 ```r
+# dprobit applied offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
+# estimates store m1, title((1))
+# sum offer4 applied if e(sample)
+# 
+# dprobit applied normrate_more low med waved2 waved3, cluster(branchuse)
+# estimates store m2, title((2))
+# 
+# dprobit applied offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
+# estimates store m3, title((3))
+# sum offer4 if e(sample)
+# 
+# dprobit tookup_outside_only offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
+# estimates store m4, title((4))
+# 
+# dprobit tookup_outside_only normrate_more low med waved2 waved3, cluster(branchuse)
+# estimates store m5, title((5))
+# 
+# dprobit tookup_outside_only offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
+# estimates store m6, title((6))
+# 
+# dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
+# estimates store m7, title((7))
+# 
+# dprobit tookup_after normrate_more low med waved2 waved3, cluster(branchuse)
+# estimates store m8, title((8))
+# 
+# dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
+# estimates store m9, title((9))
+
 reg3_1 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 1))
 
 reg3_2 <- lm(applied ~ normrate_more, data=stata_data)
@@ -269,6 +322,48 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 
 
 ```r
+# xtile sales_netincomecat= sales_netincome, n(10)
+# replace sales_netincome=sales_netincome/1000
+# label var sales_netincome "net income, in 000s"
+# 
+# for var age grossincome sales_grossincome sales_netincome appscore itcscore: capture drop Xsq \ gen Xsq=X^2
+# 
+# *UNCONDITIONAL
+# regress loansize offer4 low med waved2 waved3 if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# estimates store m1, title((1))
+# sum loansize offer4 if e(sample)
+# 
+# * with controls
+# xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m2, title((2))
+# 
+# *CONDITIONAL
+# regress loansize offer4 low med waved2 waved3 if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m3, title((3))
+# 
+# * add controls
+# xi: regress loansize offer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m4, title((4))
+# 
+# * tobit
+# xi: tobit loansize offer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
+# estimates store m5, title((5))
+# sum loansize offer4 if e(sample)
+# 
+# *log
+# regress lnloansize lnoffer4 low med waved2 waved3 if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# estimates store m6, title((6))
+# 
+# * add controls
+# xi: regress lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# estimates store m7, title((7))
+# 
+# xi: tobit lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
+# estimates store m8, title((8))
+
 # Dataset -> r(interest rate) = rc (contract rate) -> offer4 = final4, normrate_less == 1
 # Conditional on borrowing? -> tookup
 # Additional controls? + Branch fixed effects? -> grossincome != 0
@@ -324,6 +419,16 @@ stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="
 
 
 ```r
+# **REVENUES TABLE, COLUMN 1
+# regress grossinterest offer4 low med waved2 waved3 if ((normrate_less==1) & (offer4==final4)), cluster(branchuse)
+# 
+# **REVENUES TABLE, COLUMN 2
+# regress pstdue_average offer4 low med waved2 waved3 if ((normrate_less==1) & (offer4==final4) & tookup==1), cluster(branchuse)
+# 
+# **REVENUES TABLE, COLUMN 3
+# tobit pstdue_average offer4 low med waved2 waved3 if ((normrate_less==1) & (offer4==final4) & tookup==1), ll(0)
+
+
 reg5_1 <- lm(grossinterest ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
 
 reg5_2 <- lm(pstdue_average ~ offer4,data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
@@ -358,6 +463,24 @@ stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gros
 
 
 ```r
+# *UNCONDITIONAL loan size
+# * with controls
+# xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m1, title((1))
+# 
+# xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy trcount female dependants married age agesq rural i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & edhi==1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m2, title((2))
+# 
+# xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq trcount female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4) & dormancy<10), cluster(branchuse)
+# estimates store m3, title((3))
+# sum loansize offer4 if e(sample)
+# 
+# xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4) & trcount>2), cluster(branchuse)
+# estimates store m4, title((4))
+# sum loansize offer4 if e(sample)
+
 # grossincome -> additional controls
 reg6_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
 
@@ -392,4 +515,104 @@ stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
 <tr><td style="text-align:left">F Statistic</td><td>165.751<sup>***</sup> (df = 1; 28195)</td><td>76.040<sup>***</sup> (df = 1; 11273)</td><td>86.634<sup>***</sup> (df = 1; 13199)</td><td>112.015<sup>***</sup> (df = 1; 14804)</td></tr>
 <tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="4" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
+
+
+#### TABLE 7 - PRICE SENSITIVITIES FOR FEMALE AND LOW-INCOME CLIENTS
+
+
+```r
+# * EXTENSIVE
+# dprobit applied offer4 low med waved2 waved3 if (female==1 & normrate_less==1), cluster(branchuse)
+# estimates store m1, title((1))
+# sum offer4 applied if e(sample)
+# 
+# dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & normrate_less==1), cluster(branchuse)
+# estimates store m2, title((2))
+# sum offer4 applied if e(sample)
+# 
+# dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less==1), cluster(branchuse)
+# estimates store m3, title((3))
+# sum offer4 applied if e(sample)
+# 
+# *UNCONDITIONAL LOAN SIZE
+# regress loansize offer4 low med waved2 waved3 if (female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m4, title((4))
+# 
+# regress loansize offer4 low med waved2 waved3 if (grossincomecat2==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m5, title((5))
+# 
+# regress loansize offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m6, title((6))
+# 
+# *CONDITIONAL LOAN SIZE
+# regress loansize offer4 low med waved2 waved3 if (female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m7, title((7))
+# 
+# regress loansize offer4 low med waved2 waved3 if (sales_grossincomecat2==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m8, title((8))
+# 
+# regress loansize offer4 low med waved2 waved3 if (sales_grossincomecat2==1 & female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# sum loansize offer4 if e(sample)
+# estimates store m9, title((9))
+```
+
+
+#### TABLE 8A - MATURITY ELASTICITY FIRST-STAGE: THE POWER OF PURE SUGGESTION
+
+
+```r
+# * 1ST-STAGE: Maturity chosen on maturity suggested in mailer
+# ** linear IV
+# xi: regress term offer4 final4 yearlong termshown low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1), cluster(branchuse)
+# estimates store m1, title((1))
+# 
+# xi: regress term offer4 final4 yearlong termshown low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==1), cluster(branchuse)
+# estimates store m2, title((2))
+# 
+# xi: regress term offer4 final4 yearlong termshown low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==2), cluster(branchuse)
+# estimates store m3, title((3))
+# 
+# ** categorical IV
+# xi: regress term offer4 final4 yearlong termshown6 termshown12 low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1), cluster(branchuse)
+# estimates store m4, title((4))
+# 
+# xi: regress term offer4 final4 yearlong termshown6 termshown12 low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==1), cluster(branchuse)
+# estimates store m5, title((5))
+# 
+# xi: regress term offer4 final4 yearlong termshown6 termshown12 low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==2), cluster(branchuse)
+# estimates store m6, title((6))
+```
+
+
+#### TABLE 8B - MATURITY ELASTICITIES OF LOAN DEMAND: OLS AND IV ESTIMATES
+
+
+```r
+# * OLS
+# xi: regress lnloansize term offer4 final4 yearlong low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1), cluster(branchuse)
+# estimates store m1, title((1))
+# 
+# xi: regress lnloansize term offer4 final4 yearlong low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==1), cluster(branchuse)
+# estimates store m2, title((2))
+# 
+# xi: regress lnloansize term offer4 final4 yearlong low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==2), cluster(branchuse)
+# estimates store m3, title((3))
+# 
+# xi: ivreg lnloansize offer4 final4 yearlong (term= termshown6 termshown12) low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1), first cluster(branchuse)
+# estimates store m4, title((4))
+# sum loansize offer4 if e(sample)
+# 
+# xi: ivreg lnloansize offer4 final4 yearlong (term= termshown6 termshown12) low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==1), first cluster(branchuse)
+# estimates store m5, title((5))
+# sum loansize offer4 if e(sample)
+# 
+# xi: ivreg lnloansize offer4 final4 yearlong (term= termshown6 termshown12) low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==2), first cluster(branchuse)
+# estimates store m6, title((6))
+# sum loansize offer4 if e(sample)
+```
 
