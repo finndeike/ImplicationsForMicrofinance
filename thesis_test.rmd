@@ -244,7 +244,7 @@ stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2
 
 reg4_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + appscore0 + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
+felm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + appscore0 + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
 
 reg4_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
