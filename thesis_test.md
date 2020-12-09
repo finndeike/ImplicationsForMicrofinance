@@ -159,16 +159,17 @@ summary
 
 # Regression kürzt viele Werte raus, daher NAs = 0?
 
-reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + lnitcscore + itczero + lnappscore + low + med + waved2 + waved3, data=stata_data)
+stata_data$lntrcount[is.na(stata_data$lntrcount)] <- 0
+stata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)
 
-# Ergebnis nicht komplett richtig, woran liegt es? Falsch regressiert?
+reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data,)
 
-# teilweise inkorrekte Werte, was ist mit itczero(Wert deutlich zu groß) ?
+# appscore_100 = -0,065 - falsch grundet?
 
-reg2_2 <- glm(tookup_afterdead_enforced ~ offer4, family = binomial(link = "probit"), data=stata_data)
+reg2_2 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
 
 stata_data_reg3 <- stata_data %>% filter(applied == 1)
-reg2_3 <- glm(rejected ~ offer4, family = binomial(link = "probit"), data=stata_data_reg3)
+reg2_3 <- lm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, applied == 1))
 
 stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 ```
@@ -177,66 +178,63 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 <table style="text-align:center"><tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="3"><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="3" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td>offer4</td><td>tookup_afterdead_enforced</td><td>rejected</td></tr>
-<tr><td style="text-align:left"></td><td><em>OLS</em></td><td><em>probit</em></td><td><em>probit</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">dormancy</td><td>0.002</td><td></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">dormancy</td><td>0.001</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td>(0.002)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lntrcount</td><td>0.001</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.015)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">lntrcount</td><td>0.004</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.013)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">female</td><td>0.027</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.024)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">female</td><td>0.024</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.022)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">dependants</td><td>-0.001</td><td></td><td></td></tr>
+<tr><td style="text-align:left">dependants</td><td>0.0002</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td>(0.007)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">married</td><td>0.030</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.024)</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lnage</td><td>0.013</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.052)</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">rural</td><td>0.011</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.031)</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">edhi</td><td>0.007</td><td></td><td></td></tr>
+<tr><td style="text-align:left">married</td><td>0.017</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td>(0.023)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lnitcscore</td><td>0.035</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.088)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnage</td><td>-0.002</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.048)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">itczero</td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">rural</td><td>0.020</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.029)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">edhi</td><td>-0.013</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.022)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lnappscore</td><td>-0.034</td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.038)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">itcscore_100</td><td>0.005</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.014)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">low</td><td>-2.480<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.041)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">itczero</td><td>0.035</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.097)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">med</td><td>-1.060<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.043)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">appscore_100</td><td>-0.065</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.135)</td><td></td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">waved2</td><td>-0.302<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.045)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">offer4</td><td></td><td>-0.0001</td><td>0.002</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.001)</td><td>(0.002)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">waved3</td><td>-0.316<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.043)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">low</td><td>-2.486<sup>***</sup></td><td>0.193<sup>***</sup></td><td>-0.120<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.039)</td><td>(0.005)</td><td>(0.014)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">offer4</td><td></td><td>-0.041<sup>***</sup></td><td>0.043<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td></td><td>(0.003)</td><td>(0.010)</td></tr>
+<tr><td style="text-align:left">med</td><td>-1.075<sup>***</sup></td><td>0.145<sup>***</sup></td><td>-0.062<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.041)</td><td>(0.005)</td><td>(0.014)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>8.495<sup>***</sup></td><td>-0.724<sup>***</sup></td><td>-1.389<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.569)</td><td>(0.022)</td><td>(0.077)</td></tr>
+<tr><td style="text-align:left">waved2</td><td>-0.291<sup>***</sup></td><td>-0.076<sup>***</sup></td><td>-0.039<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.039)</td><td>(0.006)</td><td>(0.017)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>47,033</td><td>53,810</td><td>4,540</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.111</td><td></td><td></td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.110</td><td></td><td></td></tr>
-<tr><td style="text-align:left">Log Likelihood</td><td></td><td>-22,361.210</td><td>-1,859.831</td></tr>
-<tr><td style="text-align:left">Akaike Inf. Crit.</td><td></td><td>44,726.420</td><td>3,723.661</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>2.320 (df = 47018)</td><td></td><td></td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>417.757<sup>***</sup> (df = 14; 47018)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved3</td><td>-0.297<sup>***</sup></td><td>-0.072<sup>***</sup></td><td>-0.129<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.038)</td><td>(0.005)</td><td>(0.017)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>8.651<sup>***</sup></td><td>0.179<sup>***</sup></td><td>0.247<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.171)</td><td>(0.008)</td><td>(0.025)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>53,554</td><td>53,810</td><td>4,540</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.112</td><td>0.047</td><td>0.038</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.112</td><td>0.046</td><td>0.037</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>2.327 (df = 53538)</td><td>0.346 (df = 53804)</td><td>0.344 (df = 4534)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>450.744<sup>***</sup> (df = 15; 53538)</td><td>525.782<sup>***</sup> (df = 5; 53804)</td><td>35.664<sup>***</sup> (df = 5; 4534)</td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 
@@ -275,23 +273,23 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 # dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
 # estimates store m9, title((9))
 
-reg3_1 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 1))
+reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
 
-reg3_2 <- lm(applied ~ normrate_more, data=stata_data)
+reg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
 
-reg3_3 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 0))
+reg3_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 0))
 
-reg3_4 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 1))
+reg3_4 <- lm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
 
-reg3_5 <- lm(tookup_outside_only ~ normrate_more, data = stata_data)
+reg3_5 <- lm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
 
-reg3_6 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 0))
+reg3_6 <- lm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
 
-reg3_7 <- lm(tookup_afterdead_enforced ~ offer4, data=filter(stata_data, normrate_less == 1))
+reg3_7 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
 
-reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more, data = stata_data)
+reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
 
-reg3_9 <- lm(tookup_afterdead_enforced ~ offer4, data = filter(stata_data, normrate_less == 0))
+reg3_9 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
 
 stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE)
 ```
@@ -300,21 +298,36 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 <table style="text-align:center"><tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="9"><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="9" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td colspan="3">applied</td><td colspan="3">tookup_outside_only</td><td colspan="3">tookup_afterdead_enforced</td></tr>
+<tr><td style="text-align:left"></td><td colspan="2"><em>probit</em></td><td><em>OLS</em></td><td colspan="3"><em>OLS</em></td><td colspan="3"><em>OLS</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td><td>(8)</td><td>(9)</td></tr>
-<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.009<sup>***</sup></td><td></td><td>-0.025<sup>***</sup></td><td>-0.001</td><td></td><td>-0.012</td><td>-0.010<sup>***</sup></td><td></td><td>-0.047<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.0005)</td><td></td><td>(0.006)</td><td>(0.001)</td><td></td><td>(0.011)</td><td>(0.001)</td><td></td><td>(0.009)</td></tr>
+<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.020<sup>***</sup></td><td></td><td>-0.019<sup>**</sup></td><td>0.001</td><td></td><td>-0.009</td><td>0.0005</td><td></td><td>-0.013</td></tr>
+<tr><td style="text-align:left"></td><td>(0.004)</td><td></td><td>(0.010)</td><td>(0.001)</td><td></td><td>(0.018)</td><td>(0.001)</td><td></td><td>(0.015)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">normrate_more</td><td></td><td>-0.018</td><td></td><td></td><td>0.057<sup>***</sup></td><td></td><td></td><td>0.034<sup>**</sup></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td>(0.011)</td><td></td><td></td><td>(0.017)</td><td></td><td></td><td>(0.014)</td><td></td></tr>
+<tr><td style="text-align:left">normrate_more</td><td></td><td>-0.247<sup>***</sup></td><td></td><td></td><td>0.006</td><td></td><td></td><td>-0.053<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.083)</td><td></td><td></td><td>(0.018)</td><td></td><td></td><td>(0.015)</td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>0.154<sup>***</sup></td><td>0.085<sup>***</sup></td><td>0.392<sup>***</sup></td><td>0.228<sup>***</sup></td><td>0.223<sup>***</sup></td><td>0.432<sup>***</sup></td><td>0.226<sup>***</sup></td><td>0.147<sup>***</sup></td><td>0.781<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.004)</td><td>(0.001)</td><td>(0.076)</td><td>(0.006)</td><td>(0.002)</td><td>(0.138)</td><td>(0.005)</td><td>(0.002)</td><td>(0.116)</td></tr>
+<tr><td style="text-align:left">low</td><td>0.578<sup>***</sup></td><td>0.626<sup>***</sup></td><td>0.032</td><td>0.028<sup>***</sup></td><td>0.025<sup>***</sup></td><td>0.009</td><td>0.193<sup>***</sup></td><td>0.193<sup>***</sup></td><td>0.182<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.023)</td><td>(0.021)</td><td>(0.043)</td><td>(0.006)</td><td>(0.006)</td><td>(0.079)</td><td>(0.005)</td><td>(0.005)</td><td>(0.066)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">med</td><td>0.597<sup>***</sup></td><td>0.614<sup>***</sup></td><td>0.028</td><td>-0.005</td><td>-0.005</td><td>0.068</td><td>0.145<sup>***</sup></td><td>0.144<sup>***</sup></td><td>0.142<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.024)</td><td>(0.023)</td><td>(0.035)</td><td>(0.006)</td><td>(0.006)</td><td>(0.063)</td><td>(0.005)</td><td>(0.005)</td><td>(0.053)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved2</td><td>-0.047</td><td>-0.054<sup>*</sup></td><td></td><td>-0.058<sup>***</sup></td><td>-0.057<sup>***</sup></td><td></td><td>-0.083<sup>***</sup></td><td>-0.083<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.029)</td><td>(0.029)</td><td></td><td>(0.007)</td><td>(0.007)</td><td></td><td>(0.006)</td><td>(0.006)</td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved3</td><td>-0.077<sup>***</sup></td><td>-0.084<sup>***</sup></td><td></td><td>-0.052<sup>***</sup></td><td>-0.052<sup>***</sup></td><td></td><td>-0.079<sup>***</sup></td><td>-0.079<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.028)</td><td>(0.028)</td><td></td><td>(0.007)</td><td>(0.007)</td><td></td><td>(0.006)</td><td>(0.006)</td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>-1.329<sup>***</sup></td><td>-1.487<sup>***</sup></td><td>0.305<sup>**</sup></td><td>0.262<sup>***</sup></td><td>0.270<sup>***</sup></td><td>0.390</td><td>0.181<sup>***</sup></td><td>0.184<sup>***</sup></td><td>0.296</td></tr>
+<tr><td style="text-align:left"></td><td>(0.039)</td><td>(0.027)</td><td>(0.133)</td><td>(0.009)</td><td>(0.007)</td><td>(0.244)</td><td>(0.008)</td><td>(0.005)</td><td>(0.203)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.006</td><td>0.00005</td><td>0.029</td><td>0.00001</td><td>0.0002</td><td>0.002</td><td>0.005</td><td>0.0001</td><td>0.041</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.006</td><td>0.00003</td><td>0.027</td><td>-0.00001</td><td>0.0002</td><td>0.0004</td><td>0.005</td><td>0.0001</td><td>0.040</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>0.277 (df = 53176)</td><td>0.278 (df = 53808)</td><td>0.246 (df = 630)</td><td>0.416 (df = 53176)</td><td>0.417 (df = 53808)</td><td>0.449 (df = 630)</td><td>0.353 (df = 53176)</td><td>0.354 (df = 53808)</td><td>0.377 (df = 630)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>304.878<sup>***</sup> (df = 1; 53176)</td><td>2.657 (df = 1; 53808)</td><td>18.750<sup>***</sup> (df = 1; 630)</td><td>0.534 (df = 1; 53176)</td><td>11.620<sup>***</sup> (df = 1; 53808)</td><td>1.222 (df = 1; 630)</td><td>249.115<sup>***</sup> (df = 1; 53176)</td><td>5.628<sup>**</sup> (df = 1; 53808)</td><td>27.214<sup>***</sup> (df = 1; 630)</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td></td><td></td><td>0.030</td><td>0.002</td><td>0.002</td><td>0.004</td><td>0.047</td><td>0.047</td><td>0.058</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td></td><td></td><td>0.026</td><td>0.002</td><td>0.002</td><td>-0.001</td><td>0.047</td><td>0.047</td><td>0.053</td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-14,726.380</td><td>-14,889.970</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>29,464.760</td><td>29,791.930</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td></td><td></td><td>0.246 (df = 628)</td><td>0.416 (df = 53172)</td><td>0.416 (df = 53804)</td><td>0.450 (df = 628)</td><td>0.346 (df = 53172)</td><td>0.346 (df = 53804)</td><td>0.374 (df = 628)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td></td><td></td><td>6.535<sup>***</sup> (df = 3; 628)</td><td>19.520<sup>***</sup> (df = 5; 53172)</td><td>21.498<sup>***</sup> (df = 5; 53804)</td><td>0.820 (df = 3; 628)</td><td>519.689<sup>***</sup> (df = 5; 53172)</td><td>528.439<sup>***</sup> (df = 5; 53804)</td><td>12.871<sup>***</sup> (df = 3; 628)</td></tr>
 <tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="9" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 

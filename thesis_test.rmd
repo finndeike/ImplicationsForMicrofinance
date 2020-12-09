@@ -127,16 +127,17 @@ summary
 
 # Regression kürzt viele Werte raus, daher NAs = 0?
 
-reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + lnitcscore + itczero + lnappscore + low + med + waved2 + waved3, data=stata_data)
+stata_data$lntrcount[is.na(stata_data$lntrcount)] <- 0
+stata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)
 
-# Ergebnis nicht komplett richtig, woran liegt es? Falsch regressiert?
+reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data,)
 
-# teilweise inkorrekte Werte, was ist mit itczero(Wert deutlich zu groß) ?
+# appscore_100 = -0,065 - falsch grundet?
 
-reg2_2 <- glm(tookup_afterdead_enforced ~ offer4, family = binomial(link = "probit"), data=stata_data)
+reg2_2 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
 
 stata_data_reg3 <- stata_data %>% filter(applied == 1)
-reg2_3 <- glm(rejected ~ offer4, family = binomial(link = "probit"), data=stata_data_reg3)
+reg2_3 <- lm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, applied == 1))
 
 stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 
@@ -177,23 +178,23 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 # dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
 # estimates store m9, title((9))
 
-reg3_1 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 1))
+reg3_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link = "probit"))
 
-reg3_2 <- lm(applied ~ normrate_more, data=stata_data)
+reg3_2 <- lm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
 
-reg3_3 <- lm(applied ~ offer4, data=filter(stata_data, normrate_less == 0))
+reg3_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 0))
 
-reg3_4 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 1))
+reg3_4 <- lm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
 
-reg3_5 <- lm(tookup_outside_only ~ normrate_more, data = stata_data)
+reg3_5 <- lm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
 
-reg3_6 <- lm(tookup_outside_only ~ offer4, data = filter(stata_data, normrate_less == 0))
+reg3_6 <- lm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
 
-reg3_7 <- lm(tookup_afterdead_enforced ~ offer4, data=filter(stata_data, normrate_less == 1))
+reg3_7 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
 
-reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more, data = stata_data)
+reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
 
-reg3_9 <- lm(tookup_afterdead_enforced ~ offer4, data = filter(stata_data, normrate_less == 0))
+reg3_9 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
 
 stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE)
 
@@ -203,12 +204,6 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 
 ```{r, warning=FALSE, results='asis'}
 
-# xtile sales_netincomecat= sales_netincome, n(10)
-# replace sales_netincome=sales_netincome/1000
-# label var sales_netincome "net income, in 000s"
-# 
-# for var age grossincome sales_grossincome sales_netincome appscore itcscore: capture drop Xsq \ gen Xsq=X^2
-# 
 # *UNCONDITIONAL
 # regress loansize offer4 low med waved2 waved3 if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # estimates store m1, title((1))
@@ -245,27 +240,23 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 # xi: tobit lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
 # estimates store m8, title((8))
 
-# Dataset -> r(interest rate) = rc (contract rate) -> offer4 = final4, normrate_less == 1
-# Conditional on borrowing? -> tookup
-# Additional controls? + Branch fixed effects? -> grossincome != 0
-# Additional controls? -> ???
-# Branch fixed effects? -> ???
+stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2)
 
-reg4_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
+reg4_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
+reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + appscore0 + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-reg4_4 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-reg4_5 <- tobit(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_5 <- tobit(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-reg4_6 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+reg4_6 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
 
-reg4_7 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+reg4_7 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
 
-reg4_8 <- tobit(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+reg4_8 <- tobit(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
 
 
 stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
