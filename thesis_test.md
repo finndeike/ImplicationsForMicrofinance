@@ -27,6 +27,15 @@ library(knitr)
 library(stargazer)
 library(qwraps2)
 library(AER)
+install.packages("lme4", repo = "https://mac.R-project.org")
+```
+
+
+The downloaded binary packages are in
+	/var/folders/1q/z4qm6zl51_91h5bt8xh_b4cm0000gn/T//RtmpU2sMkL/downloaded_packages
+
+```r
+library(lme4)
 options(qwraps2_markup = "markdown")
 ```
 
@@ -273,9 +282,9 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 # dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
 # estimates store m9, title((9))
 
-reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
+reg3_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link = "probit"))
 
-reg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
+reg3_2 <- lm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
 
 reg3_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 0))
 
@@ -298,36 +307,33 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 <table style="text-align:center"><tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="9"><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="9" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td colspan="3">applied</td><td colspan="3">tookup_outside_only</td><td colspan="3">tookup_afterdead_enforced</td></tr>
-<tr><td style="text-align:left"></td><td colspan="2"><em>probit</em></td><td><em>OLS</em></td><td colspan="3"><em>OLS</em></td><td colspan="3"><em>OLS</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td><td>(8)</td><td>(9)</td></tr>
-<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.020<sup>***</sup></td><td></td><td>-0.019<sup>**</sup></td><td>0.001</td><td></td><td>-0.009</td><td>0.0005</td><td></td><td>-0.013</td></tr>
-<tr><td style="text-align:left"></td><td>(0.004)</td><td></td><td>(0.010)</td><td>(0.001)</td><td></td><td>(0.018)</td><td>(0.001)</td><td></td><td>(0.015)</td></tr>
+<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.003<sup>***</sup></td><td></td><td>-0.019<sup>**</sup></td><td>0.001</td><td></td><td>-0.009</td><td>0.0005</td><td></td><td>-0.013</td></tr>
+<tr><td style="text-align:left"></td><td>(0.001)</td><td></td><td>(0.010)</td><td>(0.001)</td><td></td><td>(0.018)</td><td>(0.001)</td><td></td><td>(0.015)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">normrate_more</td><td></td><td>-0.247<sup>***</sup></td><td></td><td></td><td>0.006</td><td></td><td></td><td>-0.053<sup>***</sup></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td>(0.083)</td><td></td><td></td><td>(0.018)</td><td></td><td></td><td>(0.015)</td><td></td></tr>
+<tr><td style="text-align:left">normrate_more</td><td></td><td>-0.038<sup>***</sup></td><td></td><td></td><td>0.006</td><td></td><td></td><td>-0.053<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.012)</td><td></td><td></td><td>(0.018)</td><td></td><td></td><td>(0.015)</td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">low</td><td>0.578<sup>***</sup></td><td>0.626<sup>***</sup></td><td>0.032</td><td>0.028<sup>***</sup></td><td>0.025<sup>***</sup></td><td>0.009</td><td>0.193<sup>***</sup></td><td>0.193<sup>***</sup></td><td>0.182<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.023)</td><td>(0.021)</td><td>(0.043)</td><td>(0.006)</td><td>(0.006)</td><td>(0.079)</td><td>(0.005)</td><td>(0.005)</td><td>(0.066)</td></tr>
+<tr><td style="text-align:left">low</td><td>0.111<sup>***</sup></td><td>0.117<sup>***</sup></td><td>0.032</td><td>0.028<sup>***</sup></td><td>0.025<sup>***</sup></td><td>0.009</td><td>0.193<sup>***</sup></td><td>0.193<sup>***</sup></td><td>0.182<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.004)</td><td>(0.004)</td><td>(0.043)</td><td>(0.006)</td><td>(0.006)</td><td>(0.079)</td><td>(0.005)</td><td>(0.005)</td><td>(0.066)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">med</td><td>0.597<sup>***</sup></td><td>0.614<sup>***</sup></td><td>0.028</td><td>-0.005</td><td>-0.005</td><td>0.068</td><td>0.145<sup>***</sup></td><td>0.144<sup>***</sup></td><td>0.142<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.024)</td><td>(0.023)</td><td>(0.035)</td><td>(0.006)</td><td>(0.006)</td><td>(0.063)</td><td>(0.005)</td><td>(0.005)</td><td>(0.053)</td></tr>
+<tr><td style="text-align:left">med</td><td>0.112<sup>***</sup></td><td>0.114<sup>***</sup></td><td>0.028</td><td>-0.005</td><td>-0.005</td><td>0.068</td><td>0.145<sup>***</sup></td><td>0.144<sup>***</sup></td><td>0.142<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.004)</td><td>(0.004)</td><td>(0.035)</td><td>(0.006)</td><td>(0.006)</td><td>(0.063)</td><td>(0.005)</td><td>(0.005)</td><td>(0.053)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">waved2</td><td>-0.047</td><td>-0.054<sup>*</sup></td><td></td><td>-0.058<sup>***</sup></td><td>-0.057<sup>***</sup></td><td></td><td>-0.083<sup>***</sup></td><td>-0.083<sup>***</sup></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.029)</td><td>(0.029)</td><td></td><td>(0.007)</td><td>(0.007)</td><td></td><td>(0.006)</td><td>(0.006)</td><td></td></tr>
+<tr><td style="text-align:left">waved2</td><td>-0.009<sup>**</sup></td><td>-0.010<sup>**</sup></td><td></td><td>-0.058<sup>***</sup></td><td>-0.057<sup>***</sup></td><td></td><td>-0.083<sup>***</sup></td><td>-0.083<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.005)</td><td>(0.005)</td><td></td><td>(0.007)</td><td>(0.007)</td><td></td><td>(0.006)</td><td>(0.006)</td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">waved3</td><td>-0.077<sup>***</sup></td><td>-0.084<sup>***</sup></td><td></td><td>-0.052<sup>***</sup></td><td>-0.052<sup>***</sup></td><td></td><td>-0.079<sup>***</sup></td><td>-0.079<sup>***</sup></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.028)</td><td>(0.028)</td><td></td><td>(0.007)</td><td>(0.007)</td><td></td><td>(0.006)</td><td>(0.006)</td><td></td></tr>
+<tr><td style="text-align:left">waved3</td><td>-0.014<sup>***</sup></td><td>-0.015<sup>***</sup></td><td></td><td>-0.052<sup>***</sup></td><td>-0.052<sup>***</sup></td><td></td><td>-0.079<sup>***</sup></td><td>-0.079<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.005)</td><td>(0.005)</td><td></td><td>(0.007)</td><td>(0.007)</td><td></td><td>(0.006)</td><td>(0.006)</td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>-1.329<sup>***</sup></td><td>-1.487<sup>***</sup></td><td>0.305<sup>**</sup></td><td>0.262<sup>***</sup></td><td>0.270<sup>***</sup></td><td>0.390</td><td>0.181<sup>***</sup></td><td>0.184<sup>***</sup></td><td>0.296</td></tr>
-<tr><td style="text-align:left"></td><td>(0.039)</td><td>(0.027)</td><td>(0.133)</td><td>(0.009)</td><td>(0.007)</td><td>(0.244)</td><td>(0.008)</td><td>(0.005)</td><td>(0.203)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>0.093<sup>***</sup></td><td>0.072<sup>***</sup></td><td>0.305<sup>**</sup></td><td>0.262<sup>***</sup></td><td>0.270<sup>***</sup></td><td>0.390</td><td>0.181<sup>***</sup></td><td>0.184<sup>***</sup></td><td>0.296</td></tr>
+<tr><td style="text-align:left"></td><td>(0.006)</td><td>(0.004)</td><td>(0.133)</td><td>(0.009)</td><td>(0.007)</td><td>(0.244)</td><td>(0.008)</td><td>(0.005)</td><td>(0.203)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td></td><td></td><td>0.030</td><td>0.002</td><td>0.002</td><td>0.004</td><td>0.047</td><td>0.047</td><td>0.058</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td></td><td></td><td>0.026</td><td>0.002</td><td>0.002</td><td>-0.001</td><td>0.047</td><td>0.047</td><td>0.053</td></tr>
-<tr><td style="text-align:left">Log Likelihood</td><td>-14,726.380</td><td>-14,889.970</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>29,464.760</td><td>29,791.930</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td></td><td></td><td>0.246 (df = 628)</td><td>0.416 (df = 53172)</td><td>0.416 (df = 53804)</td><td>0.450 (df = 628)</td><td>0.346 (df = 53172)</td><td>0.346 (df = 53804)</td><td>0.374 (df = 628)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td></td><td></td><td>6.535<sup>***</sup> (df = 3; 628)</td><td>19.520<sup>***</sup> (df = 5; 53172)</td><td>21.498<sup>***</sup> (df = 5; 53804)</td><td>0.820 (df = 3; 628)</td><td>519.689<sup>***</sup> (df = 5; 53172)</td><td>528.439<sup>***</sup> (df = 5; 53804)</td><td>12.871<sup>***</sup> (df = 3; 628)</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.030</td><td>0.030</td><td>0.030</td><td>0.002</td><td>0.002</td><td>0.004</td><td>0.047</td><td>0.047</td><td>0.058</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.030</td><td>0.030</td><td>0.026</td><td>0.002</td><td>0.002</td><td>-0.001</td><td>0.047</td><td>0.047</td><td>0.053</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>0.274 (df = 53172)</td><td>0.274 (df = 53804)</td><td>0.246 (df = 628)</td><td>0.416 (df = 53172)</td><td>0.416 (df = 53804)</td><td>0.450 (df = 628)</td><td>0.346 (df = 53172)</td><td>0.346 (df = 53804)</td><td>0.374 (df = 628)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>331.073<sup>***</sup> (df = 5; 53172)</td><td>328.817<sup>***</sup> (df = 5; 53804)</td><td>6.535<sup>***</sup> (df = 3; 628)</td><td>19.520<sup>***</sup> (df = 5; 53172)</td><td>21.498<sup>***</sup> (df = 5; 53804)</td><td>0.820 (df = 3; 628)</td><td>519.689<sup>***</sup> (df = 5; 53172)</td><td>528.439<sup>***</sup> (df = 5; 53804)</td><td>12.871<sup>***</sup> (df = 3; 628)</td></tr>
 <tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="9" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 
@@ -335,12 +341,6 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 
 
 ```r
-# xtile sales_netincomecat= sales_netincome, n(10)
-# replace sales_netincome=sales_netincome/1000
-# label var sales_netincome "net income, in 000s"
-# 
-# for var age grossincome sales_grossincome sales_netincome appscore itcscore: capture drop Xsq \ gen Xsq=X^2
-# 
 # *UNCONDITIONAL
 # regress loansize offer4 low med waved2 waved3 if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # estimates store m1, title((1))
@@ -377,55 +377,447 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 # xi: tobit lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
 # estimates store m8, title((8))
 
-# Dataset -> r(interest rate) = rc (contract rate) -> offer4 = final4, normrate_less == 1
-# Conditional on borrowing? -> tookup
-# Additional controls? + Branch fixed effects? -> grossincome != 0
-# Additional controls? -> ???
-# Branch fixed effects? -> ???
+stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2)
 
-reg4_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
+reg4_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-reg4_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
+reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + appscore0 + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-reg4_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-reg4_4 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-reg4_5 <- tobit(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_5 <- tobit(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
-reg4_6 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+reg4_6 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
 
-reg4_7 <- lm(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+reg4_7 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
 
-reg4_8 <- tobit(lnloansize ~ lnoffer4, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+reg4_8 <- tobit(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
 
 
-stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
+stargazer(reg4_1, reg4_2,type="html", header = FALSE)
 ```
 
 
-<table style="text-align:center"><tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="8"><em>Dependent variable:</em></td></tr>
-<tr><td></td><td colspan="8" style="border-bottom: 1px solid black"></td></tr>
-<tr><td style="text-align:left"></td><td colspan="5">loansize</td><td colspan="3">lnloansize</td></tr>
-<tr><td style="text-align:left"></td><td colspan="4"><em>OLS</em></td><td><em>Tobit</em></td><td colspan="2"><em>OLS</em></td><td><em>Tobit</em></td></tr>
-<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td><td>(8)</td></tr>
-<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-15.923<sup>***</sup></td><td>-15.857<sup>***</sup></td><td>-72.792<sup>***</sup></td><td>-72.792<sup>***</sup></td><td>-72.792<sup>***</sup></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(1.168)</td><td>(1.232)</td><td>(11.181)</td><td>(11.181)</td><td>(11.176)</td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">lnoffer4</td><td></td><td></td><td></td><td></td><td></td><td>-0.242<sup>***</sup></td><td>-0.268<sup>***</sup></td><td>-0.268<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td>(0.043)</td><td>(0.045)</td><td>(0.045)</td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>230.979<sup>***</sup></td><td>229.812<sup>***</sup></td><td>1,951.646<sup>***</sup></td><td>1,951.646<sup>***</sup></td><td>1,951.646<sup>***</sup></td><td>7.444<sup>***</sup></td><td>7.507<sup>***</sup></td><td>7.507<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(9.592)</td><td>(10.230)</td><td>(84.673)</td><td>(84.673)</td><td>(84.636)</td><td>(0.083)</td><td>(0.089)</td><td>(0.089)</td></tr>
-<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>31,231</td><td>28,197</td><td>2,325</td><td>2,325</td><td>2,325</td><td>2,325</td><td>2,035</td><td>2,035</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.006</td><td>0.006</td><td>0.018</td><td>0.018</td><td></td><td>0.014</td><td>0.017</td><td></td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.006</td><td>0.006</td><td>0.017</td><td>0.017</td><td></td><td>0.013</td><td>0.016</td><td></td></tr>
-<tr><td style="text-align:left">Log Likelihood</td><td></td><td></td><td></td><td></td><td>-19,936.500</td><td></td><td></td><td>-2,234.956</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>513.345 (df = 31229)</td><td>512.703 (df = 28195)</td><td>1,282.195 (df = 2323)</td><td>1,282.195 (df = 2323)</td><td></td><td>0.730 (df = 2323)</td><td>0.726 (df = 2033)</td><td></td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>185.935<sup>***</sup> (df = 1; 31229)</td><td>165.751<sup>***</sup> (df = 1; 28195)</td><td>42.388<sup>***</sup> (df = 1; 2323)</td><td>42.388<sup>***</sup> (df = 1; 2323)</td><td></td><td>32.427<sup>***</sup> (df = 1; 2323)</td><td>34.928<sup>***</sup> (df = 1; 2033)</td><td></td></tr>
-<tr><td style="text-align:left">Wald Test (df = 1)</td><td></td><td></td><td></td><td></td><td>42.424<sup>***</sup></td><td></td><td></td><td>34.962<sup>***</sup></td></tr>
-<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="8" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+<table style="text-align:center"><tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="2"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="2">loansize</td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td></tr>
+<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-4.368<sup>***</sup></td><td>-4.394<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(1.229)</td><td>(1.273)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">low</td><td>247.238<sup>***</sup></td><td>207.747<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(9.299)</td><td>(11.862)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">med</td><td>171.509<sup>***</sup></td><td>120.032<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(10.110)</td><td>(12.368)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved2</td><td>16.442</td><td>48.842</td></tr>
+<tr><td style="text-align:left"></td><td>(10.526)</td><td>(83.299)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved3</td><td>29.524<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(10.106)</td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">grossincome</td><td></td><td>10.649<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(1.823)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">grossincomesq</td><td></td><td>-0.101<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.030)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">dormancy</td><td></td><td>-5.146<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.602)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">trcount</td><td></td><td>1.493</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.954)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">female</td><td></td><td>1.792</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(6.738)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">dependants</td><td></td><td>-3.859<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(2.087)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">married</td><td></td><td>12.176<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(6.870)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">age</td><td></td><td>5.977<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(1.890)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">agesq</td><td></td><td>-0.071<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.020)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">rural</td><td></td><td>224.128</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(354.048)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">edhi</td><td></td><td>28.651<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(7.004)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">appscore</td><td></td><td>-0.200</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(1.982)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">appscoresq</td><td></td><td>0.018</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.032)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">appscore0</td><td></td><td>-76.879</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(252.135)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">itcscore</td><td></td><td>0.242</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.551)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">itcscoresq</td><td></td><td>-0.0003</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.0004)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">itczero</td><td></td><td>45.944</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(170.490)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">provinceFree State</td><td></td><td>-124.674</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(506.852)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">provinceGauteng</td><td></td><td>19.473</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(30.237)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">provinceKwazulu-Natal</td><td></td><td>-258.388</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(363.803)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">provinceLimpopo Province</td><td></td><td>-340.390</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(506.866)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">provinceMpumalanga</td><td></td><td>-135.813</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(354.088)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">provinceNorth West</td><td></td><td>-131.135</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(354.174)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">provinceWestern Cape</td><td></td><td>30.067</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(34.358)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCAD</td><td></td><td>-67.903<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(38.537)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCAE</td><td></td><td>161.359</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(354.026)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCAI</td><td></td><td>66.148</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(49.508)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCAV</td><td></td><td>-30.892</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(41.641)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBE</td><td></td><td>-131.952</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(613.548)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBF</td><td></td><td>-8.748</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(28.300)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBG</td><td></td><td>-160.180</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(612.006)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBH</td><td></td><td>-67.787</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(499.477)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBK</td><td></td><td>1.412</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(30.430)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBM</td><td></td><td>414.819</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(550.984)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBS</td><td></td><td>-276.999</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(355.597)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBV</td><td></td><td>-31.257</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(34.649)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCBY</td><td></td><td>10.829</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(24.739)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCCK</td><td></td><td>-10.066</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(58.642)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCCM</td><td></td><td>-31.731</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(62.602)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCCP</td><td></td><td>-337.530</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(499.987)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCCS</td><td></td><td>622.496</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(390.353)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCCT</td><td></td><td>-4.514</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(33.470)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCCV</td><td></td><td>-192.665</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.374)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCCW</td><td></td><td>211.437</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(499.927)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCDM</td><td></td><td>274.821</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.394)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCDP</td><td></td><td>248.671</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.834)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCDS</td><td></td><td>211.562</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.832)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCDU</td><td></td><td>202.096</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.833)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCEL</td><td></td><td>-10.257</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(35.301)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCEM</td><td></td><td>200.770</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.540)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCER</td><td></td><td>-92.059</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(501.192)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGA</td><td></td><td>696.266<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.988)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGD</td><td></td><td>-396.805</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(711.676)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGK</td><td></td><td>135.776</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(363.422)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGM</td><td></td><td>4.617</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(23.382)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGO</td><td></td><td>-291.285</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(499.820)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGP</td><td></td><td>-21.656</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(26.462)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGR</td><td></td><td>-19.223</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(25.062)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGS</td><td></td><td>148.881</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(178.428)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGT</td><td></td><td>9,401.419<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(612.638)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCGY</td><td></td><td>333.742</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(507.410)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCHL</td><td></td><td>-180.763</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(409.096)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCHV</td><td></td><td>-395.969</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(706.764)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCIM</td><td></td><td>210.527</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.802)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJA</td><td></td><td>-5.063</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(29.002)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJB</td><td></td><td>-13.072</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(24.645)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJC</td><td></td><td>-39.340</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(30.916)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJG</td><td></td><td>1.360</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(22.940)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJJ</td><td></td><td>305.965</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(364.106)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJM</td><td></td><td>6.208</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(21.166)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJP</td><td></td><td>-7.159</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(151.292)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJR</td><td></td><td>-35.952</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(28.021)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCJW</td><td></td><td>-26.151</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(38.520)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCKD</td><td></td><td>-73.857</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(499.392)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCKM</td><td></td><td>-46.842<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(27.840)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCKP</td><td></td><td>-35.018</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(23.256)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCKR</td><td></td><td>-174.879</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(613.448)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCKS</td><td></td><td>51.905</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(48.721)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCKW</td><td></td><td>-242.814</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(356.173)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCKY</td><td></td><td>93.615</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(500.110)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCLM</td><td></td><td>-51.042</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(34.361)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCLT</td><td></td><td>92.169</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(618.520)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCLY</td><td></td><td>-147.013</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(706.648)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMA</td><td></td><td>109.656</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(167.148)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMB</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMD</td><td></td><td>-2.179</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(27.461)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMG</td><td></td><td>163.984</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(499.997)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMI</td><td></td><td>41.124</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(152.591)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMK</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMP</td><td></td><td>45.461</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(32.178)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMT</td><td></td><td>39.901</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(38.525)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMV</td><td></td><td>-171.288</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(288.671)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCMZ</td><td></td><td>-23.761</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.937)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCNG</td><td></td><td>18.149</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(41.457)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCNL</td><td></td><td>3,746.531<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(794.183)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCNM</td><td></td><td>211.816</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.671)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCNS</td><td></td><td>316.402</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(711.032)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPA</td><td></td><td>-13.347</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(36.486)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPB</td><td></td><td>332.018</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(506.566)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPC</td><td></td><td>226.821</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(455.828)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPE</td><td></td><td>39.898</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(33.360)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPF</td><td></td><td>35.204</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(710.970)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPG</td><td></td><td>54.462</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(45.001)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPL</td><td></td><td>357.998</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(394.909)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPN</td><td></td><td>211.695</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.500)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPO</td><td></td><td>557.019</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(564.393)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPS</td><td></td><td>-79.626<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(37.238)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPT</td><td></td><td>16.900</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(36.360)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCPW</td><td></td><td>74.694</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(618.985)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCQT</td><td></td><td>-46.360</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(357.202)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCRB</td><td></td><td>-52.986<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(31.833)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCRL</td><td></td><td>-28.067</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(250.134)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCRM</td><td></td><td>270.326</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.953)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCRP</td><td></td><td>13.673</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(159.498)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCSD</td><td></td><td>114.359</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.616)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCSM</td><td></td><td>224.636</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(354.105)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCSP</td><td></td><td>101.492<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(30.031)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCSW</td><td></td><td>18.565</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(499.758)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCTZ</td><td></td><td>99.986</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(618.404)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCUL</td><td></td><td>-151.009</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(168.364)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCUP</td><td></td><td>99.238</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(502.203)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCUT</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCVD</td><td></td><td>-233.642</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(612.479)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCVP</td><td></td><td>-305.184</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(353.540)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCVR</td><td></td><td>-126.133</td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(355.807)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCVS</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCWB</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCWK</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCWY</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">branchuseCZE</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>71.625<sup>***</sup></td><td>-78.715</td></tr>
+<tr><td style="text-align:left"></td><td>(13.424)</td><td>(178.235)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>31,231</td><td>28,197</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.033</td><td>0.062</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.033</td><td>0.058</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>506.350 (df = 31225)</td><td>499.170 (df = 28070)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>212.779<sup>***</sup> (df = 5; 31225)</td><td>14.677<sup>***</sup> (df = 126; 28070)</td></tr>
+<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="2" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 
 ##### TABLE 5 - GROSS REVENUE AND REPAYMENT SENSITIVITIES TO INTEREST RATES

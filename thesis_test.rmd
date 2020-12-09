@@ -28,6 +28,8 @@ library(knitr)
 library(stargazer)
 library(qwraps2)
 library(AER)
+install.packages("lme4", repo = "https://mac.R-project.org")
+library(lme4)
 options(qwraps2_markup = "markdown")
 ```
 
@@ -94,7 +96,6 @@ summary_maturity <- summary_table(maturity_data, maturity_list)
 # Zusammenfassen der Listen
 summary <- cbind(summary_all, summary_applied, summary_borrowed, summary_maturity)
 summary
-
 
 ```
 
@@ -244,7 +245,7 @@ stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2
 
 reg4_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1))
 
-felm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + appscore0 + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
+reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + appscore0 + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
 
 reg4_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
@@ -259,7 +260,7 @@ reg4_7 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(
 reg4_8 <- tobit(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
 
 
-stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
+stargazer(reg4_1, reg4_2,type="html", header = FALSE)
 
 
 ```
