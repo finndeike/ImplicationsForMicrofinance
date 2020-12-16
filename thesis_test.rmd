@@ -28,8 +28,8 @@ library(knitr)
 library(stargazer)
 library(qwraps2)
 library(AER)
-install.packages("lme4", repo = "https://mac.R-project.org")
-library(lme4)
+library(VGAM)
+library(censReg)
 options(qwraps2_markup = "markdown")
 ```
 
@@ -153,49 +153,49 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 # dprobit applied offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
 # estimates store m1, title((1))
 # sum offer4 applied if e(sample)
-# 
-# dprobit applied normrate_more low med waved2 waved3, cluster(branchuse)
-# estimates store m2, title((2))
-# 
-# dprobit applied offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
-# estimates store m3, title((3))
-# sum offer4 if e(sample)
-# 
-# dprobit tookup_outside_only offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
-# estimates store m4, title((4))
-# 
-# dprobit tookup_outside_only normrate_more low med waved2 waved3, cluster(branchuse)
-# estimates store m5, title((5))
-# 
-# dprobit tookup_outside_only offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
-# estimates store m6, title((6))
-# 
-# dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
-# estimates store m7, title((7))
-# 
-# dprobit tookup_after normrate_more low med waved2 waved3, cluster(branchuse)
-# estimates store m8, title((8))
-# 
-# dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
-# estimates store m9, title((9))
 
 reg3_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link = "probit"))
 
+# dprobit applied normrate_more low med waved2 waved3, cluster(branchuse)
+# estimates store m2, title((2))
+
 reg3_2 <- lm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
 
-reg3_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 0))
+# dprobit applied offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
+# estimates store m3, title((3))
+# sum offer4 if e(sample)
 
-reg3_4 <- lm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
+reg3_3 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 0))
 
-reg3_5 <- lm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
+# dprobit tookup_outside_only offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
+# estimates store m4, title((4))
 
-reg3_6 <- lm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
+reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
 
-reg3_7 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
+# dprobit tookup_outside_only normrate_more low med waved2 waved3, cluster(branchuse)
+# estimates store m5, title((5))
 
-reg3_8 <- lm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
+reg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
 
-reg3_9 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
+# dprobit tookup_outside_only offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
+# estimates store m6, title((6))
+
+reg3_6 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
+
+# dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==1), cluster(branchuse)
+# estimates store m7, title((7))
+
+reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
+
+# dprobit tookup_after normrate_more low med waved2 waved3, cluster(branchuse)
+# estimates store m8, title((8))
+
+reg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
+
+# dprobit tookup_after offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
+# estimates store m9, title((9))
+
+reg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
 
 stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE)
 
@@ -203,65 +203,65 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 
 #### TABLE 4 - PRICE SENSITIVITIES OF LOAN SIZE
 
-```{r, warning=FALSE, results='asis'}
+```{r, warning=FALSE, results='asis', warning=FALSE}
+
+stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
 # *UNCONDITIONAL
 # regress loansize offer4 low med waved2 waved3 if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # estimates store m1, title((1))
 # sum loansize offer4 if e(sample)
-# 
+
+reg4_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1))
+
 # * with controls
 # xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m2, title((2))
-# 
+
+reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
+
 # *CONDITIONAL
 # regress loansize offer4 low med waved2 waved3 if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m3, title((3))
-# 
+
+reg4_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
 # * add controls
 # xi: regress loansize offer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m4, title((4))
-# 
+
+reg4_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
 # * tobit
 # xi: tobit loansize offer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
 # estimates store m5, title((5))
 # sum loansize offer4 if e(sample)
-# 
+
+reg4_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+
 # *log
 # regress lnloansize lnoffer4 low med waved2 waved3 if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # estimates store m6, title((6))
-# 
-# * add controls
-# xi: regress lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
-# estimates store m7, title((7))
-# 
-# xi: tobit lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
-# estimates store m8, title((8))
-
-stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2)
-
-reg4_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1))
-
-reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + appscore0 + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
-
-reg4_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
-
-reg4_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
-
-reg4_5 <- tobit(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
 reg4_6 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
 
-reg4_7 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+# * add controls
+# xi: regress lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
+# estimates store m7, title((7))
 
-reg4_8 <- tobit(lnloansize ~ lnoffer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+reg4_7 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+# xi: tobit lnloansize lnoffer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
+# estimates store m8, title((8))
+
+reg4_8 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3+ sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
 
 
-stargazer(reg4_1, reg4_2,type="html", header = FALSE)
-
+stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
 
 ```
 
@@ -271,19 +271,18 @@ stargazer(reg4_1, reg4_2,type="html", header = FALSE)
 
 # **REVENUES TABLE, COLUMN 1
 # regress grossinterest offer4 low med waved2 waved3 if ((normrate_less==1) & (offer4==final4)), cluster(branchuse)
-# 
+
+reg5_1 <- lm(grossinterest ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1))
+
 # **REVENUES TABLE, COLUMN 2
 # regress pstdue_average offer4 low med waved2 waved3 if ((normrate_less==1) & (offer4==final4) & tookup==1), cluster(branchuse)
-# 
+
+reg5_2 <- lm(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
 # **REVENUES TABLE, COLUMN 3
 # tobit pstdue_average offer4 low med waved2 waved3 if ((normrate_less==1) & (offer4==final4) & tookup==1), ll(0)
 
-
-reg5_1 <- lm(grossinterest ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1))
-
-reg5_2 <- lm(pstdue_average ~ offer4,data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
-
-reg5_3 <- tobit(pstdue_average ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg5_3 <- lm(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
 
 stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
@@ -299,30 +298,34 @@ stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gros
 # xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m1, title((1))
-# 
+#
+# full
+
+reg6_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
+
 # xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy trcount female dependants married age agesq rural i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & edhi==1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m2, title((2))
 # 
+# edhi=1 -> High education
+
+reg6_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, edhi==1))
+
 # xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq trcount female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4) & dormancy<10), cluster(branchuse)
 # estimates store m3, title((3))
 # sum loansize offer4 if e(sample)
-# 
+#
+# dormancy<10 -> Borrowed in last 9 months
+
+reg6_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, dormancy<10))
+
 # xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy female dependants married age agesq rural edhi i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & (offer4==final4) & trcount>2), cluster(branchuse)
 # estimates store m4, title((4))
 # sum loansize offer4 if e(sample)
-
-# grossincome -> additional controls
-reg6_1 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0))
-
-# edhi=1 -> High education
-reg6_2 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, edhi==1))
-
-# dormancy<=9 -> Borrowed in last 9 months
-reg6_3 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, dormancy<=9))
-
+#
 # trcount>2 -> #Past loans more than 2
-reg6_4 <- lm(loansize ~ offer4, data = filter(stata_data, offer4==final4, normrate_less==1, grossincome!=0, trcount>2))
+
+reg6_4 <- lm(loansize ~ offer4+ low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, trcount>2))
 
 
 stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
@@ -338,11 +341,15 @@ stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
 # dprobit applied offer4 low med waved2 waved3 if (female==1 & normrate_less==1), cluster(branchuse)
 # estimates store m1, title((1))
 # sum offer4 applied if e(sample)
-# 
+
+reg7_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, female==1, normrate_less==1))
+
 # dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & normrate_less==1), cluster(branchuse)
 # estimates store m2, title((2))
 # sum offer4 applied if e(sample)
-# 
+
+reg7_2 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, female==1, normrate_less==1))
+
 # dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less==1), cluster(branchuse)
 # estimates store m3, title((3))
 # sum offer4 applied if e(sample)
