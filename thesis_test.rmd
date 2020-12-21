@@ -337,6 +337,12 @@ stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
 
 ```{r, warning=FALSE, results='asis'}
 
+gi_median <- round(median(stata_data$grossincome, na.rm = T),2)
+s_gi_median <- round(median(stata_data$sales_grossincome, na.rm = T),2)
+
+stata_data <- stata_data %>% mutate(grossincomecat2 = ifelse(grossincome<gi_median,1,0))
+stata_data <- stata_data %>% mutate(sales_grossincomecat2 = ifelse(sales_grossincome<s_gi_median,1,0))
+                                    
 # * EXTENSIVE
 # dprobit applied offer4 low med waved2 waved3 if (female==1 & normrate_less==1), cluster(branchuse)
 # estimates store m1, title((1))
@@ -348,16 +354,13 @@ reg7_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_d
 # estimates store m2, title((2))
 # sum offer4 applied if e(sample)
 
-gi_median <- round(median(stata_data$grossincome, na.rm = TRUE),2)
-
-reg7_2 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincome<gi_median))
-
+reg7_2 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincomecat2==1))
 
 # dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less==1), cluster(branchuse)
 # estimates store m3, title((3))
 # sum offer4 applied if e(sample)
 
-reg7_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincome<gi_median, female==1))
+reg7_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincomecat2==1, female==1))
 
 # *UNCONDITIONAL LOAN SIZE
 # regress loansize offer4 low med waved2 waved3 if (female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
@@ -370,13 +373,13 @@ reg7_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_
 # sum loansize offer4 if e(sample)
 # estimates store m5, title((5))
 
-reg7_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincome<gi_median))
+reg7_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincomecat2==1))
 
 # regress loansize offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m6, title((6))
 
-reg7_6 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincome<gi_median, female==1))
+reg7_6 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincomecat2==1, female==1))
 
 # *CONDITIONAL LOAN SIZE
 # regress loansize offer4 low med waved2 waved3 if (female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
@@ -389,13 +392,13 @@ reg7_7 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_
 # sum loansize offer4 if e(sample)
 # estimates store m8, title((8))
 
-reg7_8 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincome<gi_median, tookup==1))
+reg7_8 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, sales_grossincomecat2==1, tookup==1))
 
 # regress loansize offer4 low med waved2 waved3 if (sales_grossincomecat2==1 & female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m9, title((9))
 
-reg7_9 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincome<gi_median, female==1, tookup==1))
+reg7_9 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, sales_grossincomecat2==1, female==1, tookup==1))
 
 
 stargazer(reg7_1, reg7_2, reg7_3, reg7_4, reg7_5, reg7_6, reg7_7, reg7_8, reg7_9, type="html", header = FALSE)
