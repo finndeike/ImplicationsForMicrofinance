@@ -70,21 +70,21 @@ Welcome to my interactive RTutor Problemset, containing the main results from th
 
 ## Data Overview
 
-wdghwugfeuifgef
-efhehf
-fhefhew
-
 ***
-### Info: How do we read a Stata File in R?
+### How do we read a Stata File in R?
+`read_dta` from the package `haven` reads a file in Stata version 5-12 binary format into a data frame in R. This funtion only supports Stata formats after 12, but since we have a 5-12 format it can be used.
+***
 
-**read_dta** reads a file in Stata version 5-12 binary format into a data frame in R. This funtion only supports Stata formats after 12, but since we have a 5-12 format it can be used.
 
-```{r "1", eval=FALSE}
+**Task:** Load the datafile _kz_demandelasts_aer08.dta_ and store it in the variable `stata_data`. To do so, first load the package `haven` with the `library()` command. Now you can use the command `read_dta()` to load the datafile.
+
+```{r "1_1", optional=TRUE, eval=FALSE}
+# Load the Package
 library(haven)
+
+# Read the datafile
 stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
-
-***
 
 
 
