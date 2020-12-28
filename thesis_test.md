@@ -137,8 +137,6 @@ summary
 
 
 
-
-
 #### TABLE 2 - EXPERIMENTAL VALIDATION REGRESSIONS
 
 
@@ -251,12 +249,12 @@ stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
 # estimates store m1, title((1))
 # sum offer4 applied if e(sample)
 
-reg3_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link = "probit"))
+reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link = "probit"))
 
 # dprobit applied normrate_more low med waved2 waved3, cluster(branchuse)
 # estimates store m2, title((2))
 
-reg3_2 <- lm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
+reg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
 
 # dprobit applied offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
 # estimates store m3, title((3))
@@ -301,36 +299,31 @@ stargazer(reg3_1, reg3_2, reg3_3, reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9
 <table style="text-align:center"><tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="9"><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="9" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td colspan="3">applied</td><td colspan="3">tookup_outside_only</td><td colspan="3">tookup_afterdead_enforced</td></tr>
-<tr><td style="text-align:left"></td><td colspan="2"><em>OLS</em></td><td><em>probit</em></td><td colspan="3"><em>probit</em></td><td colspan="3"><em>probit</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td><td>(8)</td><td>(9)</td></tr>
-<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.003<sup>***</sup></td><td></td><td>-0.149<sup>*</sup></td><td>0.004</td><td></td><td>-0.028</td><td>0.002</td><td></td><td>-0.049</td></tr>
-<tr><td style="text-align:left"></td><td>(0.001)</td><td></td><td>(0.077)</td><td>(0.003)</td><td></td><td>(0.053)</td><td>(0.003)</td><td></td><td>(0.058)</td></tr>
+<tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.020<sup>***</sup></td><td></td><td>-0.149<sup>*</sup></td><td>0.004</td><td></td><td>-0.028</td><td>0.002</td><td></td><td>-0.049</td></tr>
+<tr><td style="text-align:left"></td><td>(0.004)</td><td></td><td>(0.077)</td><td>(0.003)</td><td></td><td>(0.053)</td><td>(0.003)</td><td></td><td>(0.058)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">normrate_more</td><td></td><td>-0.038<sup>***</sup></td><td></td><td></td><td>0.018</td><td></td><td></td><td>-0.183<sup>***</sup></td><td></td></tr>
-<tr><td style="text-align:left"></td><td></td><td>(0.012)</td><td></td><td></td><td>(0.057)</td><td></td><td></td><td>(0.063)</td><td></td></tr>
+<tr><td style="text-align:left">normrate_more</td><td></td><td>-0.247<sup>***</sup></td><td></td><td></td><td>0.018</td><td></td><td></td><td>-0.183<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td>(0.083)</td><td></td><td></td><td>(0.057)</td><td></td><td></td><td>(0.063)</td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">low</td><td>0.111<sup>***</sup></td><td>0.117<sup>***</sup></td><td>0.136</td><td>0.091<sup>***</sup></td><td>0.083<sup>***</sup></td><td>0.022</td><td>0.710<sup>***</sup></td><td>0.706<sup>***</sup></td><td>0.597<sup>**</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.004)</td><td>(0.004)</td><td>(0.325)</td><td>(0.020)</td><td>(0.018)</td><td>(0.234)</td><td>(0.020)</td><td>(0.018)</td><td>(0.250)</td></tr>
+<tr><td style="text-align:left">low</td><td>0.578<sup>***</sup></td><td>0.626<sup>***</sup></td><td>0.136</td><td>0.091<sup>***</sup></td><td>0.083<sup>***</sup></td><td>0.022</td><td>0.710<sup>***</sup></td><td>0.706<sup>***</sup></td><td>0.597<sup>**</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.023)</td><td>(0.021)</td><td>(0.325)</td><td>(0.020)</td><td>(0.018)</td><td>(0.234)</td><td>(0.020)</td><td>(0.018)</td><td>(0.250)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">med</td><td>0.112<sup>***</sup></td><td>0.114<sup>***</sup></td><td>0.186</td><td>-0.017</td><td>-0.017</td><td>0.195</td><td>0.564<sup>***</sup></td><td>0.562<sup>***</sup></td><td>0.518<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.004)</td><td>(0.004)</td><td>(0.264)</td><td>(0.022)</td><td>(0.021)</td><td>(0.184)</td><td>(0.021)</td><td>(0.021)</td><td>(0.195)</td></tr>
+<tr><td style="text-align:left">med</td><td>0.597<sup>***</sup></td><td>0.614<sup>***</sup></td><td>0.186</td><td>-0.017</td><td>-0.017</td><td>0.195</td><td>0.564<sup>***</sup></td><td>0.562<sup>***</sup></td><td>0.518<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.024)</td><td>(0.023)</td><td>(0.264)</td><td>(0.022)</td><td>(0.021)</td><td>(0.184)</td><td>(0.021)</td><td>(0.021)</td><td>(0.195)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">waved2</td><td>-0.009<sup>**</sup></td><td>-0.010<sup>**</sup></td><td></td><td>-0.184<sup>***</sup></td><td>-0.182<sup>***</sup></td><td></td><td>-0.311<sup>***</sup></td><td>-0.310<sup>***</sup></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.005)</td><td>(0.005)</td><td></td><td>(0.023)</td><td>(0.023)</td><td></td><td>(0.024)</td><td>(0.024)</td><td></td></tr>
+<tr><td style="text-align:left">waved2</td><td>-0.047</td><td>-0.054<sup>*</sup></td><td></td><td>-0.184<sup>***</sup></td><td>-0.182<sup>***</sup></td><td></td><td>-0.311<sup>***</sup></td><td>-0.310<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.029)</td><td>(0.029)</td><td></td><td>(0.023)</td><td>(0.023)</td><td></td><td>(0.024)</td><td>(0.024)</td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">waved3</td><td>-0.014<sup>***</sup></td><td>-0.015<sup>***</sup></td><td></td><td>-0.165<sup>***</sup></td><td>-0.164<sup>***</sup></td><td></td><td>-0.293<sup>***</sup></td><td>-0.292<sup>***</sup></td><td></td></tr>
-<tr><td style="text-align:left"></td><td>(0.005)</td><td>(0.005)</td><td></td><td>(0.022)</td><td>(0.022)</td><td></td><td>(0.023)</td><td>(0.023)</td><td></td></tr>
+<tr><td style="text-align:left">waved3</td><td>-0.077<sup>***</sup></td><td>-0.084<sup>***</sup></td><td></td><td>-0.165<sup>***</sup></td><td>-0.164<sup>***</sup></td><td></td><td>-0.293<sup>***</sup></td><td>-0.292<sup>***</sup></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.028)</td><td>(0.028)</td><td></td><td>(0.022)</td><td>(0.022)</td><td></td><td>(0.023)</td><td>(0.023)</td><td></td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>0.093<sup>***</sup></td><td>0.072<sup>***</sup></td><td>0.287</td><td>-0.641<sup>***</sup></td><td>-0.614<sup>***</sup></td><td>-0.244</td><td>-0.968<sup>***</sup></td><td>-0.953<sup>***</sup></td><td>-0.488</td></tr>
-<tr><td style="text-align:left"></td><td>(0.006)</td><td>(0.004)</td><td>(1.027)</td><td>(0.030)</td><td>(0.021)</td><td>(0.719)</td><td>(0.033)</td><td>(0.022)</td><td>(0.788)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>-1.329<sup>***</sup></td><td>-1.487<sup>***</sup></td><td>0.287</td><td>-0.641<sup>***</sup></td><td>-0.614<sup>***</sup></td><td>-0.244</td><td>-0.968<sup>***</sup></td><td>-0.953<sup>***</sup></td><td>-0.488</td></tr>
+<tr><td style="text-align:left"></td><td>(0.039)</td><td>(0.027)</td><td>(1.027)</td><td>(0.030)</td><td>(0.021)</td><td>(0.719)</td><td>(0.033)</td><td>(0.022)</td><td>(0.788)</td></tr>
 <tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td><td>53,178</td><td>53,810</td><td>632</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.030</td><td>0.030</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.030</td><td>0.030</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Log Likelihood</td><td></td><td></td><td>-145.896</td><td>-28,187.630</td><td>-28,563.230</td><td>-373.569</td><td>-21,101.540</td><td>-21,383.760</td><td>-281.566</td></tr>
-<tr><td style="text-align:left">Akaike Inf. Crit.</td><td></td><td></td><td>299.792</td><td>56,387.250</td><td>57,138.450</td><td>755.138</td><td>42,215.080</td><td>42,779.520</td><td>571.133</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>0.274 (df = 53172)</td><td>0.274 (df = 53804)</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>331.073<sup>***</sup> (df = 5; 53172)</td><td>328.817<sup>***</sup> (df = 5; 53804)</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td>-14,726.380</td><td>-14,889.970</td><td>-145.896</td><td>-28,187.630</td><td>-28,563.230</td><td>-373.569</td><td>-21,101.540</td><td>-21,383.760</td><td>-281.566</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td>29,464.760</td><td>29,791.930</td><td>299.792</td><td>56,387.250</td><td>57,138.450</td><td>755.138</td><td>42,215.080</td><td>42,779.520</td><td>571.133</td></tr>
 <tr><td colspan="10" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="9" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 
@@ -392,7 +385,6 @@ reg4_7 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3 + sales_grossin
 # estimates store m8, title((8))
 
 reg4_8 <- lm(lnloansize ~ lnoffer4 + low + med + waved2 + waved3+ sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
-
 
 stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
 ```
@@ -850,7 +842,7 @@ reg5_2 <- lm(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filte
 # **REVENUES TABLE, COLUMN 3
 # tobit pstdue_average offer4 low med waved2 waved3 if ((normrate_less==1) & (offer4==final4) & tookup==1), ll(0)
 
-reg5_3 <- lm(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
 
 stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
@@ -860,24 +852,31 @@ stargazer(reg5_1, reg5_2, reg5_3, type="html",align=TRUE, dep.var.labels=c("Gros
 <table style="text-align:center"><tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="3"><em>Dependent variable:</em></td></tr>
 <tr><td></td><td colspan="3" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td>Gross interest revenue</td><td colspan="2">Average past due</td></tr>
+<tr><td style="text-align:left"></td><td><em>OLS</em></td><td><em>OLS</em></td><td><em>censored</em></td></tr>
+<tr><td style="text-align:left"></td><td><em></em></td><td><em></em></td><td><em>regression</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">interest rate in pp terms (e.g., 8.2)</td><td>2.553<sup>***</sup></td><td>12.161<sup>***</sup></td><td>12.161<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.641)</td><td>(3.553)</td><td>(3.553)</td></tr>
-<tr><td style="text-align:left">low</td><td>109.053<sup>***</sup></td><td>-99.383<sup>***</sup></td><td>-99.383<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(4.852)</td><td>(19.874)</td><td>(19.874)</td></tr>
-<tr><td style="text-align:left">med</td><td>72.098<sup>***</sup></td><td>36.996<sup>*</sup></td><td>36.996<sup>*</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(5.275)</td><td>(20.464)</td><td>(20.464)</td></tr>
-<tr><td style="text-align:left">waved2</td><td>11.277<sup>**</sup></td><td>-2.260</td><td>-2.260</td></tr>
-<tr><td style="text-align:left"></td><td>(5.493)</td><td>(25.328)</td><td>(25.328)</td></tr>
-<tr><td style="text-align:left">waved3</td><td>20.908<sup>***</sup></td><td>78.238<sup>***</sup></td><td>78.238<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(5.274)</td><td>(24.307)</td><td>(24.307)</td></tr>
-<tr><td style="text-align:left">Constant</td><td>-18.168<sup>***</sup></td><td>53.227</td><td>53.227</td></tr>
-<tr><td style="text-align:left"></td><td>(7.005)</td><td>(35.712)</td><td>(35.712)</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">interest rate in pp terms (e.g., 8.2)</td><td>2.553<sup>***</sup></td><td>12.161<sup>***</sup></td><td>18.064<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.641)</td><td>(3.553)</td><td>(5.935)</td></tr>
+<tr><td style="text-align:left">low</td><td>109.053<sup>***</sup></td><td>-99.383<sup>***</sup></td><td>-275.938<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(4.852)</td><td>(19.874)</td><td>(35.543)</td></tr>
+<tr><td style="text-align:left">med</td><td>72.098<sup>***</sup></td><td>36.996<sup>*</sup></td><td>114.872<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(5.275)</td><td>(20.464)</td><td>(33.159)</td></tr>
+<tr><td style="text-align:left">waved2</td><td>11.277<sup>**</sup></td><td>-2.260</td><td>-16.009</td></tr>
+<tr><td style="text-align:left"></td><td>(5.493)</td><td>(25.328)</td><td>(43.927)</td></tr>
+<tr><td style="text-align:left">waved3</td><td>20.908<sup>***</sup></td><td>78.238<sup>***</sup></td><td>125.466<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(5.274)</td><td>(24.307)</td><td>(41.683)</td></tr>
+<tr><td style="text-align:left">logSigma</td><td></td><td></td><td>6.319<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td>(0.021)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>-18.168<sup>***</sup></td><td>53.227</td><td>-211.839<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(7.005)</td><td>(35.712)</td><td>(60.726)</td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>31,231</td><td>2,325</td><td>2,325</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.020</td><td>0.050</td><td>0.050</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.020</td><td>0.048</td><td>0.048</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>264.218 (df = 31225)</td><td>365.427 (df = 2319)</td><td>365.427 (df = 2319)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>125.512<sup>***</sup> (df = 5; 31225)</td><td>24.233<sup>***</sup> (df = 5; 2319)</td><td>24.233<sup>***</sup> (df = 5; 2319)</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.020</td><td>0.050</td><td></td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.020</td><td>0.048</td><td></td></tr>
+<tr><td style="text-align:left">Log Likelihood</td><td></td><td></td><td>-10,179.040</td></tr>
+<tr><td style="text-align:left">Akaike Inf. Crit.</td><td></td><td></td><td>20,372.080</td></tr>
+<tr><td style="text-align:left">Bayesian Inf. Crit.</td><td></td><td></td><td>20,412.340</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>264.218 (df = 31225)</td><td>365.427 (df = 2319)</td><td></td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>125.512<sup>***</sup> (df = 5; 31225)</td><td>24.233<sup>***</sup> (df = 5; 2319)</td><td></td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 
@@ -1349,8 +1348,8 @@ stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
 
 
 ```r
-stata_data <- stata_data %>% mutate(grossincomecat = xtile(grossincome, n=2))
-stata_data <- stata_data %>% mutate(sales_grossincomecat = xtile(grossincome, n=10))
+stata_data <- stata_data %>% mutate(grossincomecat2 = xtile(grossincome, n=2))
+stata_data <- stata_data %>% mutate(sales_grossincomecat2 = xtile(grossincome, n=10))
                                     
 # * EXTENSIVE
 # dprobit applied offer4 low med waved2 waved3 if (female==1 & normrate_less==1), cluster(branchuse)
@@ -1363,13 +1362,13 @@ reg7_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_d
 # estimates store m2, title((2))
 # sum offer4 applied if e(sample)
 
-reg7_2 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincomecat==1))
+reg7_2 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincomecat2==1))
 
 # dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less==1), cluster(branchuse)
 # estimates store m3, title((3))
 # sum offer4 applied if e(sample)
 
-reg7_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincomecat==1, female==1))
+reg7_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, grossincomecat2==1, female==1))
 
 # *UNCONDITIONAL LOAN SIZE
 # regress loansize offer4 low med waved2 waved3 if (female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
@@ -1382,13 +1381,13 @@ reg7_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_
 # sum loansize offer4 if e(sample)
 # estimates store m5, title((5))
 
-reg7_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincomecat==1))
+reg7_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincomecat2==1))
 
 # regress loansize offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m6, title((6))
 
-reg7_6 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincomecat==1, female==1))
+reg7_6 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less==1, offer4==final4, grossincomecat2==1, female==1))
 
 # *CONDITIONAL LOAN SIZE
 # regress loansize offer4 low med waved2 waved3 if (female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
@@ -1401,13 +1400,13 @@ reg7_7 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_
 # sum loansize offer4 if e(sample)
 # estimates store m8, title((8))
 
-reg7_8 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, sales_grossincomecat==1, normrate_less==1, offer4==final4, tookup==1))
+reg7_8 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, sales_grossincomecat2==1, normrate_less==1, offer4==final4, tookup==1))
 
 # regress loansize offer4 low med waved2 waved3 if (sales_grossincomecat2==1 & female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m9, title((9))
 
-reg7_9 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, sales_grossincomecat==1, normrate_less==1, offer4==final4, female==1, tookup==1))
+reg7_9 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, sales_grossincomecat2==1, normrate_less==1, offer4==final4, female==1, tookup==1))
 
 
 stargazer(reg7_1, reg7_2, reg7_3, reg7_4, reg7_5, reg7_6, reg7_7, reg7_8, reg7_9, type="html", header = FALSE)
@@ -1458,58 +1457,74 @@ reg8a_1 <- lm(term ~ offer4 + final4 +  yearlong + termshown + low + waved2 + ln
 
 # xi: regress term offer4 final4 yearlong termshown low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==1), cluster(branchuse)
 # estimates store m2, title((2))
-# 
+
+reg8a_2 <- lm(term ~ offer4 + final4 +  yearlong + termshown + low + waved2 + lnlastamount, data=filter(stata_data, wave>1, (risk=="LOW"|risk=="MEDIUM"), onetermshown==1, normrate_less==1, tookup==1, sales_grossincomecat2==1))
+
 # xi: regress term offer4 final4 yearlong termshown low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==2), cluster(branchuse)
 # estimates store m3, title((3))
-# 
+
+reg8a_3 <- lm(term ~ offer4 + final4 +  yearlong + termshown + low + waved2 + lnlastamount, data=filter(stata_data, wave>1, (risk=="LOW"|risk=="MEDIUM"), onetermshown==1, normrate_less==1, tookup==1, sales_grossincomecat2==2))
+
 # ** categorical IV
 # xi: regress term offer4 final4 yearlong termshown6 termshown12 low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1), cluster(branchuse)
 # estimates store m4, title((4))
-# 
+
+reg8a_4 <- lm(term ~ offer4 + final4 +  yearlong + termshown6 + termshown12 + low + waved2 + lnlastamount, data=filter(stata_data, wave>1, (risk=="LOW"|risk=="MEDIUM"), onetermshown==1, normrate_less==1, tookup==1))
+
 # xi: regress term offer4 final4 yearlong termshown6 termshown12 low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==1), cluster(branchuse)
 # estimates store m5, title((5))
-# 
+
+reg8a_5 <- lm(term ~ offer4 + final4 +  yearlong + termshown6 + termshown12 + low + waved2 + lnlastamount, data=filter(stata_data, wave>1, (risk=="LOW"|risk=="MEDIUM"), onetermshown==1, normrate_less==1, tookup==1, sales_grossincomecat2==1))
+
 # xi: regress term offer4 final4 yearlong termshown6 termshown12 low waved2 lnlastamount if (wave>1 & (risk=="LOW" | risk=="MEDIUM") & onetermshown==1 & normrate_less==1 & tookup==1 & sales_grossincomecat2==2), cluster(branchuse)
 # estimates store m6, title((6))
 
+reg8a_6 <- lm(term ~ offer4 + final4 +  yearlong + termshown6 + termshown12 + low + waved2 + lnlastamount, data=filter(stata_data, wave>1, (risk=="LOW"|risk=="MEDIUM"), onetermshown==1, normrate_less==1, tookup==1, sales_grossincomecat2==2))
 
-stargazer(reg8a_1, type="html", header = FALSE)
+stargazer(reg8a_1, reg8a_2, reg8a_3, reg8a_3, reg8a_4, reg8a_5, reg8a_6, type="html", header = FALSE)
 ```
 
 
-<table style="text-align:center"><tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td><em>Dependent variable:</em></td></tr>
-<tr><td></td><td colspan="1" style="border-bottom: 1px solid black"></td></tr>
-<tr><td style="text-align:left"></td><td>term</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.062</td></tr>
-<tr><td style="text-align:left"></td><td>(0.149)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">final4</td><td>-0.056</td></tr>
-<tr><td style="text-align:left"></td><td>(0.147)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">yearlong</td><td>-0.294</td></tr>
-<tr><td style="text-align:left"></td><td>(0.274)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">termshown</td><td>0.131<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.041)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">low</td><td>0.421</td></tr>
-<tr><td style="text-align:left"></td><td>(0.324)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">waved2</td><td>-0.992<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.288)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">lnlastamount</td><td>0.818<sup>***</sup></td></tr>
-<tr><td style="text-align:left"></td><td>(0.220)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>0.090</td></tr>
-<tr><td style="text-align:left"></td><td>(1.720)</td></tr>
-<tr><td style="text-align:left"></td><td></td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>506</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.077</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.064</td></tr>
-<tr><td style="text-align:left">Residual Std. Error</td><td>3.039 (df = 498)</td></tr>
-<tr><td style="text-align:left">F Statistic</td><td>5.925<sup>***</sup> (df = 7; 498)</td></tr>
-<tr><td colspan="2" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
+<table style="text-align:center"><tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="7"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="7" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="7">term</td></tr>
+<tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td><td>(5)</td><td>(6)</td><td>(7)</td></tr>
+<tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">offer4</td><td>-0.062</td><td>-0.030</td><td>-0.801</td><td>-0.801</td><td>-0.079</td><td>-0.060</td><td>-0.799</td></tr>
+<tr><td style="text-align:left"></td><td>(0.149)</td><td>(0.337)</td><td>(0.627)</td><td>(0.627)</td><td>(0.150)</td><td>(0.356)</td><td>(0.637)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">final4</td><td>-0.056</td><td>-0.202</td><td>0.393</td><td>0.393</td><td>-0.039</td><td>-0.189</td><td>0.395</td></tr>
+<tr><td style="text-align:left"></td><td>(0.147)</td><td>(0.317)</td><td>(0.630)</td><td>(0.630)</td><td>(0.147)</td><td>(0.324)</td><td>(0.640)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">yearlong</td><td>-0.294</td><td>-0.767</td><td>-1.915<sup>*</sup></td><td>-1.915<sup>*</sup></td><td>-0.315</td><td>-0.784</td><td>-1.919<sup>*</sup></td></tr>
+<tr><td style="text-align:left"></td><td>(0.274)</td><td>(0.688)</td><td>(1.021)</td><td>(1.021)</td><td>(0.274)</td><td>(0.699)</td><td>(1.038)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">termshown</td><td>0.131<sup>***</sup></td><td>0.012</td><td>0.251<sup>*</sup></td><td>0.251<sup>*</sup></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.041)</td><td>(0.102)</td><td>(0.147)</td><td>(0.147)</td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">termshown6</td><td></td><td></td><td></td><td></td><td>-0.181</td><td>-0.243</td><td>0.448</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td>(0.342)</td><td>(0.924)</td><td>(1.381)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">termshown12</td><td></td><td></td><td></td><td></td><td>1.017<sup>***</sup></td><td>0.091</td><td>1.998</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td>(0.331)</td><td>(0.826)</td><td>(1.199)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">low</td><td>0.421</td><td>0.123</td><td>-0.802</td><td>-0.802</td><td>0.415</td><td>0.102</td><td>-0.793</td></tr>
+<tr><td style="text-align:left"></td><td>(0.324)</td><td>(0.713)</td><td>(1.338)</td><td>(1.338)</td><td>(0.324)</td><td>(0.725)</td><td>(1.374)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">waved2</td><td>-0.992<sup>***</sup></td><td></td><td></td><td></td><td>-0.957<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td>(0.288)</td><td></td><td></td><td></td><td>(0.289)</td><td></td><td></td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">lnlastamount</td><td>0.818<sup>***</sup></td><td>-0.039</td><td>-0.030</td><td>-0.030</td><td>0.857<sup>***</sup></td><td>0.003</td><td>-0.021</td></tr>
+<tr><td style="text-align:left"></td><td>(0.220)</td><td>(0.781)</td><td>(1.008)</td><td>(1.008)</td><td>(0.222)</td><td>(0.803)</td><td>(1.043)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>0.090</td><td>6.667</td><td>8.326</td><td>8.326</td><td>0.471</td><td>6.633</td><td>9.257</td></tr>
+<tr><td style="text-align:left"></td><td>(1.720)</td><td>(5.629)</td><td>(7.588)</td><td>(7.588)</td><td>(1.706)</td><td>(5.620)</td><td>(7.878)</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>506</td><td>46</td><td>46</td><td>46</td><td>506</td><td>46</td><td>46</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.077</td><td>0.080</td><td>0.230</td><td>0.230</td><td>0.080</td><td>0.082</td><td>0.230</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.064</td><td>-0.061</td><td>0.112</td><td>0.112</td><td>0.065</td><td>-0.087</td><td>0.089</td></tr>
+<tr><td style="text-align:left">Residual Std. Error</td><td>3.039 (df = 498)</td><td>2.189 (df = 39)</td><td>3.250 (df = 39)</td><td>3.250 (df = 39)</td><td>3.037 (df = 497)</td><td>2.215 (df = 38)</td><td>3.292 (df = 38)</td></tr>
+<tr><td style="text-align:left">F Statistic</td><td>5.925<sup>***</sup> (df = 7; 498)</td><td>0.568 (df = 6; 39)</td><td>1.946<sup>*</sup> (df = 6; 39)</td><td>1.946<sup>*</sup> (df = 6; 39)</td><td>5.414<sup>***</sup> (df = 8; 497)</td><td>0.488 (df = 7; 38)</td><td>1.625 (df = 7; 38)</td></tr>
+<tr><td colspan="8" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="7" style="text-align:right"><sup>*</sup>p<0.1; <sup>**</sup>p<0.05; <sup>***</sup>p<0.01</td></tr>
 </table>
 
 
