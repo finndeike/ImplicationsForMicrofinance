@@ -449,16 +449,26 @@ University of Ulm<br>
 <div id="how-do-we-read-a-stata-file-in-r" class="section level3">
 <h3>How do we read a Stata File in R?</h3>
 <p><code>read_dta</code> from the package <code>haven</code> reads a file in Stata version 5-12 binary format into a data frame in R. This funtion only supports Stata formats after 12, but since we have a 5-12 format it can be used. ***</p>
-<p><strong>Exercise 1.1:</strong> Load the data file <em>kz_demandelasts_aer08.dta</em> and store it in the variable <code>stata_data</code>. To do so, first load the package <code>haven</code> with the <code>library()</code> command. Now you can use the command <code>read_dta()</code> to load the data file.</p>
-<pre class="r"><code># Load the Package
+<p><strong>Exercise 1.1:</strong> Load the data file <em>kz_demandelasts_aer08.dta</em> and store it in the variable <code>stata_data</code>. To do so, first load the package <code>haven</code> with the <code>library()</code> command. Now you can use the command <code>read_dta()</code> to load the data file. If you think your answer is right press <code>check</code>.</p>
+<pre class="r"><code># Not yet solved...
+# Press &#39;edit&#39; to enter your code.
+
+# Load the Package
 library(haven)
 
 # Read the datafile
 stata_data &lt;- read_dta(&quot;~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta&quot;)</code></pre>
 <p>After loading in the data, we can now have a deeper look into our data and the according parameters. But first let’s have a rough look at our data stored in <code>stata_data</code>.</p>
-<p>There are a variaty of ways to get an overview on a data set. We will use the R function <code>head()</code>to show the first five rows of our data set stored in <code>stata_data</code>. This will help us to get familiar with the variables and understand how the data set is structured.</p>
-<p><strong>Exercise 1.2</strong> Show the first five rows of our data file stored in <code>stata_data</code>. Are there any inconsistencies?</p>
-<pre class="r"><code># Show the first five rows</code></pre>
+<p>There are a variaty of ways to get an overview on a data set. We will use the R function <code>head()</code>to show the first six rows of our data set stored in <code>stata_data</code>. An alternative would be to show six random sample rows, use the command <code>sample_n(data,#rows)</code>. This will help us to get familiar with the variables and understand how the data set is structured.</p>
+<p><strong>Exercise 1.2</strong> Show the first six rows of our data file stored in <code>stata_data</code>. Are there any inconsistencies? If yes, try <code>sample_n()</code> inorder to show six random rows of our data set <code>stata_data</code>. Afterwards press the <code>check</code> button.</p>
+<pre class="r"><code># Not yet solved...
+# Press &#39;edit&#39; to enter your code.
+
+# Show the first five rows
+head(stata_data)
+
+# Show six random rows
+sample_n(stata_data,6)</code></pre>
 </div>
 </div>
 </div>
