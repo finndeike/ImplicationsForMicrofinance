@@ -1,0 +1,20 @@
+
+```{r 'check_ps', include=FALSE}
+
+user.name = 'Jane Doe'
+```
+
+---
+title: "Credit Elasticities in Less-Developed Economies"
+description: "Implications for Microfinance"
+author:
+  name: "Finn Deike"
+  url: https://github.com/finndeike/thesis_code_rep
+  affiliation: University of Ulm
+output: 
+  html_document:
+    keep_md: yes
+    toc: yes
+
+---
+
