@@ -1,0 +1,48 @@
+{"type":["init_ps"],"time":["2021-01-20 10:23:16"],"user":["default_user"],"umph":[1611134596.1734],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:26:52"],"user":["default_user"],"umph":[1611134812.749],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:27:13"],"user":["default_user"],"umph":[1611134833.533],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:29:28"],"user":["default_user"],"umph":[1611134968.0398],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:34:11"],"user":["default_user"],"umph":[1611135251.5648],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-20 10:34:23"],"user":["default_user"],"umph":[1611135263.5151],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[0],"code":["x = 10:20\n# Computing the sum of x\nsum(x)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-20 10:34:27"],"user":["default_user"],"umph":[1611135267.9669],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[0],"code":["x = 10:20\n# Computing the sum of x\nsum(x)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-20 10:34:46"],"user":["default_user"],"umph":[1611135286.5735],"ok":[true],"chunk":[2],"ex":[1],"e.ind":[0],"code":["mean(x)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:37:53"],"user":["default_user"],"umph":[1611135473.6338],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:39:04"],"user":["default_user"],"umph":[1611135544.9797],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:40:14"],"user":["default_user"],"umph":[1611135614.0626],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-20 10:40:28"],"user":["default_user"],"umph":[1611135628.1181],"ok":[false],"chunk":[1],"ex":[1],"e.ind":[1],"code":["# Enter your code here."],"message":["\nYou have not yet entered all correct commands."]}
+,
+{"type":["hint"],"time":["2021-01-20 10:40:28"],"user":["default_user"],"umph":[1611135628.1281],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:50:33"],"user":["default_user"],"umph":[1611136233.3835],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:51:19"],"user":["default_user"],"umph":[1611136279.335],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:56:27"],"user":["default_user"],"umph":[1611136587.606],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 10:58:02"],"user":["default_user"],"umph":[1611136682.5404],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-20 10:58:09"],"user":["default_user"],"umph":[1611136689.4474],"ok":[false],"chunk":[1],"ex":[1],"e.ind":[1],"code":["# Enter your code here."],"message":["\nYou have not yet entered all correct commands."]}
+,
+{"type":["hint"],"time":["2021-01-20 10:58:09"],"user":["default_user"],"umph":[1611136689.4565],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[1]}
+,
+{"type":["check_chunk"],"time":["2021-01-20 10:58:23"],"user":["default_user"],"umph":[1611136703.2257],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-01-20 11:02:39"],"user":["default_user"],"umph":[1611136959.0178],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-20 19:28:43"],"user":["default_user"],"umph":[1611167323.198],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-20 19:28:51"],"user":["default_user"],"umph":[1611167331.3046],"ok":[false],"chunk":[1],"ex":[1],"e.ind":[1],"code":["# Enter your code here."],"message":["\nYou have not yet entered all correct commands."]}
+,
+{"type":["hint"],"time":["2021-01-20 19:28:51"],"user":["default_user"],"umph":[1611167331.3136],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[1]}
+,
