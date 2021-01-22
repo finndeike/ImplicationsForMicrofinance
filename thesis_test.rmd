@@ -100,7 +100,7 @@ summary
 
 ```
 
-
+ggplot(stata_data, aes(offer4, lastamount) + geom_point() + geom_abline()
 
 #### TABLE 2 - EXPERIMENTAL VALIDATION REGRESSIONS
 

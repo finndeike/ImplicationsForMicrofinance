@@ -46,3 +46,39 @@
 ,
 {"type":["hint"],"time":["2021-01-20 19:28:51"],"user":["default_user"],"umph":[1611167331.3136],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[1]}
 ,
+{"type":["init_ps"],"time":["2021-01-21 12:26:45"],"user":["default_user"],"umph":[1611228405.6362],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-21 12:26:55"],"user":["default_user"],"umph":[1611228415.8936],"ok":[false],"chunk":[1],"ex":[1],"e.ind":[1],"code":["# Enter your code here."],"message":["\nYou have not yet entered all correct commands."]}
+,
+{"type":["hint"],"time":["2021-01-21 12:26:55"],"user":["default_user"],"umph":[1611228415.9036],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-01-21 12:27:20"],"user":["default_user"],"umph":[1611228440.1467],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-21 12:28:04"],"user":["default_user"],"umph":[1611228484.7523],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-21 12:28:18"],"user":["default_user"],"umph":[1611228498.0183],"ok":[true],"chunk":[1],"ex":[1],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-21 12:28:25"],"user":["default_user"],"umph":[1611228505.8828],"ok":[false],"chunk":[2],"ex":[1],"e.ind":[1],"code":["# Enter your code here."],"message":["\nYou have not yet made an assignment to stata_data."]}
+,
+{"type":["hint"],"time":["2021-01-21 12:28:25"],"user":["default_user"],"umph":[1611228505.8922],"ok":[true],"chunk":[2],"ex":[1],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-01-21 14:42:58"],"user":["default_user"],"umph":[1611236578.6029],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-21 14:44:06"],"user":["default_user"],"umph":[1611236646.389],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-21 14:47:01"],"user":["default_user"],"umph":[1611236821.9619],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-21 14:48:56"],"user":["default_user"],"umph":[1611236936.1867],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-21 14:50:38"],"user":["default_user"],"umph":[1611237038.4198],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-21 14:55:35"],"user":["default_user"],"umph":[1611237335.8449],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-22 14:49:40"],"user":["default_user"],"umph":[1611323380.9818],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-22 15:28:23"],"user":["default_user"],"umph":[1611325703.14],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-22 16:43:34"],"user":["default_user"],"umph":[1611330214.3205],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-22 16:53:12"],"user":["default_user"],"umph":[1611330792.0799],"ok":[true]}
+,

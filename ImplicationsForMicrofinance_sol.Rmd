@@ -1,30 +1,30 @@
-**An Interactive Anaylsis in R**
+
+## Credit Elasticities in Less-Developed Economics: Implications for Microfinance
 
 
 Welcome to my interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published by the American Economic Review in 2008.
 
+The paper, a supplemental appendix and data are available online at the following websites:
 
-# Exercise Content
+## Exercise Content
 
-1. Introduction 
+1. Data Overview
 
-2. Data Overview
+2. Theoretical Model
 
-3. Theoretical Model
+3. Regression Analysis
 
-4. Regression Analysis
+4. Estimation
 
-5. Estimation
+5. Conclusion
 
-6. Conclusion
+6. Appendix
 
-7. Appendix
-
-8. References
-
+7. References
 
 
-## Introduction
+
+### Introduction
 
 #< ignore
 
@@ -53,34 +53,45 @@ stop()
 #>
 ## Exercise 1 -- Data Overview
 
-***
-### How do we read a Stata File in R?
+“If you go out into the real world, you cannot miss seeing that the poor are poor not because they are untrained or illiterate but because they cannot retain the returns of their labor. They have no control over capital, and it is the ability to control capital that gives people the power to rise out of poverty.”
+
+― Muhammad Yunus, Banker to the Poor: Micro-Lending and the Battle Against World Poverty ("https://microfinancingafrica.org/10-profound-quotes-about-microfinance/")
+
+
+Microfinance institutions (MFI) are often forced to increase interest rates to eliminate reliance of subsidies by policymakers. This makes only sense if the poor are really insensitive to interest rates. Otherwise increasing interest rates would limit the access. Many economic model suggest that loan pricing is tightly related to reliance on subsidies and therefore also to the functioning of the MFI market. However there is little evidence indicating interest rate sensitivities in MFI markets. Therefore we test the hypotheses of price inelastic demand using randomized trials conducted by a high-risk consumer lender in South Africa. A field experiment with randomized individual interest rate direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate. Though loan price is not the only determining factor that might influence the demand and thus the MFI profit. Borrowers with low liquidity might also respond to maturity because longer maturities reduce monthly payment and thereby increasing the cash flow. Maturity might have the same or even larger impact on the demand for credit then the loan price. We examine maturity elasticities of demand using exogenous variation in maturities engineerd by a randomly assigned, nonbinding example maturity (four, six or twelve month) presented in some direct mailers. The randomly assigned example maturity predicts the actual maturity chosen.
+
+#< info "How do we read a Stata File in R?"
 `read_dta` from the package `haven` reads a file in Stata version 5-12 binary format into a data frame in R. This funtion only supports Stata formats after 12, but since we have a 5-12 format it can be used.
-***
+#>
 
 1.1) Load the data file _kz_demandelasts_aer08.dta_ and store it in the variable `stata_data`. To do so, first load the package `haven` with the `library()` command. If you think your answer is right press `check`:
 
 ```{r "1 a) "}
+#< fill_in
+library(___)
+#>
 library(haven)
 #< hint
-display("library(...)")
+display("library(package_name)")
 #>
 ```
 
 1.2) Now you can use the command `read_dta()` to load the data file.
 
 ```{r "1 a) 2"}
-stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+#< fill_in
+___ <- ___("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+#>
 #< hint
-display("... <- ...(~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta)")
+display("Just fill in the command stata_data in the first place holder and read_dta() in the second")
 #>
 ```
 
-After loading in the data, we can now have a deeper look into our data and the according parameters. But first let's have a rough look at our data stored in `stata_data`.
+After loading in the data, we can now have a deeper look into our data and the according parameters. Let's have a rough look at our data stored in `stata_data`.
 
-There are a variaty of ways to get an overview on a data set. We will use the R function `head()`to show the first six rows of our data set stored in `stata_data`. An alternative would be to show six random sample rows,  use the command `sample_n(data,#rows)`. This will help us to get familiar with the variables and understand how the data set is structured.
+There are a variaty of ways to get an overview on a data set. We will use the R function `head()`to show the first six rows of our data set stored in `stata_data`. An alternative would be to show six random sample rows, by using the command `sample_n(data,#rows)`. This will help us to get familiar with the variables and understand how the data set is structured.
 
-1.3) Show the first six rows of our data file stored in `stata_data`. Afterwards press the `check` button.Are there any inconsistencies?
+1.3) Show the first six rows of our data file stored in `stata_data`. Afterwards press the `check` button. Are there any inconsistencies?
 
 ```{r "1 b) "}
 head(stata_data)
@@ -89,10 +100,10 @@ display("head(...)")
 #>
 ```
 
-If yes, try `sample_n()` inorder to show six random rows of our data set `stata_data`.
+If yes, try `sample_n()` inorder to show six random rows of our data set `stata_data`. 
 
 ```{r "1 b) 2"}
-sample_n(stata_data)
+sample_n(stata_data,6)
 #< hint
 display("sample_n(...,6)")
 #>
