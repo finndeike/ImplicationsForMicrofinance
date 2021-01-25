@@ -471,3 +471,40 @@ stargazer(reg8a_1, reg8a_2, reg8a_3, reg8a_3, reg8a_4, reg8a_5, reg8a_6, type="h
 
 ```
 
+```{r}
+
+library(maps)
+library(mapdata)
+library(raster)
+library(plyr)
+library(rgdal)
+library(tidyverse)
+library(lubridate)
+library(readr)
+library(sf)
+library(formattable)
+library(dplyr)
+library(ggplot2)
+library(maptools)
+library(knitr)
+library(stargazer)
+
+
+ZAF <- getData("GADM", country = "ZAF", level = 1)
+
+plot(ZAF)
+
+df <- stata_data %>% group_by(province) %>% summarise(offer4 = mean(offer4))
+df <- rbind(df, "Northern Cape" = c("Northern Cape", NA))
+df$province <- c("Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Western Cape", "Northern Cape")
+map <- left_join(df, ZAF@data, by=c("province" = "NAME_1"), as.sf = TRUE)
+
+karte <- st_as_sf(map)
+map1 <- map %>% ggplot(aes(fill = offer4)) + geom_sf()
+
+map1
+
+```
+
+
+

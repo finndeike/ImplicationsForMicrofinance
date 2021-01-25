@@ -115,5 +115,11 @@ display("sample_n(...,6)")
 ```
 
 
+```{r}
+
+test_df <- stata_data %>% group_by(province) %>% summarise(offer = mean(offer4))
+
+
+```
 
 
