@@ -90,3 +90,169 @@
 ,
 {"type":["init_ps"],"time":["2021-01-25 13:54:20"],"user":["default_user"],"umph":[1611579260.7539],"ok":[true]}
 ,
+{"type":["init_ps"],"time":["2021-01-26 12:19:12"],"user":["default_user"],"umph":[1611659952.7483],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:19:38"],"user":["default_user"],"umph":[1611659978.6937],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:20:05"],"user":["default_user"],"umph":[1611660005.8353],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:20:22"],"user":["default_user"],"umph":[1611660022.2325],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:21:03"],"user":["default_user"],"umph":[1611660063.2564],"ok":[false],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data)"],"message":["evaluation error in \n  sample_n(stata_data)\n  Error in sample.int(n(), check_size(~, n(), replace = replace), replace = replace, : ungültiges 'size' Argument\n"]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:21:16"],"user":["default_user"],"umph":[1611660076.5518],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:21:55"],"user":["default_user"],"umph":[1611660115.0123],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:22:00"],"user":["default_user"],"umph":[1611660120.8097],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:22:07"],"user":["default_user"],"umph":[1611660127.8465],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 12:22:11"],"user":["default_user"],"umph":[1611660131.3391],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-01-26 14:18:49"],"user":["default_user"],"umph":[1611667129.1649],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-26 14:20:26"],"user":["default_user"],"umph":[1611667226.4859],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-26 15:09:29"],"user":["default_user"],"umph":[1611670169.9437],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 15:09:37"],"user":["default_user"],"umph":[1611670177.1775],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 15:09:37"],"user":["default_user"],"umph":[1611670177.9515],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 15:09:38"],"user":["default_user"],"umph":[1611670178.2709],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 15:09:38"],"user":["default_user"],"umph":[1611670178.3269],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-01-26 15:09:51"],"user":["default_user"],"umph":[1611670191.2282],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":["# FunctionTable1 - Übersicht und Kontrolle des Datensatzes\ntestfunction <- function(stata_data1){\n  list(\"Panel A: Experimental variables\" =\n         list(\"Interest rate\" = ~ mean_sd(stata_data1$offer4)),\n         list(\"Dynamic repayment incentive\" = ~ mean_sd(stata_data1$yearlong)),\n         list(\"Example loan term = 4 months\" = ~ mean_sd(stata_data1$termshown4, na_rm = TRUE)),\n         list(\"Example loan term = 6 months\" = ~ mean_sd(stata_data1$termshown6, na_rm = TRUE)),\n         list(\"Example loan term = 12 months\" = ~ mean_sd(stata_data1$termshown12, na_rm =TRUE)),\n         list(\"Borrowed\" = ~ mean_sd(stata_data1$tookup)),\n         list(\"Applied\" = ~ mean_sd(stata_data1$applied)),\n         list(\"Loan size\" = ~ mean_sd(stata_data1$loansize)),\n       \"Panel B: Demographic characteristics\" =\n         list(\"Female\" = ~ mean_sd(stata_data1$female)),\n         list(\"Married\" = ~ mean_sd(stata_data1$married, na_rm = TRUE)),\n         list(\"Age\" = ~ mean_sd(stata_data1$age)),\n         list(\"More educated\" = ~ mean_sd(stata_data1$edhi)),\n         list(\"Rural\" = ~ mean_sd(stata_data1$rural)),\n         list(\"Number of dependents\" = ~ mean_sd(stata_data1$dependants, na_rm = TRUE)),\n         list(\"Gross monthly income (000s of rand)\" = ~ mean_sd(stata_data1$grossincome, na_rm = TRUE)),\n         list(\"Number of loans with the lender\" = ~ mean_sd(stata_data1$trcount, na_rm = TRUE))\n  )\n}\n\n\n# Spalte1 - All\nall_data <- testfunction(stata_data)\nsummary_all <- summary_table(stata_data, all_data)\n\n# Spalte2 - Applied\napplied_data <- stata_data %>% filter(applied == 1)\napplied_list <- testfunction(applied_data) \nsummary_applied <- summary_table(applied_data, applied_list)\n\n# Spalte3 - Borrowed\nborrowed_data <- stata_data %>% filter(tookup == 1)\nborrowed_list <- testfunction(borrowed_data) \nsummary_borrowed <- summary_table(borrowed_data, borrowed_list)\n\n# Spalte4 - Eligible for maturity suggestion randomizition\nmaturity_data <- stata_data %>% filter(onetermshown == 1, low==1 | med ==1)\nmaturity_list <- testfunction(maturity_data) \nsummary_maturity <- summary_table(maturity_data, maturity_list)\n\n# Zusammenfassen der Listen\nsummary <- cbind(summary_all, summary_applied, summary_borrowed, summary_maturity)\nsummary\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-01-27 11:58:44"],"user":["default_user"],"umph":[1611745124.1061],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-27 12:44:20"],"user":["default_user"],"umph":[1611747860.2933],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-27 12:51:00"],"user":["default_user"],"umph":[1611748260.7369],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-01-30 17:26:19"],"user":["default_user"],"umph":[1612023979.5829],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-02-02 19:04:02"],"user":["default_user"],"umph":[1612289042.0161],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-02-08 15:03:14"],"user":["default_user"],"umph":[1612792994.6096],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-02-09 14:34:40"],"user":["default_user"],"umph":[1612877680.0413],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-02-09 16:07:31"],"user":["default_user"],"umph":[1612883251.7281],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:22:16"],"user":["default_user"],"umph":[1612974136.0338],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:25:48"],"user":["default_user"],"umph":[1612974348.9504],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:25:56"],"user":["default_user"],"umph":[1612974356.3878],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:25:57"],"user":["default_user"],"umph":[1612974357.3548],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:25:57"],"user":["default_user"],"umph":[1612974357.7713],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:25:57"],"user":["default_user"],"umph":[1612974357.8253],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:26:57"],"user":["default_user"],"umph":[1612974417.3669],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:27:00"],"user":["default_user"],"umph":[1612974420.6939],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:27:05"],"user":["default_user"],"umph":[1612974425.8535],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:27:08"],"user":["default_user"],"umph":[1612974428.715],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:27:11"],"user":["default_user"],"umph":[1612974431.6921],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":["library(sf)\nlibrary(ggplot2)\nlibrary(tmap)\nlibrary(tmaptools)\nlibrary(leaflet)\nlibrary(dplyr)\n\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\nmymap <- st_read(\"~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp\", stringsAsFactors=FALSE)\ndf <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))\ndf <- rbind(df, \"Northern Cape\" = c(\"Northern Cape\", NA))\ndf$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(df)[names(df) == \"province\"] <- \"NAME_1\"\nmap_data <- inner_join(mymap, df)\n\ntm_shape(map_data) +\n  tm_polygons(\"interest_rate\", id = \"NAME_1\", palette = \"Greens\")\n\ntmap_mode(\"view\")\ntmap_last()\n\nzaf_map <- tmap_last()\ntmap_save(zaf_map, \"zaf_map.html\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:27:20"],"user":["default_user"],"umph":[1612974440.9205],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":["library(sf)\nlibrary(ggplot2)\nlibrary(tmap)\nlibrary(tmaptools)\nlibrary(leaflet)\nlibrary(dplyr)\n\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\nmymap <- st_read(\"~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp\", stringsAsFactors=FALSE)\ndf <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))\ndf <- rbind(df, \"Northern Cape\" = c(\"Northern Cape\", NA))\ndf$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(df)[names(df) == \"province\"] <- \"NAME_1\"\nmap_data <- inner_join(mymap, df)\n\ntm_shape(map_data) +\n  tm_polygons(\"interest_rate\", id = \"NAME_1\", palette = \"Greens\")\n\ntmap_mode(\"view\")\ntmap_last()\n\nzaf_map <- tmap_last()\ntmap_save(zaf_map, \"zaf_map.html\")"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:35:49"],"user":["default_user"],"umph":[1612974949.8044],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:35:57"],"user":["default_user"],"umph":[1612974957.6906],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:35:58"],"user":["default_user"],"umph":[1612974958.6856],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:35:59"],"user":["default_user"],"umph":[1612974959.112],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:35:59"],"user":["default_user"],"umph":[1612974959.1638],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:37:46"],"user":["default_user"],"umph":[1612975066.7002],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:37:57"],"user":["default_user"],"umph":[1612975077.296],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:37:57"],"user":["default_user"],"umph":[1612975077.9928],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:37:58"],"user":["default_user"],"umph":[1612975078.3039],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:37:58"],"user":["default_user"],"umph":[1612975078.3576],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:40:20"],"user":["default_user"],"umph":[1612975220.3435],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:40:27"],"user":["default_user"],"umph":[1612975227.0699],"ok":[false],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(.PH_._)"],"message":["evaluation error in \n  library(___)\n  Error in library(___): there is no package called ‘___’\n"]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:40:34"],"user":["default_user"],"umph":[1612975234.6008],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:40:48"],"user":["default_user"],"umph":[1612975248.6203],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:41:03"],"user":["default_user"],"umph":[1612975263.9437],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:41:14"],"user":["default_user"],"umph":[1612975274.6398],"ok":[false],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data)"],"message":["evaluation error in \n  sample_n(stata_data)\n  Error in sample.int(n(), check_size(~, n(), replace = replace), replace = replace, : ungültiges 'size' Argument\n"]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:41:25"],"user":["default_user"],"umph":[1612975285.1793],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data, 6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:41:43"],"user":["default_user"],"umph":[1612975303.8425],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":["\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\nmymap <- st_read(\"~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp\", stringsAsFactors=FALSE)\ndf <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))\ndf <- rbind(df, \"Northern Cape\" = c(\"Northern Cape\", NA))\ndf$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(df)[names(df) == \"province\"] <- \"NAME_1\"\nmap_data <- inner_join(mymap, df)\n\ntm_shape(map_data) +\n  tm_polygons(\"interest_rate\", id = \"NAME_1\", palette = \"Greens\")\n\ntmap_mode(\"view\")\ntmap_last()\n\nzaf_map <- tmap_last()\ntmap_save(zaf_map, \"zaf_map.html\")\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:43:27"],"user":["default_user"],"umph":[1612975407.2662],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:43:35"],"user":["default_user"],"umph":[1612975415.0114],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:43:35"],"user":["default_user"],"umph":[1612975415.8346],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:43:36"],"user":["default_user"],"umph":[1612975416.4366],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:43:36"],"user":["default_user"],"umph":[1612975416.4855],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:44:53"],"user":["default_user"],"umph":[1612975493.2239],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:45:00"],"user":["default_user"],"umph":[1612975500.6401],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:45:15"],"user":["default_user"],"umph":[1612975515.4737],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:45:31"],"user":["default_user"],"umph":[1612975531.1191],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:45:43"],"user":["default_user"],"umph":[1612975543.9922],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:47:09"],"user":["default_user"],"umph":[1612975629.4414],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":["\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\nmymap <- st_read(\"~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp\", stringsAsFactors=FALSE)\ndf <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))\ndf <- rbind(df, \"Northern Cape\" = c(\"Northern Cape\", NA))\ndf$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(df)[names(df) == \"province\"] <- \"NAME_1\"\nmap_data <- inner_join(mymap, df)\n\ntm_shape(map_data) +\n  tm_polygons(\"interest_rate\", id = \"NAME_1\", palette = \"Greens\")\n\ntmap_mode(\"view\")\ntmap_last()\n\nzaf_map <- tmap_last()\ntmap_save(zaf_map, \"zaf_map.html\")\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:47:43"],"user":["default_user"],"umph":[1612975663.5507],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":["\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\nmymap <- st_read(\"~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp\", stringsAsFactors=FALSE)\ndf <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))\ndf <- rbind(df, \"Northern Cape\" = c(\"Northern Cape\", NA))\ndf$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(df)[names(df) == \"province\"] <- \"NAME_1\"\nmap_data <- inner_join(mymap, df)\n\ntm_shape(map_data) +\n  tm_polygons(\"interest_rate\", id = \"NAME_1\", palette = \"Greens\")\n\ntmap_mode(\"view\")\ntmap_last()\n\nzaf_map <- tmap_last()\ntmap_save(zaf_map, \"zaf_map.html\")\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:48:19"],"user":["default_user"],"umph":[1612975699.4676],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":["\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\nmymap <- st_read(\"~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp\", stringsAsFactors=FALSE)\ndf <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))\ndf <- rbind(df, \"Northern Cape\" = c(\"Northern Cape\", NA))\ndf$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(df)[names(df) == \"province\"] <- \"NAME_1\"\nmap_data <- inner_join(mymap, df)\n\ntm_shape(map_data) +\n  tm_polygons(\"interest_rate\", id = \"NAME_1\", palette = \"Greens\")\n\ntmap_mode(\"view\")\ntmap_last()\n\nzaf_map <- tmap_last()\ntmap_save(zaf_map, \"zaf_map.html\")\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 17:50:49"],"user":["default_user"],"umph":[1612975849.7986],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:51:09"],"user":["default_user"],"umph":[1612975869.939],"ok":[false],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(.PH_._)"],"message":["evaluation error in \n  library(___)\n  Error in library(___): there is no package called ‘___’\n"]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:51:14"],"user":["default_user"],"umph":[1612975874.5189],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:51:28"],"user":["default_user"],"umph":[1612975888.3931],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:51:38"],"user":["default_user"],"umph":[1612975898.5878],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 17:51:51"],"user":["default_user"],"umph":[1612975911.8476],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 18:04:35"],"user":["default_user"],"umph":[1612976675.3433],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-02-10 18:11:20"],"user":["default_user"],"umph":[1612977080.1533],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 18:11:29"],"user":["default_user"],"umph":[1612977089.4601],"ok":[true],"chunk":[1],"ex":[2],"e.ind":[0],"code":["library(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 18:11:30"],"user":["default_user"],"umph":[1612977090.2768],"ok":[true],"chunk":[2],"ex":[2],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 18:11:30"],"user":["default_user"],"umph":[1612977090.8929],"ok":[true],"chunk":[3],"ex":[2],"e.ind":[0],"code":["head(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 18:11:30"],"user":["default_user"],"umph":[1612977090.9557],"ok":[true],"chunk":[4],"ex":[2],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-02-10 18:11:34"],"user":["default_user"],"umph":[1612977094.2244],"ok":[true],"chunk":[5],"ex":[2],"e.ind":[0],"code":[""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-02-10 20:06:30"],"user":["default_user"],"umph":[1612983990.2144],"ok":[true]}
+,

@@ -32,48 +32,97 @@ The paper, a supplemental appendix and data are available online at the followin
 
 ### Introduction
 
-Over three billion people in developing countries are still without effective access
-to loan and deposit services. The problem is particularly acute in Sub-Saharan Africa, where only between five and twenty-five percent of households have a formal relationship with a financial institution. The region is also home to just two percent of the world’s microfinance institutions.
-Lack of access to financial services is therefore one of the largest constraints to private sector development in Africa. Addressing this shortfall requires creating new institutions and building operational and managerial capacity from the ground up. (IFC)
-Providing  access  to  microcredit  is  expensive  for  lenders  in  view  of  the  high transaction costs relative to the small  amounts borrowed. Therefore,  to encourage micro-lending, profit-driven microfinance organisations, including retail and furniture stores, are permitted (in terms of the Usury Act Exemption Notice) to charge interest rates that are higher than those payable in respect of debt procured from the formal financial sector.32  This, in turn makes microcredit expensive for borrowers and more attractive for lenders
-
 “If you go out into the real world, you cannot miss seeing that the poor are poor not because they are untrained or illiterate but because they cannot retain the returns of their labor. They have no control over capital, and it is the ability to control capital that gives people the power to rise out of poverty.”
 
 ― Muhammad Yunus, Banker to the Poor: Micro-Lending and the Battle Against World Poverty ("https://microfinancingafrica.org/10-profound-quotes-about-microfinance/")
 
+Over three billion people in developing countries are still without effective access
+to loan and deposit services. The problem is particularly acute in Sub-Saharan Africa, where only between five and twenty-five percent of households have a formal relationship with a financial institution. The region is also home to just two percent of the world’s microfinance institutions.
+Lack of access to financial services is therefore one of the largest constraints to private sector development in Africa. Addressing this shortfall requires creating new institutions and building operational and managerial capacity from the ground up. (IFC)
+Providing  access  to  microcredit  is  expensive  for  lenders  in  view  of  the  high transaction costs relative to the small  amounts borrowed. Therefore,  to encourage micro-lending, profit-driven microfinance organisations, including retail and furniture stores, are permitted (in terms of the Usury Act Exemption Notice) to charge interest rates that are higher than those payable in respect of debt procured from the formal financial sector. This, in turn makes microcredit expensive for borrowers and more attractive for lenders
 
 Microfinance institutions (MFI) are often forced to increase interest rates to eliminate reliance of subsidies by policymakers. This makes only sense if the poor are really insensitive to interest rates. Otherwise increasing interest rates would limit the access. Many economic model suggest that loan pricing is tightly related to reliance on subsidies and therefore also to the functioning of the MFI market. However there is little evidence indicating interest rate sensitivities in MFI markets. Therefore we test the hypotheses of price inelastic demand using randomized trials conducted by a high-risk consumer lender in South Africa. A field experiment with randomized individual interest rate direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate. Though loan price is not the only determining factor that might influence the demand and thus the MFI profit. Borrowers with low liquidity might also respond to maturity because longer maturities reduce monthly payment and thereby increasing the cash flow. Maturity might have the same or even larger impact on the demand for credit then the loan price. We examine maturity elasticities of demand using exogenous variation in maturities engineerd by a randomly assigned, nonbinding example maturity (four, six or twelve month) presented in some direct mailers. The randomly assigned example maturity predicts the actual maturity chosen.
 
-## Exercise 1 -- Data Overview
+STRUCTURE und oben umformulieren + wie funktionier es mit Check, Hint, Edit etc.?
+
+## Exercise 1 -- Data 
+
+In this section we will get to know the data we use in this interactive R-Problemset. The data set we are working with _kz_demandelasts_aer08.dta_ is a Stata data File it contains data of more then 50,000 former clients of a lender in South Africa. The information of the clients range from experimental variables to demographic characteristics. But before we can take a look at our data set _kz_demandelasts_aer08.dta_ , we have to load the data. To do so we use the command 'read_dta()' from the 'haven' package.
 
 info("How do we read a Stata File in R?")
 
-1.1) Load the data file _kz_demandelasts_aer08.dta_ and store it in the variable `stata_data`. To do so, first load the package `haven` with the `library()` command. If you think your answer is right press `check`:
+1.1.1)  First load the package `haven` with the `library()` command. If you think your answer is right press `check`:
 
 ```{r "2_1"}
 library(haven)
 ```
 
-1.2) Now you can use the command `read_dta()` to load the data file.
+1.1.2) Now you can use the command `read_dta()` to load the data file _kz_demandelasts_aer08.dta_ and store it in the variable `stata_data`..
 
 ```{r "2_2"}
+stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
+
+# Data Overview
 
 After loading in the data, we can now have a deeper look into our data and the according parameters. Let's have a rough look at our data stored in `stata_data`.
 
-There are a variaty of ways to get an overview on a data set. We will use the R function `head()`to show the first six rows of our data set stored in `stata_data`. An alternative would be to show six random sample rows, by using the command `sample_n(data,#rows)`. This will help us to get familiar with the variables and understand how the data set is structured.
+There are a variaty of ways to get an overview on a data set. We will use the R function `head()`to show the first six rows of our data set stored in `stata_data`. An alternative would be to show six random sample rows, by using the command `sample_n(data,rows)`. This will help us to get familiar with the variables and understand how the data set is structured.
 
-1.3) Show the first six rows of our data file stored in `stata_data`. Afterwards press the `check` button. Are there any inconsistencies?
+1.2.1) Show the first six rows of our data file stored in `stata_data`. Afterwards press the `check` button it will execute the function and show you if you are right or wrong.
 
 ```{r "2_3"}
 head(stata_data)
 ```
 
-If yes, try `sample_n()` inorder to show six random rows of our data set `stata_data`. 
+1.2.2) Now try `sample_n()` in order to show six random rows of our data set `stata_data`.
 
 ```{r "2_4"}
 sample_n(stata_data,6)
 ```
+
+Both functions show you six rows of the sample data frame where each row typifies one of the 58,168 clients from 86 mostly urban branches who had borrowed from the lender in the past 24 months, and did not currently have a loan from the lender as of 30 days prior to the mailer. Furthermore we can see 54 columns. Every column stands for one variable. 
+We are going to take especially a look at series of experimental variables. These include, inter alia, the three rates which were assigned to each client: `offer4` a randomized individual interest rate directed mail offer, `final4` a contract rate that was slightly less than the offer rate and `yearlong` the dynamic repayment incentive that extended preferential contract rates for up to one year. In addition the three example maturities presented in some mailers `termshown4`, `termshown6` and `termshown12` (four, six and twelve month), which give a prediction of the actual maturity chosen. The variables `tookup`, `applied` and `onetermshown` presents those clients who borrowed, those who applied and those who were eligible for the maturity suggestion randomization. As well as the loan size which is described by the variable `loansize`. 
+More over we will examine demographic characteristics like: `female`, `married`, `age`, `edhi` (more educated), `rural`, `dependants` (number of dependants), `grossincome` (gross monthly income 000s of rand), `trcount` (number of loans with the lender), `dormancy` (number of months since the last loan with lender) and the three risk categories `low` (low risk), `mid` (medium risk) and high risk (neither `med` or `low`). Since the remaining variables are mostly not relevant for our analysis I will not give an explanation of those. If you are interested in the remaining variables, you can press the `data` button to get to the Data Explorer. There you get descriptions of all variables.
+
+The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. 
+The following graphic shows the operational steps of the experiment in detail.
+
+![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](~/Documents/GitHub/thesis_code_rep//steps.png)
+
+# Interest Rate Randomization 
+
+
+
+```{r "2_5",output='htmlwidget', widget='tmap'}
+
+library(sf)
+library(ggplot2)
+library(tmap)
+library(tmaptools)
+library(leaflet)
+library(dplyr)
+# set options so numbers don't display as scientific notation
+options(scipen=999)
+
+mymap <- st_read("~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp", stringsAsFactors=FALSE)
+df <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))
+df <- rbind(df, "Northern Cape" = c("Northern Cape", NA))
+df$province <- c("Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Western Cape", "Northern Cape")
+names(df)[names(df) == "province"] <- "NAME_1"
+map_data <- inner_join(mymap, df)
+
+tm_shape(map_data) +
+  tm_polygons("interest_rate", id = "NAME_1", palette = "Greens")
+
+tmap_mode("view")
+tmap_last()
+
+```
+
+
+![Fig. 2  | Interactive Map of South Africa](~/Documents/GitHub/thesis_code_rep/zaf_map.html)
+
 
 
 
