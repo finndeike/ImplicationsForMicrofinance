@@ -30,7 +30,7 @@ The paper, a supplemental appendix and data are available online at the followin
 
 
 
-### Introduction
+## Exercise Introduction
 
 “If you go out into the real world, you cannot miss seeing that the poor are poor not because they are untrained or illiterate but because they cannot retain the returns of their labor. They have no control over capital, and it is the ability to control capital that gives people the power to rise out of poverty.”
 
@@ -39,27 +39,30 @@ The paper, a supplemental appendix and data are available online at the followin
 Over three billion people in developing countries are still without effective access
 to loan and deposit services. The problem is particularly acute in Sub-Saharan Africa, where only between five and twenty-five percent of households have a formal relationship with a financial institution. The region is also home to just two percent of the world’s microfinance institutions.
 Lack of access to financial services is therefore one of the largest constraints to private sector development in Africa. Addressing this shortfall requires creating new institutions and building operational and managerial capacity from the ground up. (IFC)
-Providing  access  to  microcredit  is  expensive  for  lenders  in  view  of  the  high transaction costs relative to the small  amounts borrowed. Therefore,  to encourage micro-lending, profit-driven microfinance organisations, including retail and furniture stores, are permitted (in terms of the Usury Act Exemption Notice) to charge interest rates that are higher than those payable in respect of debt procured from the formal financial sector. This, in turn makes microcredit expensive for borrowers and more attractive for lenders
+Providing  access  to  microcredit  is  expensive  for  lenders  in  view  of  the  high transaction costs relative to the small  amounts borrowed. Therefore,  to encourage micro-lending, profit-driven microfinance organisation, including retail and furniture stores, are permitted (in terms of the Usury Act Exemption Notice) to charge interest rates that are higher than those payable in respect of debt procured from the formal financial sector. This, in turn makes microcredit expensive for borrowers and more attractive for lenders
 
-Microfinance institutions (MFI) are often forced to increase interest rates to eliminate reliance of subsidies by policymakers. This makes only sense if the poor are really insensitive to interest rates. Otherwise increasing interest rates would limit the access. Many economic model suggest that loan pricing is tightly related to reliance on subsidies and therefore also to the functioning of the MFI market. However there is little evidence indicating interest rate sensitivities in MFI markets. Therefore we test the hypotheses of price inelastic demand using randomized trials conducted by a high-risk consumer lender in South Africa. A field experiment with randomized individual interest rate direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate. Though loan price is not the only determining factor that might influence the demand and thus the MFI profit. Borrowers with low liquidity might also respond to maturity because longer maturities reduce monthly payment and thereby increasing the cash flow. Maturity might have the same or even larger impact on the demand for credit then the loan price. We examine maturity elasticities of demand using exogenous variation in maturities engineerd by a randomly assigned, nonbinding example maturity (four, six or twelve month) presented in some direct mailers. The randomly assigned example maturity predicts the actual maturity chosen.
+Microfinance institutions (MFI) are often forced to increase interest rates to eliminate reliance of subsidies by policymakers. This makes only sense if the poor are really insensitive to interest rates. Otherwise increasing interest rates would limit the access. Many economic model suggest that loan pricing is tightly related to reliance on subsidies and therefore also to the functioning of the MFI market. However there is little evidence indicating interest rate sensitivities in MFI markets. Therefore we test the hypotheses of price inelastic demand using randomized trials conducted by a high-risk consumer lender in South Africa. A field experiment with randomized individual interest rate direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate. Though loan price is not the only determining factor that might influence the demand and thus the MFI profit. Borrowers with low liquidity might also respond to maturity because longer maturities reduce monthly payment and thereby increasing the cash flow. Maturity might have the same or even larger impact on the demand for credit then the loan price. We will observe the repayment behavior of the clients by identifying demand curves for consumer credit by randomizing both the offered interest rate and the maturity of an example loan. In particular we examine maturity elasticities of demand using exogenous variation in maturities engineered by a randomly assigned, nonbinding example maturity (four, six or twelve month) presented in some direct mailers. The randomly assigned example maturity predicts the actual maturity chosen. 
 
 STRUCTURE und oben umformulieren + wie funktionier es mit Check, Hint, Edit etc.?
 
-## Exercise 1 -- Data 
+## Exercise 1 -- Data Overview
 
-In this section we will get to know the data we use in this interactive R-Problemset. The data set we are working with _kz_demandelasts_aer08.dta_ is a Stata data File it contains data of more then 50,000 former clients of a lender in South Africa. The information of the clients range from experimental variables to demographic characteristics. But before we can take a look at our data set _kz_demandelasts_aer08.dta_ , we have to load the data. To do so we use the command 'read_dta()' from the 'haven' package.
+In this section we will get to know the data we use in this interactive R-Problemset.
+
+The data set we are working with _kz_demandelasts_aer08.dta_ is a Stata data file it contains data of more then 50,000 former clients of a lender in South Africa. The information of the clients range from experimental variables to demographic characteristics. But before we can take a look at our data set _kz_demandelasts_aer08.dta_ , we have to load the data. To do so we use the command `read_dta()`n  from the `haven` package.
 
 info("How do we read a Stata File in R?")
 
-1.1.1)  First load the package `haven` with the `library()` command. If you think your answer is right press `check`:
+1.1)  First load the package `haven` with the `library()` command. If you think your answer is right press `check`:
 
-```{r "2_1"}
+```{r "3_1"}
+# Load the package with the library() command
 library(haven)
 ```
 
-1.1.2) Now you can use the command `read_dta()` to load the data file _kz_demandelasts_aer08.dta_ and store it in the variable `stata_data`..
+1.2) Now you can use the command `read_dta()` to load the data file _kz_demandelasts_aer08.dta_ and store it in the variable `stata_data`.
 
-```{r "2_2"}
+```{r "3_2"}
 stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
@@ -67,17 +70,20 @@ stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08
 
 After loading in the data, we can now have a deeper look into our data and the according parameters. Let's have a rough look at our data stored in `stata_data`.
 
-There are a variaty of ways to get an overview on a data set. We will use the R function `head()`to show the first six rows of our data set stored in `stata_data`. An alternative would be to show six random sample rows, by using the command `sample_n(data,rows)`. This will help us to get familiar with the variables and understand how the data set is structured.
+There are a variety of ways to get an overview on a data set. We will use the R function `head()`to show the first six rows of our data set stored in `stata_data`. An alternative would be to show six random sample rows, by using the command `sample_n(data,rows)`. This will help us to get familiar with the variables and understand how the data set is structured.
 
-1.2.1) Show the first six rows of our data file stored in `stata_data`. Afterwards press the `check` button it will execute the function and show you if you are right or wrong.
+1.3) Show the first six rows of our data file stored in `stata_data`. Afterwards press the `check` button it will execute the function and show you if you are right or wrong.
 
-```{r "2_3"}
+```{r "3_3"}
+# Use the function head() to show the first six rows of the data frame
 head(stata_data)
 ```
 
-1.2.2) Now try `sample_n()` in order to show six random rows of our data set `stata_data`.
+info("Function: `sample_n()`")
 
-```{r "2_4"}
+1.4) Now try `sample_n()` in order to show six random rows of our data set `stata_data`.
+
+```{r "3_4"}
 sample_n(stata_data,6)
 ```
 
@@ -85,16 +91,92 @@ Both functions show you six rows of the sample data frame where each row typifie
 We are going to take especially a look at series of experimental variables. These include, inter alia, the three rates which were assigned to each client: `offer4` a randomized individual interest rate directed mail offer, `final4` a contract rate that was slightly less than the offer rate and `yearlong` the dynamic repayment incentive that extended preferential contract rates for up to one year. In addition the three example maturities presented in some mailers `termshown4`, `termshown6` and `termshown12` (four, six and twelve month), which give a prediction of the actual maturity chosen. The variables `tookup`, `applied` and `onetermshown` presents those clients who borrowed, those who applied and those who were eligible for the maturity suggestion randomization. As well as the loan size which is described by the variable `loansize`. 
 More over we will examine demographic characteristics like: `female`, `married`, `age`, `edhi` (more educated), `rural`, `dependants` (number of dependants), `grossincome` (gross monthly income 000s of rand), `trcount` (number of loans with the lender), `dormancy` (number of months since the last loan with lender) and the three risk categories `low` (low risk), `mid` (medium risk) and high risk (neither `med` or `low`). Since the remaining variables are mostly not relevant for our analysis I will not give an explanation of those. If you are interested in the remaining variables, you can press the `data` button to get to the Data Explorer. There you get descriptions of all variables.
 
-The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. 
-The following graphic shows the operational steps of the experiment in detail.
 
-![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](~/Documents/GitHub/thesis_code_rep//steps.png)
+But how many clients applied for the loan on time and actually were assigned to borrow from the lender?
 
-# Interest Rate Randomization 
+To answer this question we could extract all the clients from our data set who actually accepted the offer, were approved  and ended up taking the loan. To subset a data frame we can use the function `filter()` from the `dplyr` package. 
+
+info("Function: `filter()`")
+
+1.5) Filter the main data frame `stata_data` by using `filter()` with the condition `tookup == 1` to get the sample data frame `borrowed`. Just fill in the remaining commands. Afterwards press Check.
+
+```{r "3_5"}
+borrowed <- stata_data %>% filter(tookup == 1)
+```
+
+Now we created a data frame which only contains clients who borrowed from the lender. But we still don't know how many borrowed. Therefore you can press the `Data` button to get to the Data Explorer and it will show you the number of rows of the sample frame `borrowed`. This number corresponds with the number of borrowers.
 
 
+Quiz: How many clients borrowed from our lender?
 
-```{r "2_5",output='htmlwidget', widget='tmap'}
+- NA [ ]
+
+- NA [ ]
+
+- 3,887 [x]
+
+- NA [ ]
+
+
+Another aspect that could by interesting is to analyze the geographic circumstances. Our data frame `stata_data` contains a column named `province`, which contains the province in which the applicant applied for a loan. Hence we can create a new data frame grouped by the provinces by using the functions `group_by()` and `summarise()`.
+
+info("Function: group_by() & summarise()")
+
+
+1.6) Group the data frame `borrowed` by the `province` the applicant applied in using the function `group_by()`. The new data frame should be named `provinces`. Then use the function `summarise()` to apply the given operations for each group. Afterwards show the new data frame `provinces`. 
+```{r "3_6"}
+provinces <- borrowed %>% group_by(province) %>% summarise("Average Interest Rate" = round(mean(offer4, na.rm=TRUE),3),
+                                                      "Average Offer Rate" = round(mean(final4, na.rm=TRUE),3),
+                                                      "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
+                                                      "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
+                                                      "Average Maturity" = round(mean(term, na.rm=TRUE),3),
+                                                      "Number of Clients" = sum(tookup),
+                                                      )
+provinces
+
+```
+
+As you can see our newly created data frame is grouped into eight provinces. Tough South Africa is actually divided into nine provinces, the province Northern Cape is missing because no client applied for a loan in this province. We want to create an interactive map of South Africa later in this problem set therefore we have to add the Northern Cape to our data frame `provinces`.
+
+1.7) Just press `Check` to add the Northern cape to the data frame.
+
+```{r "3_7"}
+provinces_ <- provinces
+provinces <- rbind(provinces_, c("Northern Cape", NA, NA, NA , NA, NA, NA))
+provinces$province <- c("Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Western Cape", "Northern Cape")
+names(provinces)[names(provinces) == "province"] <- "NAME_1"
+```
+
+As you can see the provinces of South Africa are: Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, Northern Cape, North West and Western Cape. 
+
+Before we continue with our analysis, try to answer the short question:
+
+
+Quiz: Why did so many clients applied for a loan in Gauteng and none in the Northern Cape?
+
+- The Northern Cape is a highly urbanized province and Gauteng consists mostly of sedimentary rocks. [ ]
+
+- Gauteng is a highly urbanized province and the Northern Cape consists mostly of sedimentary rocks. [x]
+
+
+The provinces  of South Africa vary substantial in size. The smallest but most crowded one is Gauteng. The province of Gauteng is a highly urbanized region. It includes the cities of Johannesburg, Ekurhuleni (East Rand) and Pretoria. Which are three of the five largest cities in the country. On the other hand the largest but most sparsely populated province is the Northern Cape. For comparison the province is slightly larger than Germany. To get a better idea of what we are talking about, let us import the data with the population of every province. 
+In order to do this we can add a new variable or rather column to the data frame called `population`. A helpful function to add a variable to a data frame is called `mutate`.
+
+info("Function: mutate()")
+
+1.8) Add a new column to our existing data frame `provinces` which includes the population of each province using the `mutate`function. You can use the given vector c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786) as the values we want to assign to the new variable `population`. If you finished the task, press `Check`.
+
+```{r "3_8"}
+provinces <- provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))
+
+```
+
+The population data is provided by the south african government. Check out https://www.gov.za/about-sa/south-africas-provinces# for more information.
+
+Evtl. Anteil an actually borrowed
+
+1.9) Press Check in order to get a interactive map of South Africa.
+```{r "3_9",output='htmlwidget', widget='leaflet'}
 
 library(sf)
 library(ggplot2)
@@ -105,23 +187,237 @@ library(dplyr)
 # set options so numbers don't display as scientific notation
 options(scipen=999)
 
-mymap <- st_read("~/Downloads/gadm36_ZAF_shp/gadm36_ZAF_2.shp", stringsAsFactors=FALSE)
-df <- stata_data %>% group_by(province) %>% summarise(interest_rate = mean(offer4))
-df <- rbind(df, "Northern Cape" = c("Northern Cape", NA))
-df$province <- c("Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Western Cape", "Northern Cape")
-names(df)[names(df) == "province"] <- "NAME_1"
-map_data <- inner_join(mymap, df)
+# reads the features from the shapefile
+mymap <- st_read("~/Documents/GitHub/thesis_code_rep/gadm36_ZAF_shp/gadm36_ZAF_1.shp", stringsAsFactors=FALSE)
 
-tm_shape(map_data) +
-  tm_polygons("interest_rate", id = "NAME_1", palette = "Greens")
+# joining the data of the shapefile and our dataframe
+map_data <- inner_join(mymap, provinces)
 
-tmap_mode("view")
-tmap_last()
+map_data$`Average Interest Rate` <- as.numeric(map_data$`Average Interest Rate`)
+map_data$`Average Loansize` <- as.numeric(map_data$`Average Loansize`)
+
+mymap <- tm_shape(map_data) +
+  tm_polygons("Average Interest Rate",
+              id = "NAME_1",
+              style = "quantile",
+              palette="Greens",
+              popup.vars=c("population", "Number of Clients", "Average Interest Rate",  "Average Offer Rate", "Average Dynamic Repayment Incentive","Average Loansize", "Average Maturity")) +
+  tm_bubbles(size = "population", col= "black", id="NAME_1", scale = 2) +
+  tm_borders() +
+  tm_scale_bar() +
+  tm_compass(type="8star", size = 2) +
+  tm_credits("Source: GADM database (www.gadm.org)") # not support by view - change how?
+
+tmap_leaflet(mymap)
+# tmap mode set to interactive leaflet map
 
 ```
 
 
-![Fig. 2  | Interactive Map of South Africa](~/Documents/GitHub/thesis_code_rep/zaf_map.html)
+## Exercise 2 -- Experimental Design 
+
+In the last section we loaded in the data file, got a rough look at our data and created a interactive map of South Africa.
+Now, we want to find out more about the variable. In this part details we will discuss the experimental design, implementation and the validation of the random assignments.
+We will take a look especially at the earlier utilized interest rate `offer4`. 
+
+Let's start with the application process. The clients with good repayment histories received a limited-time offer including a randomized interest rate from our lender. Those who were eligible for maturities longer then  four month also received a randomized sample maturity of four, six or twelve month. The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003.The offer rate randomization was based on the client's pre-approved risk category. The categories for a standard schedule for four-month loans were subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). Through the randomization program the individual rate for each client was randomly assigned based on the distribution for each category. Each offer contained a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications were evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients chose a proportional loan size and maturity. The maturity randomization was orthogonal to the offer rate randomization. But the difference was that only low- and medium-risk clients received the suggestion randomization . High-risk clients were not able to choose higher maturities than 4 months. The only value which was clearly stated on the letter and was not randomized was the loan size.
+The following graphic shows the operational steps of the experiment in detail.
+
+![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](~/Documents/GitHub/thesis_code_rep//steps.png)
+
+Fig 1. Source: Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008)
+
+## Randomization Process
+
+2.1.1) To load in the data just press `Check`.
+```{r "4_1"}
+stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+stata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)
+
+
+```
+
+We want to find out more about the interest rate variable `offer4`. In this part of the section we will inspect the correlation of `offer4` and `maturity`, conditional on the risk category, with other observable variables and check if the randomization process was sucessfull.
+
+An interesting function to look at the distribution of rates is `geom_density()`. The function is part of the package `ggplot2`. The package is used for creating elegant data visualizations and is based on "The Grammar of Graphics". `geom_density()` is often used in combination with the function `ggplot()` which is also a part of the `ggplot2`package. We want to create a density estimate of the offer rate in relation to the three risk categories.
+
+info("ggplot()")
+
+info("geom_density()")
+
+
+2.1.2) Create a density estimate of the offer rates.
+```{r "4_2"}
+stata_data %>%
+ggplot(aes(x=offer4, group=risk, fill=risk)) + 
+  geom_density(adjust = 1.5, alpha = 0.4) +
+  scale_fill_discrete(name = "Risk Category", breaks = c("LOW", "MEDIUM", "HIGH")) +
+  xlab("Randomized Offer Rate (%)") +
+  ylab("Density") +
+  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c("green", "blue", "red"))
+
+```
+
+The graphic shows the distribution of the offer rates of the clients in relation to their risk category. We can see that the interest rates of all clients are mostly under their categorical standard schedule. The lowest randomized offer rate is slightly higher then 3% per month and the highest is slightly lower then 15% per month. If we consider the different risk categories it becomes apparent that a offer rate of a low risk client has the highest density between slightly less than 6% and slightly more then 7% at around 0.3. If we now have a look at clients of the medium risk category we see that the offer rate has the highest density between 7% and a bit more then 9% having a ratio of about 0.22. Whereas the density of high risk category is the highest at about 7.5% and between 9% and 11% at 0.16.
+These determinations are vague estimates of the graphic. But we can have a more detailed look at the distribution by using simple mathematic operations.
+
+info("Mathematic Operations")
+
+2.1.3) Task: Calculate the minimal (`min_value`) and maximum (`max_value`) values of the offer rate in regarding the risk categories by using the `group_by()` function and mathematic operations. To do so create a new data frame `values`. If you finished the task press `Check`.
+```{r "4_3"}
+# create a data frame `values` which contains the min and max interest rate values of each risk category
+values <- stata_data %>% group_by(risk) %>% summarise(min_value=min(offer4), max_value=max(offer4))
+```
+
+The data frame shows that the offer rates very from 3.25% to 14.75%.
+
+Now we want to analyze how large the proportion of interest rate lower or rather higher the the standard rates is. The standard rate is the rate the client would be charged with if the experiment did not take place. Fortunately we have the variables called `normate_less()` and `normrate_more()` which states if the offer rate is even or lower or rather higher than the standard rate (1=YES, 0=NO). Therefore we can easily calculate the proportion of interest rates which are even or lower and higher than the standard rates. (ADD AVERAGE DISCOUNT)
+
+2.1.4) Task: Calculate the proportion of interest rates even or lower and higher than the standard rates. Check the info box `Mathemtic Operations` for help. 
+```{r "4_4"}
+# 
+sum(stata_data$normrate_less)/nrow(stata_data)
+sum(stata_data$normrate_more)/nrow(stata_data)
+
+```
+
+We can see that slightly more than 1 percent of the offers were higher than the standard rate and nearly 99 percent at a lower or even rate.
+
+Early it was mentioned that the assigned rates are uncorrelated with other given information such as the external or internal credit score. Thus let us check if this assumption corresponds with the reality. We will now do a simple linear regression with the `lm()` function and check if the offer rate is actually unrelated to other observable characteristics. The value we will look at the closest is the **p-value**.
+
+info("lm() & summary()")
+
+The p-value will give us information about the outcome of the randomization. If our hypothesis is correct, the p-value will be comparatively high for each variable and higher than the significance level.
+
+info("Evaluation of a Linear Regression")
+
+ The variables `low`, `med`, `waved2` and `waved3` are control variables. Control variables are variables which are hold constant during an experiment. They are neither dependent or independent variables. Control variables are not part of the experiment itself but yet they still may influence the outcome of the experiment.
+
+2.2.1) Task: Regress the offer rate `offer4` on the given variables using the `lm()` regression and store it in the variable `reg2_1`. To do so, uncomment the given code and replace it with you answer.
+```{r "4_5"}
+reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data)
+
+summary(reg2_1)
+```
+
+In fact the p-value of all observable variables is significantly higher than the significance level. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful.
+
+Since it is reasonable to assume that the randomization process was successful we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical. (https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf)
+
+info("Probit Regression")
+
+2.2.2) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To do so change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
+```{r "4_6"}
+reg2_2 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
+summary(reg2_2)
+```
+
+As we can see the p-value is 0.851 which is considerably higher than the significance level which substantiates that offer rates at or below the standard rate did not influence the take-up after the deadline. This seems conclusive since the clients borrowed at the standard rate schedule after the deadline.
+
+We can also observe the relationship between the takek-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, then we will utilize the `stat_smooth()` to plot our probit regression `reg2_2`.
+
+info("stat_smooth()")
+
+2.2.3) Plot the probit regression `reg2_2`. Just press Check.
+```{r "4_7",error=FALSE, results='asis'}
+ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ 
+  stat_smooth(method='glm',family=binomial(link='probit'))+
+  ylim(min=0, max=1)
+```
+
+The graph corroborates our thesis since there is no clear tendency that the probability of a take-up after the deadline increases or decreases with a higher offer rate.  
+
+In addition we want to find out if the rejection decisions of the clients were correlated with the offer rate awarding process. The approach is the same as the previous regression. However this time we have to reduce the data frame to only clients who applied for a loan. Furthermore we will add a new function called `stargazer()` to get a nicer output table which holds the regression results of all three regressions.
+
+info("stargazer()")
+
+2.2.4) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`
+```{r "4_8",error=FALSE, results='asis'}
+reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, applied == 1))
+
+stargazer(reg2_1, reg2_2, reg2_3, "branchuse", type="html", header=FALSE)
+```
+
+The first column shows the result of our first regression `reg2_1`, the second column the result of our second regression `reg2_2` and the third our third regression `reg2_3`. We see that the p-value is once again substantially higher than the significance level which corroborates that the rejection decision was not influenced by the offer rate.
+
+To sum up everything that has been stated so far we found out that our randomization process is was successful not affected by other observable characteristics.
+
+
+## Exercise 3 -- Theoretical Model
+
+It the first two sections we got familiar with our parameters and verified the randomization process. Now we want to comprehend the empirical strategy.
+
+## Exercise 4 -- Price Elasticities
+
+So far we learned a lot about our data and the randomization process thus in this section we will apply our newly acquired knowledge to get our first tangible results. In the narrow sense we are interested in the price elasticities of loan demand. A difficulty with estimating loan demand elasticities is that the contract terms are often subjected to external influences, such as alternative financing opportunities or other supply decisions. As far as the price sensitivity we approached the problem be randomizing the interest rate based on the clients risk category. This allows us to observe what happen if we change the loan price or in our instance the interest rate. To achieve this, we estimate a linear probability model of the form:
+
+$$
+a_i = \alpha + \beta{r_i} + \delta{X_i} + \epsilon_{ib}
+$$
+info("Linear Probability Model")
+
+In our model $a_i$ is the independent variable `applied` which can be either **1** if the client $i$ applied for a loan or **0** if he or she did not. The offer rate `offer4` $r$ is orthogonal to the standard errors $\epsilon_{ib}$ by construction and therefore $\beta$ is an unbiased estimate of the price sensitivity of loan take-up from direct mail offers. We will assume that $\beta < 0$ since almost every model of consumer choice predicts that the demand is downward sloping with an increase in price.
+
+## Extensive Margin
+
+4.1.1) To load in the data just press `Check`.
+```{r "6_1"}
+stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+stata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)
+```
+
+
+```{r "6_2",error=FALSE, results='asis'}
+reg3_1 <- felm(applied ~ offer4 | low + med + waved2 + waved3 | branchuse, data=filter(stata_data, normrate_less == 1))
+
+reg3_2 <- felm(applied ~ normrate_more | low + med + waved2 + waved3 | branchuse, data=(stata_data))
+
+reg3_3 <- felm(applied ~ offer4 | low + med + waved2 + waved3 | branchuse, data=filter(stata_data, normrate_less == 0))
+
+stargazer(reg3_1, reg3_2, reg3_3, type="html", header = FALSE)
+```
+
+```{r "6_3",error=FALSE, results='asis'}
+reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
+
+reg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
+
+reg3_6 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
+
+reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
+
+reg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
+
+reg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
+
+stargazer(reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE)
+```
+
+
+## Exercise 5 -- Pricing Strategy
+
+## Exercise 6 -- Maturity Elasticities
+
+## Exercise Conclusion 
+
+## Exercise References
+
+# Bibliography
+
+- South African Government (2021): South Africa's provinces. Retrieved from https://www.gov.za/about-sa/south-africas-provinces#
+
+# Packages
+ - install.packages("hrbrthemes", repos = c("https://cinc.rud.is", "https://cloud.r-project.org/"))
+ https://github.com/hrbrmstr/hrbrthemes
+ 
+# Awards
+- Legendre https://www.risknet.de/wissen/whos-who/adrien-marie-legendre/
+- JJ ALLAIRE https://rstudio.com/speakers/j.j.-allaire/
+- Bartolomeu Dias https://www.bbc.com/news/world-africa-14094918
+
+
+
+
 
 
 
