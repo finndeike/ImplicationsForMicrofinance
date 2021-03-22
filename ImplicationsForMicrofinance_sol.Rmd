@@ -1,3 +1,8 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
 
 ## Credit Elasticities in Less-Developed Economics: Implications for Microfinance
 
@@ -422,7 +427,7 @@ Since it is reasonable to assume that the randomization process was successful w
 Probit regression , generalized linear model -> specify a link function in the GLM. This allows you to fit particular forms of nonlinear relationship between y (or rather its conditional mean) and the x variables
 #>
 
-2.2.2) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To do so change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
+2.2.2) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. TChange the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
 ```{r "2 a) 6"}
 #< fill_in
 reg2_2 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, data=stata_data)
@@ -481,67 +486,184 @@ You successfully completed the first part of our regression analysis! You are on
 
 It the first two sections we got familiar with our parameters and verified the randomization process. Now we want to comprehend the empirical strategy.
 
-## Exercise 4 -- Price Elasticities
+So far we learned a lot about our data and the randomization process thus in this section we will apply our newly acquired knowledge to map our data into testable predictions. In the narrow sense we are interested in the response of loan demand to changes in price and maturity. Our basic model for the estimation is the following: $$y_i = f(C_i, X_i)$$
+In our model **$y$** measures the extensive (`take-up`) and intensive (`loansize`) demand. While **$i$** indicates one of the 53,810 borrowers. The variable **$C_i$** is a vector including the offer rate (**$r_i$**) and the maturity (**$m_i$**). The variables we used for the randomization process of **$r_i$** - the pre-approved risk category (low/medium/high) and the mailer wave (July/September/October) - are included in **$X_i$**.
 
-So far we learned a lot about our data and the randomization process thus in this section we will apply our newly acquired knowledge to get our first tangible results. In the narrow sense we are interested in the price elasticities of loan demand. A difficulty with estimating loan demand elasticities is that the contract terms are often subjected to external influences, such as alternative financing opportunities or other supply decisions. As far as the price sensitivity we approached the problem be randomizing the interest rate based on the clients risk category. This allows us to observe what happen if we change the loan price or in our instance the interest rate. To achieve this, we estimate a linear probability model of the form:
+We often use binary variables as independent variables in regressions. But in our case we want to use a binary variable as a dependent variable. This means it is either 1 if something occurs or zero otherwise. It is possible to use the ordinary least squares method (OLS) in which the dependent variable $y$ is binary. It is called the **Linear Probability Model** (LPM). The LPM is an OLS method with a continuous dependent variable: $$Y_i = \beta_0 + \beta_1{X_1} + ... + \beta_k{X_{ki}} + \epsilon_i$$ To analyze the model we take a look at the conditional expectation of the dependent variable **$Y$** and we see that: $$E[Y|X] = P(Y=1 | X)$$ Now we can use this assumption to describe the model above, we assume that: $$E[Y|X] =  \beta_0 + \beta_1{X_1} + \epsilon_i = P(Y=1 | X) = y$$ Since the expectation of the error term **$\epsilon_i$** given we have **$X$** is **0**. The change in probability associated with a change in **X** to **$X+1$** equals a probability change by the factor of **$\beta_1$**. In other words the coefficient **$\beta_i$** can be interpreted as the change in **$Y$** associated with a unit change in **$X_i$** or the predicted probability of having $y=1$ for the given values of $x_1...x_k$.
+
+However the classic LPM has a fundamental problem. We will shows this by using the `mtcars` data set which is included in the `dplyr`-package. The following plots will show the difference between a LPM and a Probit or Logit model and why probit or logit models are better suited future regressions. Just press check to have a look at the following plots to answer the question bellow:
+
+```{r "3 a) 1"}
+#< task_notest
+library(gridExtra)
+
+lm_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + 
+  stat_smooth(method="lm", se=TRUE) +
+  geom_hline(yintercept=0, col="red") +
+  geom_hline(yintercept=1, col="red") +
+  ylim(-0.25, 1.5) +
+  ggtitle("Linear Probability Model")
+
+probit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + 
+  stat_smooth(method="glm", method.args=list(family="binomial"(link="probit")), se=TRUE) +
+  geom_hline(yintercept=0, col="red") +
+  geom_hline(yintercept=1, col="red") +
+  ylim(-0.25, 1.5) +
+  ggtitle("Probit Model")
+
+logit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + 
+  stat_smooth(method="glm", method.args=list(family="binomial"(link="logit")), se=TRUE) +
+  geom_hline(yintercept=0, col="red") +
+  geom_hline(yintercept=1, col="red") +
+  ylim(-0.25, 1.5) +
+  ggtitle("Logit Model")
+
+grid.arrange(lm_plot, probit_plot, logit_plot, ncol=2)
+#>
+
+```
+
+#< quiz "LPM"
+question: What could be the problem with the Linear Probability Model?
+sc:
+- It is not possible to use the LPM if the dependent variable is binary.
+- In an LPM it is possible to get a probability below zero or above 1.*
+- There is no problem with the LPM.
+success: Your answer is correct, it makes no sense to have a probability lower then zero or higher then 1!
+failure: Your answer is wrong, take a closer look at the LPM!
+#>
+
+As you see in the plots above, Probit and Logit models are better fitted for a regression with a binary dependent variable. They are in fact specifically made for regression with a binary dependent variable and always results in a probability between zero and 1. Now we have to choose between the probit and logit model. The real big difference between the logit and probit model is the assumptions made about the error distributions. Logit assumes you have a logistic error distribution while probit assumes you have a normal error distribution. Since their is a lot more known about the normal error distribution, we will use the probit model in our future regressions with a binary dependent variable. Now we are able to use this to analyze the response of loan demand to changes in price and maturity.
+
+A difficulty with estimating loan demand elasticities is that the contract terms are often subjected to external influences, such as alternative financing opportunities or other supply decisions. As far as the price sensitivity we approached the problem be randomizing the interest rate based on the clients risk category. This allows us to observe what happen if we change the loan price or in our instance the interest rate. To achieve this, we estimate a probit model of the form:
 
 $$
 a_i = \alpha + \beta{r_i} + \delta{X_i} + \epsilon_{ib}
 $$
-#< info "Linear Probability Model"
-Buch
-#>
 
 In our model $a_i$ is the independent variable `applied` which can be either **1** if the client $i$ applied for a loan or **0** if he or she did not. The offer rate `offer4` $r$ is orthogonal to the standard errors $\epsilon_{ib}$ by construction and therefore $\beta$ is an unbiased estimate of the price sensitivity of loan take-up from direct mail offers. We will assume that $\beta < 0$ since almost every model of consumer choice predicts that the demand is downward sloping with an increase in price.
 
-## Extensive Margin
+Since you now learned a little bit about our theoretical model, let's do a short Quiz based on our data:
 
-4.1.1) To load in the data just press `Check`.
-```{r "2 a) 1"}
+#< quiz "Basic Interpretation"
+question: What do you think would happen to the take-up if we would increase the interest rate by 100 basis-points? Just type "reduces" or "increases" in the blank box.
+answer: reduces
+success: Your answer is correct!
+failure: Your answer is wrong, try again!
+#>
+
+In the next section we will deal with this subject more intensively. 
+
+## Exercise 4.1 -- Price Elasticity Results - Price Sensitivities of Loan Take-Up
+
+So war far we talked a lot about our data set and our theoretical strategy. But in this section we want to get our first tangible results. In fact we are estimating the price elasticity of loan demand.
+
+4.1.1) Since this is a new exercise, press `Check`to load in the data once again.
+```{r "4 a) 1"}
+#< task_notest
+stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+#>
+```
+
+As we mentioned in the last section we are using a probit model to estimate the price elasticity of loan demand. We begin with borrowers who applied for a loan before the deadline ended. Tough instead of the `lm()`-function, we will use the generalized linear model function `glm()` because it enables us to perform a probit regression. 
+
+#< info "Probit Regression with glm()"
+The `glm()`function from the `stats`-package is used to fit generalized linear models. It is similar structure to the `lm()`regression, with the exception that with the argument *family* we can specify what kind of linear model we want to use. In our case we want to use a Probit link function. Then the function looks as follows: *glm(formula, family=binomial(link="probit"), data)*
+#>
+
+We want to start with the clients who received offers at or below the standard rate of their risk category. As a reminder, the offer rate per month for a low risk client was 7.75 percent, for a medium risk client 9.75 percent and for a client of the high risk category 11.75 percent. To do so we have to reduce the data set to only the clients who received a offer at or below the standard rates of the client (`normrate_less == 1`) with the `filter()` function. Recall that `applied` is our binary dependent variable and `offer4` as well as the control variables `low`, `med`, `waved2`and `waved3` are our explanatory variables.
+
+4.2.1) Use `glm()` to perform our first Probit regression. Regress `applied` on `offer4`, `low`, `med`, `waved2` and `waved3` and filter our data set `stata_data` for `normate_less == 1`. Store this regression in `reg3_1`. Afterwards display the regression results with the `summary()` command. Finally press `Check` or if you need help press `hint`.
+```{r "4.1 a)", error=FALSE}
+#< task
+# Perform a Probit regression and show the regression results
+#>
+reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
+summary(reg3_1)
+
+#< hint
+display("reg3_1 <- glm(??? ~ offer4 + low + med + waved2 + waved3, family = binomial(link = ???), data=filter(stata_data, ???))
+summary(???)")
+#>
+```
+
+From our computed summary we can see that the offer rate `offer4` is significant at the 0.1 percent level which means that a coincidental connection between `applied` and `offer4` is very unlikely. Unfortunately an Probit output is not equal to the marginal effects. Though we can say that an increase of the offer rate by 100-basis-point is negatively associated with the loan take-up. Suggesting that clients who received an offer at or below the standard rates are less likely to apply if the offer rate would be 100-basis-points higher.
+
+Next, we want to estimate price elasticity of loan demand of clients who received an offer higher its standard ones and if the price sensitivity changed when the lender offered rates higher then the standard rates. To estimate the price sensitivity of clients who were offered a rate higher then the standard for their risk category, we can use the same regression as we did in task 4.2.1), although we must change the variable `normrate_less`to zero. To analyze if the price sensitivity changed when the lender offered higher then the clients standard rate, we have to regress `applied` on `normrate_more`. This time, however, we will estimate the probit regression model and calculate the corresponding marginal effects of the two regressions and the regression `reg3_1` from task 4.2.1). To do this we are using functions from the `regtools` package. In particular the `showreg()` function which can show marginal effects in a glm model and it allows for robust standard errors (https://rdrr.io/github/skranz/regtools/src/R/showreg.r).
+
+#< info "showreg()"
+The `showreg()`function from the `regtools`-package is used to extend and wrap either `stargazer` or the `screenreg`, `texreg` and `htmlreg` functions in the `texreg` package. It allows for robust standard errors and can show marginal effects in glm models. To show the marginal effects of a Probit regression it uses the argument `coef.transform="mfx"` from the `mfx`-package.
+#>
+
+4.2.2) Just press `Check` to perform the two above explained regressions and show the marginal probit effects of all three regressions.
+```{r "4.1 b)", error=FALSE, results='asis'}
+#< task_notest
+reg3_2 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))
+
+reg3_3 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))
+
+showreg(list("(1)"=reg3_1,"(2)"=reg3_2, "(3)"=reg3_3), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", output="html", digits=3)
+#>
+```
+
+```{r "4.1 c)", error=FALSE, results='asis'}
+#< task_notest
+reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
+
+reg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
+
+reg3_6 <- glm(tookup_outside_only ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
+
+showreg(list("(4)"=reg3_4,"(5)"=reg3_5, "(6)"=reg3_6), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", output="html", digits=3)
+#>
+```
+
+```{r "4.1 d)", error=FALSE, results='asis'}
+#< task_notest
+reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
+
+reg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
+
+reg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
+
+showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", output = "html", digits=3)
+#>
+```
+
+## Exercise 4.2 -- Price Elasticity Results - Price Sensitivity of Loan Size
+
+```{r "4.2 a)"}
 #< task_notest
 stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 stata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)
 #>
 ```
 
-
-```{r "4 a) 1", error=FALSE, results='asis'}
+```{r "4.2 b)", warning=FALSE, results='asis', warning=FALSE}
 #< task_notest
-reg3_1 <- bife(applied ~ offer4 | low, med, waved2, waved3 ,  model="probit", data=filter(stata_data, normrate_less == 1))
+stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
-summary(reg3_1)
+reg4_1 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
+
+reg4_2 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + factor(province) + factor(branchuse) |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
+# funktioniert nicht
+
+reg4_3 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg4_4 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + as.factor(province) + as.factor(branchuse) |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg4_5 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+
+reg4_6 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+reg4_7 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
+
+reg4_8 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscore0 + appscoresq + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))
+
+stargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type="html", header = FALSE)
 #>
+
 ```
-
-```{r "4 a) 2", error=FALSE, results='asis'}
-#< task_notest
-reg3_2 <- felm(applied ~ normrate_more | low + med + waved2 + waved3 | branchuse, data=(stata_data))
-
-reg3_3 <- felm(applied ~ offer4 | low + med + waved2 + waved3 | branchuse, data=filter(stata_data, normrate_less == 0))
-
-stargazer(reg3_1, reg3_2, reg3_3, type="html", header = FALSE)
-#>
-```
-
-
-```{r "4 a) 3", error=FALSE, results='asis'}
-#< task_notest
-reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
-
-reg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
-
-reg3_6 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
-
-reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
-
-reg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
-
-reg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
-
-stargazer(reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = FALSE)
-#>
-```
-
 
 ## Exercise 5 -- Pricing Strategy
 
@@ -552,7 +674,7 @@ stargazer(reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type="html", header = 
 ## Exercise References
 
 # Bibliography
-
+- LPM https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf
 - South African Government (2021): South Africa's provinces. Retrieved from https://www.gov.za/about-sa/south-africas-provinces#
 
 # Packages

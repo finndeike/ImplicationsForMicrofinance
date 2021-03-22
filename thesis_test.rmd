@@ -152,10 +152,16 @@ reg2_3 <- lm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(
 
 reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link = "probit"))
 
+summary(reg3_1)
+
 # dprobit applied normrate_more low med waved2 waved3, cluster(branchuse)
 # estimates store m2, title((2))
 
-reg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
+summary(reg3_1)
+
+reg3_2 <- lm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=(stata_data))
+              
+summary(reg3_2)
 
 # dprobit applied offer4 low med waved2 waved3 if (normrate_less==0), cluster(branchuse)
 # estimates store m3, title((3))
@@ -300,6 +306,7 @@ reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = 
 
 reg6_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
 
+summary(reg6_1)
 # xi: regress loansize offer4 low med waved2 waved3 grossincome grossincomesq dormancy trcount female dependants married age agesq rural i.province i.branchuse appscore appscoresq appscore0 itcscore itcscoresq itczero if (normrate_less== 1 & edhi==1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m2, title((2))

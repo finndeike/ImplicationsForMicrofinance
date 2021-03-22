@@ -1256,3 +1256,297 @@
 ,
 {"type":["check_chunk"],"time":["2021-03-17 13:13:43"],"user":["default_user"],"umph":[1615983223.1368],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- felm(applied ~ offer4 | low + med + waved2 + waved3 | branchuse, data=filter(stata_data, normrate_less == 1))\n\nreg3_2 <- felm(applied ~ normrate_more | low + med + waved2 + waved3 | branchuse, data=(stata_data))\n\nreg3_3 <- felm(applied ~ offer4 | low + med + waved2 + waved3 | branchuse, data=filter(stata_data, normrate_less == 0))\n\nstargazer(reg3_1, reg3_2, reg3_3, type=\"html\", header = FALSE)"],"message":[""]}
 ,
+{"type":["init_ps"],"time":["2021-03-18 17:35:18"],"user":["default_user"],"umph":[1616085318.4592],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-19 12:21:58"],"user":["default_user"],"umph":[1616152918.0402],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-19 12:34:43"],"user":["default_user"],"umph":[1616153683.0638],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-19 12:35:08"],"user":["default_user"],"umph":[1616153708.8046],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-19 12:35:25"],"user":["default_user"],"umph":[1616153725.4207],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-19 12:35:27"],"user":["default_user"],"umph":[1616153727.732],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- felm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1))\n\nsummary(reg3_1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-19 12:35:30"],"user":["default_user"],"umph":[1616153730.2462],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- felm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1))\n\nsummary(reg3_1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-19 12:35:32"],"user":["default_user"],"umph":[1616153732.1964],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":[""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-19 12:35:36"],"user":["default_user"],"umph":[1616153736.1873],"ok":[true],"chunk":[21],"ex":[6],"e.ind":[0],"code":["reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 1))\n\nreg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_6 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nreg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, normrate_less == 1))\n\nreg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nstargazer(reg3_4, reg3_5, reg3_6, reg3_7, reg3_8, reg3_9, type=\"html\", header = FALSE)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-19 12:36:06"],"user":["default_user"],"umph":[1616153766.3243],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":[""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 10:20:10"],"user":["default_user"],"umph":[1616232010.9285],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 10:21:54"],"user":["default_user"],"umph":[1616232114.4233],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 10:21:56"],"user":["default_user"],"umph":[1616232116.7602],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- bife(applied ~ offer4 + low + med + waved2 + waved3 | branchuse, model=\"probit\", data=filter(stata_data, normrate_less == 1))\n\nsummary(reg3_1)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 11:14:59"],"user":["default_user"],"umph":[1616235299.5207],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-20 11:52:20"],"user":["default_user"],"umph":[1616237540.1184],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-20 16:22:47"],"user":["default_user"],"umph":[1616253767.1671],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:22:53"],"user":["default_user"],"umph":[1616253773.8456],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:22:59"],"user":["default_user"],"umph":[1616253779.2947],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:23:00"],"user":["default_user"],"umph":[1616253780.9264],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":[""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:23:04"],"user":["default_user"],"umph":[1616253784.6642],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["reg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nshowreg(list(\"probit\"=reg3_2,\"marginal effects\"=reg3_2), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output=\"html\", caption=\"The Extensive Margin: Price Sensitivities of Loan Take-Up\", caption.above=!TRUE)\n\nreg3_3 <- felm(applied ~ offer4 | low + med + waved2 + waved3 | branchuse, data=filter(stata_data, normrate_less == 0))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:23:23"],"user":["default_user"],"umph":[1616253803.3015],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- probitmfx(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1))\nreg3_1"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 16:24:12"],"user":["default_user"],"umph":[1616253852.9467],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:24:25"],"user":["default_user"],"umph":[1616253865.1375],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:24:33"],"user":["default_user"],"umph":[1616253873.5701],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- probitmfx(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1))\nreg3_1"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:24:35"],"user":["default_user"],"umph":[1616253875.2126],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- probitmfx(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1))\nreg3_1"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:24:38"],"user":["default_user"],"umph":[1616253878.5631],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":[""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 16:24:45"],"user":["default_user"],"umph":[1616253885.1629],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["reg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nshowreg(list(\"probit\"=reg3_2,\"marginal effects\"=reg3_2), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output=\"html\", caption=\"The Extensive Margin: Price Sensitivities of Loan Take-Up\", caption.above=!TRUE)\n\nreg3_3 <- felm(applied ~ offer4 | low + med + waved2 + waved3 | branchuse, data=filter(stata_data, normrate_less == 0))\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 17:40:53"],"user":["default_user"],"umph":[1616258453.8251],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:40:59"],"user":["default_user"],"umph":[1616258459.8422],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:41:03"],"user":["default_user"],"umph":[1616258463.9855],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nshowreg(list(\"probit\"=reg3_1,\"marginal effects\"=reg3_1), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:41:06"],"user":["default_user"],"umph":[1616258466.4599],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nshowreg(list(\"probit\"=reg3_1,\"marginal effects\"=reg3_1), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\")"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 17:41:50"],"user":["default_user"],"umph":[1616258510.7034],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:41:56"],"user":["default_user"],"umph":[1616258516.7107],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:42:00"],"user":["default_user"],"umph":[1616258520.1283],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nshowreg(list(\"probit\"=reg3_1,\"marginal effects\"=reg3_1), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\")"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 17:44:31"],"user":["default_user"],"umph":[1616258671.589],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:44:36"],"user":["default_user"],"umph":[1616258676.3748],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:44:40"],"user":["default_user"],"umph":[1616258680.3751],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nshowreg(list(\"probit\"=reg3_1,\"marginal effects\"=reg3_1), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 17:56:41"],"user":["default_user"],"umph":[1616259401.3007],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:56:47"],"user":["default_user"],"umph":[1616259407.0401],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:56:48"],"user":["default_user"],"umph":[1616259408.827],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nshowreg(list(\"marginal effects\"=reg3_1,\"marginal effects\"=reg3_2), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 17:59:03"],"user":["default_user"],"umph":[1616259543.515],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:59:08"],"user":["default_user"],"umph":[1616259548.7023],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:59:11"],"user":["default_user"],"umph":[1616259551.6498],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"marginal effects\"=reg3_1,\"marginal effects\"=reg3_2, \"marginal effects\"=reg3_3), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 17:59:53"],"user":["default_user"],"umph":[1616259593.5142],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"marginal effects\"=reg3_1,\"marginal effects\"=reg3_2, \"marginal effects\"=reg3_3), coef.transform=c(\"no\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 18:13:37"],"user":["default_user"],"umph":[1616260417.0255],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:13:42"],"user":["default_user"],"umph":[1616260422.156],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:14:01"],"user":["default_user"],"umph":[1616260441.4281],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", title = \"1 = Applied\" , digits=3, package = \"stargazer\")\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 18:14:36"],"user":["default_user"],"umph":[1616260476.0165],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-20 18:15:20"],"user":["default_user"],"umph":[1616260520.8309],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:15:25"],"user":["default_user"],"umph":[1616260525.5171],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:15:45"],"user":["default_user"],"umph":[1616260545.5912],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", title = \"1 = Applied\" , digits=3, package = \"stargazer\")\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 18:16:56"],"user":["default_user"],"umph":[1616260616.8339],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:17:00"],"user":["default_user"],"umph":[1616260620.6268],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:17:05"],"user":["default_user"],"umph":[1616260625.0665],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", title = \"1 = Applied\" , digits=3)\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 18:32:49"],"user":["default_user"],"umph":[1616261569.8978],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:32:58"],"user":["default_user"],"umph":[1616261578.5173],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:33:04"],"user":["default_user"],"umph":[1616261584.8696],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:33:12"],"user":["default_user"],"umph":[1616261592.3511],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 1))\n\nreg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_6 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(4)\"=reg3_4,\"(5)\"=reg3_5, \"(6)\"=reg3_6), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 18:36:28"],"user":["default_user"],"umph":[1616261788.8694],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:36:33"],"user":["default_user"],"umph":[1616261793.2468],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:36:37"],"user":["default_user"],"umph":[1616261797.1013],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:36:43"],"user":["default_user"],"umph":[1616261803.3996],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 1))\n\nreg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_6 <- glm(tookup_outside_only ~ offer4 + low + med, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(4)\"=reg3_4,\"(5)\"=reg3_5, \"(6)\"=reg3_6), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output=\"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:37:21"],"user":["default_user"],"umph":[1616261841.3817],"ok":[true],"chunk":[21],"ex":[6],"e.ind":[0],"code":["reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, normrate_less == 1))\n\nreg3_9\n\nreg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(7)\"=reg3_7,\"(8)\"=reg3_8, \"(9)\"=reg3_9), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-20 18:38:11"],"user":["default_user"],"umph":[1616261891.0451],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:38:15"],"user":["default_user"],"umph":[1616261895.877],"ok":[true],"chunk":[18],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:38:19"],"user":["default_user"],"umph":[1616261899.4886],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(stata_data, normrate_less == 1), family = binomial(link =probit))\n\nreg3_2 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nreg3_3 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:38:26"],"user":["default_user"],"umph":[1616261906.2087],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 1))\n\nreg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_6 <- glm(tookup_outside_only ~ offer4 + low + med, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(4)\"=reg3_4,\"(5)\"=reg3_5, \"(6)\"=reg3_6), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output=\"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-20 18:38:32"],"user":["default_user"],"umph":[1616261912.8319],"ok":[true],"chunk":[21],"ex":[6],"e.ind":[0],"code":["reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, normrate_less == 1))\n\nreg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(7)\"=reg3_7,\"(8)\"=reg3_8, \"(9)\"=reg3_9), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-21 09:40:13"],"user":["default_user"],"umph":[1616316013.0631],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-21 09:53:33"],"user":["default_user"],"umph":[1616316813.2899],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-21 10:54:23"],"user":["default_user"],"umph":[1616320463.1379],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-21 12:45:32"],"user":["default_user"],"umph":[1616327132.1924],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-21 12:45:39"],"user":["default_user"],"umph":[1616327139.7154],"ok":[true],"chunk":[18],"ex":[5],"e.ind":[0],"code":["probit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"glm\", method.args=list(family=\"binomial\"(link=\"probit\")), se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5)\n\nlm_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"lm\", se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5)\n\ngrid.arrange(probit_plot, lm_plot, ncol=2)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-21 14:48:47"],"user":["default_user"],"umph":[1616334527.0046],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-21 14:48:51"],"user":["default_user"],"umph":[1616334531.5113],"ok":[true],"chunk":[23],"ex":[7],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-21 14:48:59"],"user":["default_user"],"umph":[1616334539.3864],"ok":[true],"chunk":[24],"ex":[7],"e.ind":[0],"code":["stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)\n\nreg4_1 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))\n\nreg4_2 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))\n\nreg4_3 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))\n\nreg4_4 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))\n\nreg4_5 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))\n\nreg4_6 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))\n\nreg4_7 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))\n\nreg4_8 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscore0 + appscoresq + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))\n\nstargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type=\"html\", header = FALSE)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-21 14:57:01"],"user":["default_user"],"umph":[1616335021.0206],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-21 14:57:05"],"user":["default_user"],"umph":[1616335025.9704],"ok":[true],"chunk":[23],"ex":[7],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-21 14:57:16"],"user":["default_user"],"umph":[1616335036.7777],"ok":[true],"chunk":[24],"ex":[7],"e.ind":[0],"code":["stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)\n\nreg4_1 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))\n\nreg4_2 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + factor(province) + factor(branchuse) |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))\n\nreg4_3 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))\n\nreg4_4 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))\n\nreg4_5 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))\n\nreg4_6 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))\n\nreg4_7 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))\n\nreg4_8 <- felm(lnloansize ~ lnoffer4 | low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscore0 + appscoresq + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1, grossincome!=0))\n\nstargazer(reg4_1, reg4_2, reg4_3, reg4_4, reg4_5, reg4_6, reg4_7, reg4_8, type=\"html\", header = FALSE)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-21 16:06:27"],"user":["default_user"],"umph":[1616339187.9233],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-22 08:30:45"],"user":["default_user"],"umph":[1616398245.2968],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-03-22 08:44:34"],"user":["default_user"],"umph":[1616399074.2342],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 08:44:40"],"user":["default_user"],"umph":[1616399080.9788],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-22 11:33:05"],"user":["default_user"],"umph":[1616409185.052],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 11:33:37"],"user":["default_user"],"umph":[1616409217.0496],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 11:33:49"],"user":["default_user"],"umph":[1616409229.9653],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["hint"],"time":["2021-03-22 11:33:57"],"user":["default_user"],"umph":[1616409237.2965],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:33:58"],"user":["default_user"],"umph":[1616409238.1511],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-03-22 11:40:24"],"user":["default_user"],"umph":[1616409624.9859],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 11:40:40"],"user":["default_user"],"umph":[1616409640.3197],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["hint"],"time":["2021-03-22 11:40:52"],"user":["default_user"],"umph":[1616409652.2722],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:40:53"],"user":["default_user"],"umph":[1616409653.0902],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-03-22 11:43:08"],"user":["default_user"],"umph":[1616409788.045],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 11:43:23"],"user":["default_user"],"umph":[1616409803.706],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["hint"],"time":["2021-03-22 11:43:33"],"user":["default_user"],"umph":[1616409813.108],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:43:33"],"user":["default_user"],"umph":[1616409813.8249],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:43:34"],"user":["default_user"],"umph":[1616409814.0157],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-03-22 11:44:36"],"user":["default_user"],"umph":[1616409876.6311],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 11:44:48"],"user":["default_user"],"umph":[1616409888.2289],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["hint"],"time":["2021-03-22 11:44:53"],"user":["default_user"],"umph":[1616409893.3976],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:44:53"],"user":["default_user"],"umph":[1616409893.9349],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:44:54"],"user":["default_user"],"umph":[1616409894.1646],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:44:54"],"user":["default_user"],"umph":[1616409894.3056],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:44:54"],"user":["default_user"],"umph":[1616409894.4206],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:44:54"],"user":["default_user"],"umph":[1616409894.6398],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:44:54"],"user":["default_user"],"umph":[1616409894.9037],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-03-22 11:46:29"],"user":["default_user"],"umph":[1616409989.624],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 11:46:34"],"user":["default_user"],"umph":[1616409994.3974],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["hint"],"time":["2021-03-22 11:46:51"],"user":["default_user"],"umph":[1616410011.902],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:46:52"],"user":["default_user"],"umph":[1616410012.4662],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:46:52"],"user":["default_user"],"umph":[1616410012.629],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:46:52"],"user":["default_user"],"umph":[1616410012.7984],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-03-22 11:47:53"],"user":["default_user"],"umph":[1616410073.9472],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 11:48:02"],"user":["default_user"],"umph":[1616410082.4385],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["hint"],"time":["2021-03-22 11:48:08"],"user":["default_user"],"umph":[1616410088.6517],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:48:09"],"user":["default_user"],"umph":[1616410089.2467],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:48:09"],"user":["default_user"],"umph":[1616410089.3891],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:48:09"],"user":["default_user"],"umph":[1616410089.7638],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["hint"],"time":["2021-03-22 11:48:09"],"user":["default_user"],"umph":[1616410089.8503],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-03-22 12:19:14"],"user":["default_user"],"umph":[1616411954.3052],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 12:19:22"],"user":["default_user"],"umph":[1616411962.0012],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 12:19:24"],"user":["default_user"],"umph":[1616411964.146],"ok":[false],"chunk":[20],"ex":[6],"e.ind":[1],"code":["# Perform a Probit regression and show the regression results\n"],"message":["\nYou have not yet made an assignment to reg3_1."]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 12:19:26"],"user":["default_user"],"umph":[1616411966.9089],"ok":[false],"chunk":[20],"ex":[6],"e.ind":[1],"code":["# Perform a Probit regression and show the regression results\n"],"message":["\nYou have not yet made an assignment to reg3_1."]}
+,
+{"type":["hint"],"time":["2021-03-22 12:19:26"],"user":["default_user"],"umph":[1616411966.9207],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[1]}
+,
+{"type":["init_ps"],"time":["2021-03-22 14:35:15"],"user":["default_user"],"umph":[1616420115.4396],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:36:08"],"user":["default_user"],"umph":[1616420168.8084],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:36:11"],"user":["default_user"],"umph":[1616420171.1668],"ok":[false],"chunk":[20],"ex":[6],"e.ind":[1],"code":["# Perform a Probit regression and show the regression results\n"],"message":["\nYou have not yet made an assignment to reg3_1."]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:36:11"],"user":["default_user"],"umph":[1616420171.7096],"ok":[false],"chunk":[20],"ex":[6],"e.ind":[1],"code":["# Perform a Probit regression and show the regression results\n"],"message":["\nYou have not yet made an assignment to reg3_1."]}
+,
+{"type":["init_ps"],"time":["2021-03-22 14:37:30"],"user":["default_user"],"umph":[1616420250.2383],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:37:34"],"user":["default_user"],"umph":[1616420254.7753],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-22 14:38:45"],"user":["default_user"],"umph":[1616420325.2292],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:38:50"],"user":["default_user"],"umph":[1616420330.1395],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:38:53"],"user":["default_user"],"umph":[1616420333.4976],"ok":[false],"chunk":[20],"ex":[6],"e.ind":[0],"code":["# Perform a Probit regression and show the regression results\nreg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\", data=filter(stata_data, normrate_less == 1)))"],"message":["evaluation error in \n  reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\", data = filter(stata_data, normrate_less == 1)))\n  Error in binomial(link = \"probit\", data = filter(stata_data, normrate_less == : unbenutztes Argument (data = filter(stata_data, normrate_less == 1))\n"]}
+,
+{"type":["init_ps"],"time":["2021-03-22 14:40:59"],"user":["default_user"],"umph":[1616420459.7013],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:41:03"],"user":["default_user"],"umph":[1616420463.819],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:41:07"],"user":["default_user"],"umph":[1616420467.9313],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["# Perform a Probit regression and show the regression results\nreg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, normrate_less == 1))\nsummary(reg3_1)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:41:16"],"user":["default_user"],"umph":[1616420476.0775],"ok":[true],"chunk":[21],"ex":[6],"e.ind":[0],"code":["reg3_2 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nreg3_3 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-22 14:42:30"],"user":["default_user"],"umph":[1616420550.7469],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:43:11"],"user":["default_user"],"umph":[1616420591.3589],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:43:16"],"user":["default_user"],"umph":[1616420596.7092],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["# Perform a Probit regression and show the regression results\nreg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, normrate_less == 1))\nsummary(reg3_1)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:43:22"],"user":["default_user"],"umph":[1616420602.623],"ok":[true],"chunk":[21],"ex":[6],"e.ind":[0],"code":["reg3_2 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nreg3_3 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output=\"html\", digits=3)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-03-22 14:44:49"],"user":["default_user"],"umph":[1616420689.5162],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:46:32"],"user":["default_user"],"umph":[1616420792.7473],"ok":[true],"chunk":[19],"ex":[6],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:46:33"],"user":["default_user"],"umph":[1616420793.9573],"ok":[true],"chunk":[20],"ex":[6],"e.ind":[0],"code":["# Perform a Probit regression and show the regression results\nreg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, normrate_less == 1))\nsummary(reg3_1)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:46:38"],"user":["default_user"],"umph":[1616420798.9726],"ok":[true],"chunk":[21],"ex":[6],"e.ind":[0],"code":["reg3_2 <- glm(applied ~ offer4 + low + med, family = binomial(link =probit), data=filter(stata_data, normrate_less == 0))\n\nreg3_3 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link =probit), data=(stata_data))\n\nshowreg(list(\"(1)\"=reg3_1,\"(2)\"=reg3_2, \"(3)\"=reg3_3), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output=\"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:46:44"],"user":["default_user"],"umph":[1616420804.8108],"ok":[true],"chunk":[22],"ex":[6],"e.ind":[0],"code":["reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 1))\n\nreg3_5 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_6 <- glm(tookup_outside_only ~ offer4 + low + med, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(4)\"=reg3_4,\"(5)\"=reg3_5, \"(6)\"=reg3_6), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output=\"html\", digits=3)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-03-22 14:47:42"],"user":["default_user"],"umph":[1616420862.2027],"ok":[true],"chunk":[23],"ex":[6],"e.ind":[0],"code":["reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, normrate_less == 1))\n\nreg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data = stata_data)\n\nreg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med, family = binomial(link = \"probit\"), data = filter(stata_data, normrate_less == 0))\n\nshowreg(list(\"(7)\"=reg3_7,\"(8)\"=reg3_8, \"(9)\"=reg3_9), coef.transform=c(\"mfx\", \"mfx\", \"mfx\"), omit.coef = \"(Intercept)\", output = \"html\", digits=3)"],"message":[""]}
+,
