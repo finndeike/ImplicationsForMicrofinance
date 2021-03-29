@@ -223,7 +223,12 @@ reg4_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stat
 # sum loansize offer4 if e(sample)
 # estimates store m2, title((2))
 
+rel_data <- stata_data
+rel_data$province <- relevel(as.factor(rel_data$province), ref=4)
+rel_data$branchuse <- relevel(as.factor(rel_data$branchuse), ref=4)
+
 reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
+
 
 # *CONDITIONAL
 # regress loansize offer4 low med waved2 waved3 if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
@@ -232,20 +237,22 @@ reg4_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + gro
 
 reg4_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
+stargazer(reg4_1, reg4_2, reg4_3, omit = c("offer4"), type="html", header = FALSE)
 # * add controls
 # xi: regress loansize offer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province i.branchuse if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
 # sum loansize offer4 if e(sample)
 # estimates store m4, title((4))
 
-reg4_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_4 <- lm(loansize ~ factor(offer4) + low + med + waved2 + waved3 + factor(sales_grossincome) + factor(sales_grossincomesq) + factor(sales_netincome) + factor(sales_netincomesq) + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
 # * tobit
 # xi: tobit loansize offer4 low med waved2 waved3 sales_netincome sales_netincomesq sales_grossincome sales_grossincomesq appscore appscoresq appscore0 itcscore itcscoresq itczero dormancy trcount female dependants married age agesq rural edhi i.province if (tookup==1 & normrate_less== 1 & (offer4==final4)), ul ll
 # estimates store m5, title((5))
 # sum loansize offer4 if e(sample)
 
-reg4_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + province, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
+reg4_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + appscore + appscoresq + appscore0 + itcscore + itczero + itcscoresq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + as.factor(province), data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
 
+summary(reg4_5)
 
 # *log
 # regress lnloansize lnoffer4 low med waved2 waved3 if (tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
@@ -537,6 +544,14 @@ zaf_map <- tmap_last()
 tmap_save(zaf_map, "zaf_map.html")
 
 ```
+
+- read_dta() -    https://stat.ethz.ch/R-manual/R-devel/library/foreign/html/read.dta.html
+- sample_n() -    https://dplyr.tidyverse.org/reference/sample.html
+- filter() -      https://dplyr.tidyverse.org/reference/filter.html
+- group_by() -    https://dplyr.tidyverse.org/reference/group_by.html
+- summarise() -   https://dplyr.tidyverse.org/reference/summarise.html
+- mutate() -      https://dplyr.tidyverse.org/reference/mutate.html
+- 
 
 
 
