@@ -1892,3 +1892,505 @@
 ,
 {"type":["check_chunk"],"time":["2021-04-02 13:36:17"],"user":["default_user"],"umph":[1617363377.0488],"ok":[true],"chunk":[16],"ex":[4],"e.ind":[0],"code":["ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ \n  stat_smooth(method='glm',family=binomial(link='probit'))+\n  ylim(min=0, max=1)"],"message":[""]}
 ,
+{"type":["init_ps"],"time":["2021-04-02 13:50:23"],"user":["default_user"],"umph":[1617364223.508],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:50:32"],"user":["default_user"],"umph":[1617364232.1796],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:50:33"],"user":["default_user"],"umph":[1617364233.4528],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:50:33"],"user":["default_user"],"umph":[1617364233.8007],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:50:33"],"user":["default_user"],"umph":[1617364233.8569],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:50:33"],"user":["default_user"],"umph":[1617364233.9148],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:50:36"],"user":["default_user"],"umph":[1617364236.924],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:50:40"],"user":["default_user"],"umph":[1617364240.9933],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces_ <- provinces\nprovinces <- rbind(provinces_, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 13:53:08"],"user":["default_user"],"umph":[1617364388.2052],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:15"],"user":["default_user"],"umph":[1617364395.1394],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:15"],"user":["default_user"],"umph":[1617364395.9731],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:16"],"user":["default_user"],"umph":[1617364396.3108],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:16"],"user":["default_user"],"umph":[1617364396.3724],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:16"],"user":["default_user"],"umph":[1617364396.476],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:18"],"user":["default_user"],"umph":[1617364398.8961],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:22"],"user":["default_user"],"umph":[1617364402.5748],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:53:35"],"user":["default_user"],"umph":[1617364415.3288],"ok":[false],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":["evaluation error in \n  provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n  Error: Problem with `mutate()` input `population`.\n\u001b[31mx\u001b[39m Input `population` can't be recycled to size 8.\n\u001b[34mℹ\u001b[39m Input `population` is `c(...)`.\n\u001b[34mℹ\u001b[39m Input `population` must be size 8 or 1, not 9.\n"]}
+,
+{"type":["init_ps"],"time":["2021-04-02 13:54:24"],"user":["default_user"],"umph":[1617364464.477],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:54:31"],"user":["default_user"],"umph":[1617364471.766],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:54:32"],"user":["default_user"],"umph":[1617364472.621],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:54:32"],"user":["default_user"],"umph":[1617364472.9589],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:54:33"],"user":["default_user"],"umph":[1617364473.065],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:54:33"],"user":["default_user"],"umph":[1617364473.1363],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:54:33"],"user":["default_user"],"umph":[1617364473.3161],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:54:36"],"user":["default_user"],"umph":[1617364476.9099],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:55:04"],"user":["default_user"],"umph":[1617364504.0731],"ok":[false],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces %>% mutate(population = c(\"population\", 6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":["evaluation error in \n  provinces %>% mutate(population = c(\"population\", 6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n  Error: Problem with `mutate()` input `population`.\n\u001b[31mx\u001b[39m Input `population` can't be recycled to size 8.\n\u001b[34mℹ\u001b[39m Input `population` is `c(...)`.\n\u001b[34mℹ\u001b[39m Input `population` must be size 8 or 1, not 10.\n"]}
+,
+{"type":["init_ps"],"time":["2021-04-02 13:56:23"],"user":["default_user"],"umph":[1617364583.4937],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:56:33"],"user":["default_user"],"umph":[1617364593.0701],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:56:33"],"user":["default_user"],"umph":[1617364593.9056],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:56:34"],"user":["default_user"],"umph":[1617364594.264],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:56:34"],"user":["default_user"],"umph":[1617364594.3298],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:56:34"],"user":["default_user"],"umph":[1617364594.4033],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:56:36"],"user":["default_user"],"umph":[1617364596.4176],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 13:56:39"],"user":["default_user"],"umph":[1617364599.4981],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:03:16"],"user":["default_user"],"umph":[1617364996.9214],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:03:35"],"user":["default_user"],"umph":[1617365015.8346],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:03:36"],"user":["default_user"],"umph":[1617365016.6884],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:03:37"],"user":["default_user"],"umph":[1617365017.0997],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:03:37"],"user":["default_user"],"umph":[1617365017.1836],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:03:40"],"user":["default_user"],"umph":[1617365020.6605],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:03:44"],"user":["default_user"],"umph":[1617365024.1949],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:03:47"],"user":["default_user"],"umph":[1617365027.5167],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\"\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:05:02"],"user":["default_user"],"umph":[1617365102.8633],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:08"],"user":["default_user"],"umph":[1617365108.7518],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:09"],"user":["default_user"],"umph":[1617365109.616],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:10"],"user":["default_user"],"umph":[1617365110.1063],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:10"],"user":["default_user"],"umph":[1617365110.1857],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:10"],"user":["default_user"],"umph":[1617365110.2499],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:11"],"user":["default_user"],"umph":[1617365111.6839],"ok":[false],"chunk":[6],"ex":[3],"e.ind":[1],"code":[".PH_._ <- .PH_._ %>% .PH_._ %>% .PH_._(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n\n# show the data frame\n\n"],"message":["\nYou have not yet made an assignment to provinces."]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:15"],"user":["default_user"],"umph":[1617365115.9539],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:05:20"],"user":["default_user"],"umph":[1617365120.6771],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\"\nprovinces$NAME_1 <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:07:08"],"user":["default_user"],"umph":[1617365228.6883],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:24"],"user":["default_user"],"umph":[1617365244.0764],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:24"],"user":["default_user"],"umph":[1617365244.9573],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:25"],"user":["default_user"],"umph":[1617365245.3533],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:25"],"user":["default_user"],"umph":[1617365245.4195],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:25"],"user":["default_user"],"umph":[1617365245.474],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:27"],"user":["default_user"],"umph":[1617365247.3892],"ok":[false],"chunk":[6],"ex":[3],"e.ind":[1],"code":[".PH_._ <- .PH_._ %>% .PH_._ %>% .PH_._(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n\n# show the data frame\n\n"],"message":["\nYou have not yet made an assignment to provinces."]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:29"],"user":["default_user"],"umph":[1617365249.2091],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:32"],"user":["default_user"],"umph":[1617365252.4176],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:07:36"],"user":["default_user"],"umph":[1617365256.2056],"ok":[true],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:11:01"],"user":["default_user"],"umph":[1617365461.4652],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:11:06"],"user":["default_user"],"umph":[1617365466.771],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:11:07"],"user":["default_user"],"umph":[1617365467.6116],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:11:08"],"user":["default_user"],"umph":[1617365468.1438],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:11:08"],"user":["default_user"],"umph":[1617365468.2225],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:11:11"],"user":["default_user"],"umph":[1617365471.6382],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:11:13"],"user":["default_user"],"umph":[1617365473.997],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:11:17"],"user":["default_user"],"umph":[1617365477.2661],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces$province[1:9] <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:12:06"],"user":["default_user"],"umph":[1617365526.4821],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:12:13"],"user":["default_user"],"umph":[1617365533.5961],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:12:14"],"user":["default_user"],"umph":[1617365534.5757],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:12:15"],"user":["default_user"],"umph":[1617365535.1109],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:12:15"],"user":["default_user"],"umph":[1617365535.1888],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:12:15"],"user":["default_user"],"umph":[1617365535.2445],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:12:17"],"user":["default_user"],"umph":[1617365537.5722],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:12:21"],"user":["default_user"],"umph":[1617365541.4141],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces$province[,1:9] <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:13:43"],"user":["default_user"],"umph":[1617365623.6626],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:13:50"],"user":["default_user"],"umph":[1617365630.2303],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:13:51"],"user":["default_user"],"umph":[1617365631.106],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:13:51"],"user":["default_user"],"umph":[1617365631.6431],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:13:51"],"user":["default_user"],"umph":[1617365631.7151],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:13:56"],"user":["default_user"],"umph":[1617365636.1645],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:13:59"],"user":["default_user"],"umph":[1617365639.6286],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:14:02"],"user":["default_user"],"umph":[1617365642.7197],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces$province[,1:9] <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:14:54"],"user":["default_user"],"umph":[1617365694.4517],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:15:00"],"user":["default_user"],"umph":[1617365700.4269],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:15:01"],"user":["default_user"],"umph":[1617365701.3167],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:15:01"],"user":["default_user"],"umph":[1617365701.9052],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:15:01"],"user":["default_user"],"umph":[1617365701.9889],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:15:02"],"user":["default_user"],"umph":[1617365702.0472],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:15:04"],"user":["default_user"],"umph":[1617365704.4417],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:15:07"],"user":["default_user"],"umph":[1617365707.91],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces$province[,1:9] <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:17:25"],"user":["default_user"],"umph":[1617365845.0529],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:17:33"],"user":["default_user"],"umph":[1617365853.4008],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:17:34"],"user":["default_user"],"umph":[1617365854.7934],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:17:35"],"user":["default_user"],"umph":[1617365855.1345],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:17:35"],"user":["default_user"],"umph":[1617365855.192],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:17:35"],"user":["default_user"],"umph":[1617365855.2439],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:17:41"],"user":["default_user"],"umph":[1617365861.4932],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:17:43"],"user":["default_user"],"umph":[1617365863.9906],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces[1,] <- list(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:18:54"],"user":["default_user"],"umph":[1617365934.9662],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:18:59"],"user":["default_user"],"umph":[1617365939.6311],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:00"],"user":["default_user"],"umph":[1617365940.462],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:00"],"user":["default_user"],"umph":[1617365940.8097],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:00"],"user":["default_user"],"umph":[1617365940.9208],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:00"],"user":["default_user"],"umph":[1617365940.9947],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:04"],"user":["default_user"],"umph":[1617365944.3862],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:07"],"user":["default_user"],"umph":[1617365947.8073],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces[,1] <- list(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:19:39"],"user":["default_user"],"umph":[1617365979.8739],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:43"],"user":["default_user"],"umph":[1617365983.9979],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:44"],"user":["default_user"],"umph":[1617365984.8987],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:45"],"user":["default_user"],"umph":[1617365985.3264],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:45"],"user":["default_user"],"umph":[1617365985.4386],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:45"],"user":["default_user"],"umph":[1617365985.504],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:49"],"user":["default_user"],"umph":[1617365989.1223],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:19:52"],"user":["default_user"],"umph":[1617365992.2905],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces[,1] <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:20:43"],"user":["default_user"],"umph":[1617366043.614],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:20:49"],"user":["default_user"],"umph":[1617366049.1965],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:20:50"],"user":["default_user"],"umph":[1617366050.0559],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:20:50"],"user":["default_user"],"umph":[1617366050.4721],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:20:50"],"user":["default_user"],"umph":[1617366050.5548],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:20:50"],"user":["default_user"],"umph":[1617366050.6228],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:20:52"],"user":["default_user"],"umph":[1617366052.7794],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:20:55"],"user":["default_user"],"umph":[1617366055.5214],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nprovinces[,1] <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\",)\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:25:59"],"user":["default_user"],"umph":[1617366359.07],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:05"],"user":["default_user"],"umph":[1617366365.3665],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:06"],"user":["default_user"],"umph":[1617366366.2214],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:06"],"user":["default_user"],"umph":[1617366366.7395],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:06"],"user":["default_user"],"umph":[1617366366.82],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:06"],"user":["default_user"],"umph":[1617366366.8762],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:09"],"user":["default_user"],"umph":[1617366369.9006],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:13"],"user":["default_user"],"umph":[1617366373.658],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:26:20"],"user":["default_user"],"umph":[1617366380.254],"ok":[false],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":["evaluation error in \n  provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n  Error: Problem with `mutate()` input `population`.\n\u001b[31mx\u001b[39m Input `population` can't be recycled to size 8.\n\u001b[34mℹ\u001b[39m Input `population` is `c(...)`.\n\u001b[34mℹ\u001b[39m Input `population` must be size 8 or 1, not 9.\n"]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:27:11"],"user":["default_user"],"umph":[1617366431.6112],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces %>% rbind(c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA))\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:27:23"],"user":["default_user"],"umph":[1617366443.3943],"ok":[false],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":["evaluation error in \n  provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n  Error: Problem with `mutate()` input `population`.\n\u001b[31mx\u001b[39m Input `population` can't be recycled to size 8.\n\u001b[34mℹ\u001b[39m Input `population` is `c(...)`.\n\u001b[34mℹ\u001b[39m Input `population` must be size 8 or 1, not 9.\n"]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:37:20"],"user":["default_user"],"umph":[1617367040.2632],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:25"],"user":["default_user"],"umph":[1617367045.6665],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:26"],"user":["default_user"],"umph":[1617367046.5276],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:26"],"user":["default_user"],"umph":[1617367046.9822],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:27"],"user":["default_user"],"umph":[1617367047.0745],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:27"],"user":["default_user"],"umph":[1617367047.146],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:29"],"user":["default_user"],"umph":[1617367049.5932],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:33"],"user":["default_user"],"umph":[1617367053.5597],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = list(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:37:37"],"user":["default_user"],"umph":[1617367057.7523],"ok":[false],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":["evaluation error in \n  provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n  Error: Problem with `mutate()` input `population`.\n\u001b[31mx\u001b[39m Input `population` can't be recycled to size 10.\n\u001b[34mℹ\u001b[39m Input `population` is `c(...)`.\n\u001b[34mℹ\u001b[39m Input `population` must be size 10 or 1, not 9.\n"]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:38:35"],"user":["default_user"],"umph":[1617367115.1182],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:38:40"],"user":["default_user"],"umph":[1617367120.5782],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:38:41"],"user":["default_user"],"umph":[1617367121.5377],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:38:42"],"user":["default_user"],"umph":[1617367122.5707],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:38:42"],"user":["default_user"],"umph":[1617367122.6508],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:38:42"],"user":["default_user"],"umph":[1617367122.7296],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:38:45"],"user":["default_user"],"umph":[1617367125.3086],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:38:49"],"user":["default_user"],"umph":[1617367129.6508],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = list(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\"\nprovinces"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:39:26"],"user":["default_user"],"umph":[1617367166.9599],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:33"],"user":["default_user"],"umph":[1617367173.7776],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:34"],"user":["default_user"],"umph":[1617367174.6238],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:34"],"user":["default_user"],"umph":[1617367174.9825],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:35"],"user":["default_user"],"umph":[1617367175.1017],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:35"],"user":["default_user"],"umph":[1617367175.1803],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:35"],"user":["default_user"],"umph":[1617367175.2637],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:35"],"user":["default_user"],"umph":[1617367175.3244],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = list(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\"\nprovinces"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:39:38"],"user":["default_user"],"umph":[1617367178.641],"ok":[false],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":["evaluation error in \n  provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n  Error: Problem with `mutate()` input `population`.\n\u001b[31mx\u001b[39m Input `population` can't be recycled to size 10.\n\u001b[34mℹ\u001b[39m Input `population` is `c(...)`.\n\u001b[34mℹ\u001b[39m Input `population` must be size 10 or 1, not 9.\n"]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:41:32"],"user":["default_user"],"umph":[1617367292.1482],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:41:40"],"user":["default_user"],"umph":[1617367300.7762],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:41:41"],"user":["default_user"],"umph":[1617367301.6312],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:41:42"],"user":["default_user"],"umph":[1617367302.0527],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:41:42"],"user":["default_user"],"umph":[1617367302.1432],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:41:42"],"user":["default_user"],"umph":[1617367302.2098],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:41:42"],"user":["default_user"],"umph":[1617367302.2861],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:41:45"],"user":["default_user"],"umph":[1617367305.1069],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = list(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:42:42"],"user":["default_user"],"umph":[1617367362.994],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:42:47"],"user":["default_user"],"umph":[1617367367.7763],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:42:48"],"user":["default_user"],"umph":[1617367368.6264],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:42:49"],"user":["default_user"],"umph":[1617367369.1765],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:42:49"],"user":["default_user"],"umph":[1617367369.2555],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:42:49"],"user":["default_user"],"umph":[1617367369.3267],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:42:49"],"user":["default_user"],"umph":[1617367369.4151],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:42:52"],"user":["default_user"],"umph":[1617367372.2134],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:43:35"],"user":["default_user"],"umph":[1617367415.5352],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:49"],"user":["default_user"],"umph":[1617367429.4283],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:50"],"user":["default_user"],"umph":[1617367430.391],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:50"],"user":["default_user"],"umph":[1617367430.9209],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:50"],"user":["default_user"],"umph":[1617367430.9852],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:51"],"user":["default_user"],"umph":[1617367431.0415],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:51"],"user":["default_user"],"umph":[1617367431.1213],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:54"],"user":["default_user"],"umph":[1617367434.163],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:54"],"user":["default_user"],"umph":[1617367434.4832],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:43:55"],"user":["default_user"],"umph":[1617367435.91],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = c(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-02 14:45:10"],"user":["default_user"],"umph":[1617367510.3551],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:45:15"],"user":["default_user"],"umph":[1617367515.3478],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:45:16"],"user":["default_user"],"umph":[1617367516.2172],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:45:16"],"user":["default_user"],"umph":[1617367516.6808],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:45:16"],"user":["default_user"],"umph":[1617367516.7672],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:45:16"],"user":["default_user"],"umph":[1617367516.8433],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:45:20"],"user":["default_user"],"umph":[1617367520.5843],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-02 14:45:23"],"user":["default_user"],"umph":[1617367523.6189],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = list(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 07:43:26"],"user":["default_user"],"umph":[1617428606.2089],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:43:36"],"user":["default_user"],"umph":[1617428616.8024],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:43:37"],"user":["default_user"],"umph":[1617428617.6428],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:43:38"],"user":["default_user"],"umph":[1617428618.0038],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:43:38"],"user":["default_user"],"umph":[1617428618.0745],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:43:38"],"user":["default_user"],"umph":[1617428618.2038],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:43:41"],"user":["default_user"],"umph":[1617428621.4851],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup),\n                                                      \"Rural\" = sum(rural)/sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:43:45"],"user":["default_user"],"umph":[1617428625.2121],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] = list(\"Northern Cape\", NA, NA, NA, NA, NA, NA, NA)\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 07:55:41"],"user":["default_user"],"umph":[1617429341.391],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:55:50"],"user":["default_user"],"umph":[1617429350.7666],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:55:51"],"user":["default_user"],"umph":[1617429351.5712],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:55:51"],"user":["default_user"],"umph":[1617429351.9938],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:55:52"],"user":["default_user"],"umph":[1617429352.0687],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:55:52"],"user":["default_user"],"umph":[1617429352.1352],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:55:55"],"user":["default_user"],"umph":[1617429355.1557],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 07:55:58"],"user":["default_user"],"umph":[1617429358.0928],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces[nrow(provinces) + 1,] <- list(\"Northern Cape\", NA, NA, NA, NA, NA, NA)\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 08:04:37"],"user":["default_user"],"umph":[1617429877.8224],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:04:47"],"user":["default_user"],"umph":[1617429887.309],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:04:48"],"user":["default_user"],"umph":[1617429888.5751],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:04:48"],"user":["default_user"],"umph":[1617429888.9088],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:04:48"],"user":["default_user"],"umph":[1617429888.9646],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:04:49"],"user":["default_user"],"umph":[1617429889.0155],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:04:49"],"user":["default_user"],"umph":[1617429889.0732],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:04:51"],"user":["default_user"],"umph":[1617429891.7943],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces <- rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA))\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:06"],"user":["default_user"],"umph":[1617430506.4775],"ok":[true],"chunk":[10],"ex":[4],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)\n\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:06"],"user":["default_user"],"umph":[1617430506.9005],"ok":[true],"chunk":[11],"ex":[4],"e.ind":[0],"code":["stata_data %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:07"],"user":["default_user"],"umph":[1617430507.6972],"ok":[true],"chunk":[12],"ex":[4],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- stata_data %>% group_by(risk) %>% summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:07"],"user":["default_user"],"umph":[1617430507.7742],"ok":[true],"chunk":[13],"ex":[4],"e.ind":[0],"code":["# \nsum(stata_data$normrate_less)/nrow(stata_data)\nsum(stata_data$normrate_more)/nrow(stata_data)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:08"],"user":["default_user"],"umph":[1617430508.1552],"ok":[true],"chunk":[14],"ex":[4],"e.ind":[0],"code":["reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data)\n\nsummary(reg2_1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:08"],"user":["default_user"],"umph":[1617430508.7189],"ok":[true],"chunk":[15],"ex":[4],"e.ind":[0],"code":["reg2_2 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=stata_data)\nsummary(reg2_2)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:09"],"user":["default_user"],"umph":[1617430509.3705],"ok":[true],"chunk":[16],"ex":[4],"e.ind":[0],"code":["ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ \n  stat_smooth(method='glm',family=binomial(link='probit'))+\n  ylim(min=0, max=1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:15:46"],"user":["default_user"],"umph":[1617430546.7184],"ok":[true],"chunk":[17],"ex":[4],"e.ind":[0],"code":["reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, applied == 1))\n\nstargazer(reg2_1, reg2_2, reg2_3, \"branchuse\", type=\"html\", header=FALSE)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 08:30:30"],"user":["default_user"],"umph":[1617431430.6905],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:44"],"user":["default_user"],"umph":[1617431444.0662],"ok":[true],"chunk":[10],"ex":[4],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)\n\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:44"],"user":["default_user"],"umph":[1617431444.487],"ok":[true],"chunk":[11],"ex":[4],"e.ind":[0],"code":["stata_data %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:44"],"user":["default_user"],"umph":[1617431444.8659],"ok":[true],"chunk":[12],"ex":[4],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- stata_data %>% group_by(risk) %>% summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:44"],"user":["default_user"],"umph":[1617431444.9353],"ok":[true],"chunk":[13],"ex":[4],"e.ind":[0],"code":["# \nsum(stata_data$normrate_less)/nrow(stata_data)\nsum(stata_data$normrate_more)/nrow(stata_data)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:45"],"user":["default_user"],"umph":[1617431445.7168],"ok":[true],"chunk":[14],"ex":[4],"e.ind":[0],"code":["reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data)\n\nsummary(reg2_1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:46"],"user":["default_user"],"umph":[1617431446.2563],"ok":[true],"chunk":[15],"ex":[4],"e.ind":[0],"code":["reg2_2 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=stata_data)\nsummary(reg2_2)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:46"],"user":["default_user"],"umph":[1617431446.5041],"ok":[true],"chunk":[16],"ex":[4],"e.ind":[0],"code":["ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ \n  stat_smooth(method='glm',family=binomial(link='probit'))+\n  ylim(min=0, max=1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:30:56"],"user":["default_user"],"umph":[1617431456.0803],"ok":[true],"chunk":[17],"ex":[4],"e.ind":[0],"code":["reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, applied == 1))\n\nstargazer(reg2_1, reg2_2, reg2_3, \"branchuse\", type=\"html\", align=TRUE)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 08:31:52"],"user":["default_user"],"umph":[1617431512.534],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:02"],"user":["default_user"],"umph":[1617431522.9358],"ok":[true],"chunk":[10],"ex":[4],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)\n\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:03"],"user":["default_user"],"umph":[1617431523.3812],"ok":[true],"chunk":[11],"ex":[4],"e.ind":[0],"code":["stata_data %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:03"],"user":["default_user"],"umph":[1617431523.6769],"ok":[true],"chunk":[12],"ex":[4],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- stata_data %>% group_by(risk) %>% summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:03"],"user":["default_user"],"umph":[1617431523.7471],"ok":[true],"chunk":[13],"ex":[4],"e.ind":[0],"code":["# \nsum(stata_data$normrate_less)/nrow(stata_data)\nsum(stata_data$normrate_more)/nrow(stata_data)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:04"],"user":["default_user"],"umph":[1617431524.0824],"ok":[true],"chunk":[14],"ex":[4],"e.ind":[0],"code":["reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data)\n\nsummary(reg2_1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:04"],"user":["default_user"],"umph":[1617431524.6959],"ok":[true],"chunk":[15],"ex":[4],"e.ind":[0],"code":["reg2_2 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=stata_data)\nsummary(reg2_2)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:05"],"user":["default_user"],"umph":[1617431525.3656],"ok":[true],"chunk":[16],"ex":[4],"e.ind":[0],"code":["ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ \n  stat_smooth(method='glm',family=binomial(link='probit'))+\n  ylim(min=0, max=1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 08:32:11"],"user":["default_user"],"umph":[1617431531.5597],"ok":[true],"chunk":[17],"ex":[4],"e.ind":[0],"code":["reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=filter(stata_data, applied == 1))\n\nstargazer(reg2_1, reg2_2, reg2_3, \"branchuse\", type=\"html\", header=FALSE)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 09:01:30"],"user":["default_user"],"umph":[1617433290.1429],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 09:03:37"],"user":["default_user"],"umph":[1617433417.5343],"ok":[true],"chunk":[18],"ex":[5],"e.ind":[0],"code":["library(gridExtra)\n\nlm_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"lm\", se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Linear Probability Model\")\n\nprobit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"glm\", method.args=list(family=\"binomial\"(link=\"probit\")), se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Probit Model\")\n\nlogit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"glm\", method.args=list(family=\"binomial\"(link=\"logit\")), se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Logit Model\")\n\ngrid.arrange(lm_plot, probit_plot, logit_plot, ncol=2)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 09:05:32"],"user":["default_user"],"umph":[1617433532.452],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-03 09:05:39"],"user":["default_user"],"umph":[1617433539.4228],"ok":[true],"chunk":[18],"ex":[5],"e.ind":[0],"code":["\nlm_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"lm\", se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Linear Probability Model\")\n\nprobit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"glm\", method.args=list(family=\"binomial\"(link=\"probit\")), se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Probit Model\")\n\nlogit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"glm\", method.args=list(family=\"binomial\"(link=\"logit\")), se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Logit Model\")\n\ngrid.arrange(lm_plot, probit_plot, logit_plot, ncol=2)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-03 09:16:54"],"user":["default_user"],"umph":[1617434214.7872],"ok":[true]}
+,

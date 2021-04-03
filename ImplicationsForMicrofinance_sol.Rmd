@@ -18,7 +18,7 @@ setwd("~/Documents/GitHub/thesis_code_rep/")
 
 ps.name = "ImplicationsForMicrofinance"
 sol.file = paste0(ps.name, "_sol.Rmd")
-libs = c("ggplot2", "haven", "statar", "dplyr", "weights", "lmtest", "lfe", "stargazer", "regtools", "tidyverse", "readr", "knitr", "qwraps2", "AER", "VGAM", "censReg","sf", "ggplot2", "tmap", "tmaptools", "leaflet", "dplyr")
+libs = c("ggplot2", "haven", "statar", "dplyr", "weights", "lmtest", "lfe", "stargazer", "regtools", "tidyverse", "readr", "knitr", "qwraps2", "AER", "VGAM", "censReg","sf", "ggplot2", "tmap", "tmaptools", "leaflet", "dplyr", "gridExtra")
 
 create.ps(sol.file = sol.file, ps.name = ps.name, user.name=NULL, libs = libs, addons = "quiz")
 
@@ -45,13 +45,13 @@ The paper, the data and a supplemental appendix are available online at the foll
 
 3.    Theoretical Model
 
-4.1  Price Elasticity Results - Price Sensitivities of Loan Take-Up
+4.1   Price Elasticity Results - Price Sensitivities of Loan Take-Up
 
-4.2  Price Elasticity Results - Price Sensitivity of Loan Size
+4.2   Price Elasticity Results - Price Sensitivity of Loan Size
 
-5.1  Pricing Strategy - Profit Maximization
+5.1   Pricing Strategy - Profit Maximization
 
-5.2  Pricing Strategy - Targeted Access
+5.2   Pricing Strategy - Targeted Access
 
 6.    Maturity Elasticities
 
@@ -194,10 +194,10 @@ Now we created a data frame which only contains clients who borrowed from the le
 #< quiz "Borrowers"
 question: How many clients borrowed from our lender?
 sc:
-- 53,810
-- 4,540
-- 3,887*
-- 3,096
+- 53810
+- 4540
+- 3887*
+- 3096
 success: Your answer is correct!
 failure: Your answer is wrong, take a closer look at the sample frame and try again!
 #>
@@ -219,8 +219,7 @@ ___ <- ___ %>% ___ %>% ___("Average Interest Rate" = round(mean(offer4, na.rm=TR
                                                       "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
                                                       "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
                                                       "Average Maturity" = round(mean(term, na.rm=TRUE),3),
-                                                      "Number of Clients" = sum(tookup),
-                                                      "Rural" = sum(rural)/sum(tookup)
+                                                      "Number of Clients" = sum(tookup)
                                                       )
 
 # show the data frame
@@ -231,8 +230,7 @@ provinces <- borrowed %>% group_by(province) %>% summarise("Average Interest Rat
                                                       "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
                                                       "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
                                                       "Average Maturity" = round(mean(term, na.rm=TRUE),3),
-                                                      "Number of Clients" = sum(tookup),
-                                                      "Rural" = sum(rural)/sum(tookup)
+                                                      "Number of Clients" = sum(tookup)
                                                       )
                                                       
 provinces
@@ -241,14 +239,12 @@ provinces
 
 As you can see our newly created data frame is grouped into eight provinces. Tough South Africa is actually divided into nine provinces, the province Northern Cape is missing because no client applied for a loan in this province. We want to create an interactive map of South Africa later in this problem set therefore we have to add the Northern Cape to our data frame `provinces`.
 
-1.7) Just press `Check` to add the Northern cape to the data frame.
+1.7 a) Just press `Check` to add the Northern cape to the data frame.
 
 ```{r "1 d) 2"}
 #< task_notest
-provinces_ <- provinces
-provinces <- rbind(provinces_, c("Northern Cape", NA, NA, NA, NA, NA, NA))
-#>
-#< notest
+provinces <- rbind(provinces, c("Northern Cape", NA, NA, NA, NA, NA, NA))
+
 provinces$province <- c("Eastern Cape", "Free State", "Gauteng", "KwaZulu-Natal", "Limpopo", "Mpumalanga", "North West", "Western Cape", "Northern Cape")
 names(provinces)[names(provinces) == "province"] <- "NAME_1"
 #>
@@ -281,15 +277,15 @@ For further information check: https://dplyr.tidyverse.org/reference/mutate.html
 ```{r "1 e) 1"}
 #< fill_in
 # Replace the question marks with your answer
-provinces %>% ???(??? = ???)
+provinces <- ???(??? = ???)
 #>
-provinces %>% mutate(population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))
+provinces <- mutate(provinces, "Population" = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))
 
 ```
 
 The population data is provided by the South African government. Check out https://www.gov.za/about-sa/south-africas-provinces# for more information.
 
-1.9) Press Check in order to get a interactive map of South Africa.
+1.9) Press Check in order to get a interactive map of South Africa. The color portrays the average interest rate and the bubble size the population of the selected province. You ca get information about a province by just clicking on it.
 ```{r "1 f) 1", output="htmlwidget", widget="leaflet"}
 #< task_notest
 
@@ -316,16 +312,14 @@ mymap <- tm_shape(map_data) +
               id = "NAME_1",
               style = "quantile",
               palette="Greens",
-              popup.vars=c("population", "Number of Clients", "Average Interest Rate",  "Average Offer Rate", "Average Dynamic Repayment Incentive","Average Loansize", "Average Maturity", "Rural")) +
-  tm_bubbles(size = "population", col= "black", id="NAME_1", scale = 2) +
+              popup.vars=c("Population", "Number of Clients", "Average Interest Rate",  "Average Offer Rate", "Average Dynamic Repayment Incentive","Average Loansize", "Average Maturity")) +
+  tm_bubbles(size = "Population", col= "black", id="NAME_1", scale = 2) +
   tm_borders() +
-  tm_scale_bar() +
-  tm_compass(type="8star", size = 2) +
-  tm_credits("Source: GADM database (www.gadm.org)") # not support by view - change how?
+  tm_scale_bar()
+
 
 tmap_leaflet(mymap)
 # tmap mode set to interactive leaflet map
-
 #>
 ```
 
@@ -333,7 +327,7 @@ tmap_leaflet(mymap)
 Great, you created a map of South Africa which shows the most important average characteristics of the loan contracts for each province! Maybe you now get a glimpse how Bartholomeu Dias felt when he was the first European who explored the coastline of South Africa!
 #>
 
-
+The map gives us information about how the clients are geographically distributed. We can see that a majority of the clients are from the Gauteng and KwaZulu-Natal provinces which are also the provinces with the most residents which is portrayed by the size of the black bubbles. As mentioned earlier we have no clients in the Northern Cape and only 1 in the North West. If we take a look at the average interest rates, which is portrayed by the color, we see that it varies from 7.18 in KwaZulu-Natal to 10.49 in North West. However, the average interest rate in North West is not very informative, because as we know, there is only one client in North West. The average interest rates of the remaining provinces are very similar. For further information, just click on the province you want to get more information about.
 
 ## Exercise 2 -- Experimental Design 
 
@@ -476,11 +470,7 @@ summary(reg2_2)
 
 As we can see the p-value is 0.851 which is considerably higher than the significance level which substantiates that offer rates at or below the standard rate did not influence the take-up after the deadline. This seems conclusive since the clients borrowed at the standard rate schedule after the deadline.
 
-We can also observe the relationship between the take-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, then we will utilize the `stat_smooth()` to plot our probit regression `reg2_2`.
-
-#< info "stat_smooth()"
-The `stat_smooth()` function is part of the ggplot2 package and can be used in a variety of ways. In our case it is used to portray
-#>
+We can also observe the relationship between the take-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, then we will utilize the `stat_smooth()` (will be explained later in detail) to plot our probit regression `reg2_2`.
 
 2.2.3) Plot the probit regression `reg2_2`. Just press Check.
 ```{r "2 a) 7", error=FALSE, results='asis'}
@@ -496,10 +486,14 @@ The graph corroborates our thesis since there is no clear tendency that the prob
 In addition we want to find out if the rejection decisions of the clients were correlated with the offer rate awarding process. The approach is the same as the previous regression. However this time we have to reduce the data frame to only clients who applied for a loan. Furthermore we will add a new function called `stargazer()` to get a nicer output table which holds the regression results of all three regressions.
 
 #< info "stargazer()"
-The `geom_density()` function from the `ggplot2` package is used to is one of the multiple display options which can be realized.
+`stargazer` is an R package that creates LATEX-/HTML code and ASCII text for regression tables, with multiple models side-by-side, as well as for summary statistics tables, data frames, vectors and matrices. We use `stargazer` because the output is well-formatted, it supports many models and it commands many beautiful aesthetics. To create summary statistics table we just have to run  `stargazer(.data)`. If we want to create a regression table we have to proceed in the same way but we want to make some adjustments. With the command `type=` we can determine the output data type. The `header=` command indicates whether a header (name and version of the package, author,...) should appear.
+
+For further information check: https://cran.r-project.org/web/packages/stargazer/stargazer.pdf
 #>
 
-2.2.4) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`
+We want to set `type="html"` and `header=FALSE`.
+
+2.2.4) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`. If you need a little hint, press `hint`.
 ```{r "2 a) 8", error=FALSE, results='asis'}
 #< fill_in
 reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, applied == 1))
@@ -508,7 +502,10 @@ stargazer(???)
 #>
 reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, applied == 1))
 
-stargazer(reg2_1, reg2_2, reg2_3, "branchuse", type="html", header=FALSE)
+stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
+#< hint
+display("stargazer(reg2_1, ???, ???, type=???, header=???)")
+#>
 ```
 
 The first column shows the result of our first regression `reg2_1`, the second column the result of our second regression `reg2_2` and the third our third regression `reg2_3`. We see that the p-value is once again substantially higher than the significance level which corroborates that the rejection decision was not influenced by the offer rate.
@@ -523,8 +520,12 @@ You successfully completed the first part of our regression analysis! You are on
 
 It the first two sections we got familiar with our parameters and verified the randomization process. Now we want to comprehend the empirical strategy.
 
+### Basic Model
+
 So far we learned a lot about our data and the randomization process thus in this section we will apply our newly acquired knowledge to map our data into testable predictions. In the narrow sense we are interested in the response of loan demand to changes in price and maturity. Our basic model for the estimation is the following: $$y_i = f(C_i, X_i)$$
 In our model **$y$** measures the extensive (`take-up`) and intensive (`loansize`) demand. While **$i$** indicates one of the 53,810 borrowers. The variable **$C_i$** is a vector including the offer rate (**$r_i$**) and the maturity (**$m_i$**). The variables we used for the randomization process of **$r_i$** - the pre-approved risk category (low/medium/high) and the mailer wave (July/September/October) - are included in **$X_i$**.
+
+### Linear Probability Model
 
 We often use binary variables as independent variables in regressions. But in our case we want to use a binary variable as a dependent variable. This means it is either 1 if something occurs or zero otherwise. It is possible to use the ordinary least squares method (OLS) in which the dependent variable $y$ is binary. It is called the **Linear Probability Model** (LPM). The LPM is an OLS method with a continuous dependent variable: $$Y_i = \beta_0 + \beta_1{X_1} + ... + \beta_k{X_{ki}} + \epsilon_i$$ To analyze the model we take a look at the conditional expectation of the dependent variable **$Y$** and we see that: $$E[Y|X] = P(Y=1 | X)$$ Now we can use this assumption to describe the model above, we assume that: $$E[Y|X] =  \beta_0 + \beta_1{X_1} + \epsilon_i = P(Y=1 | X) = y$$ Since the expectation of the error term **$\epsilon_i$** given we have **$X$** is **0**. The change in probability associated with a change in **X** to **$X+1$** equals a probability change by the factor of **$\beta_1$**. In other words the coefficient **$\beta_i$** can be interpreted as the change in **$Y$** associated with a unit change in **$X_i$** or the predicted probability of having $y=1$ for the given values of $x_1...x_k$.
 
@@ -532,7 +533,6 @@ However the classic LPM has a fundamental problem. We will shows this by using t
 
 ```{r "3 a) 1"}
 #< task_notest
-library(gridExtra)
 
 lm_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + 
   stat_smooth(method="lm", se=TRUE) +
@@ -670,9 +670,9 @@ ggplot(stata_data, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_smooth(
 
 ```
 
-grafik erklären und auf kink eingehen
+The demand curve confirms our thesis that an interest rate decrease is associated with a higher loan size and an increased offer rate with a lower loan size. However, a kink at approximately an interest rate increase of 250-basis-points is particular noticeable. It shows that if we increase the interest rate by more then 250-basis-points the demand curve or rather the loan size falls strongly.
 
-### Outside Lender
+### Borrowing from an outside lender
 
 An explanation for the kink in the demand curve could be that clients borrowed elsewhere if the offer rate was to high. To test this hypothesis we will perform the same regression as in 4.2.2 but this time we will only focus on clients who ended up borrowing from another financial institution. For this circumstance the lender obtained credit bureau data and it is described with the variable `tookup_outside_only` in our data set.
 
@@ -738,7 +738,7 @@ To put it in a nutshell, our results on non-linearities in price sensitivity see
 
 ## Exercise 4.2 -- Price Elasticity Results - Price Sensitivity of Loan Size
 
-In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (R). R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021). Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
+In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (R). For your information: R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021). Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
 
 4.2.1) Press `Check`to load in the data once again.
 ```{r "4.2 a) 1"}
