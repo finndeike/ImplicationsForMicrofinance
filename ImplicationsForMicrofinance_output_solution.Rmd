@@ -54,6 +54,11 @@ RTutor::set.knit.print.opts(data.frame.theme="code", table.max.rows=25, table.ma
 knitr::opts_chunk$set(error = TRUE) 
 ```
 
+---
+output:
+  word_document: default
+  html_document: default
+---
 
 # Credit Elasticities in Less-Developed Economics: Implications for Microfinance
 
@@ -76,13 +81,17 @@ The paper, the data and a supplemental appendix are available online at the foll
 
 3.    Theoretical Model
 
-4.1   Price Elasticity Results - Price Sensitivities of Loan Take-Up
+4.    Price Elasticity Results
 
-4.2   Price Elasticity Results - Price Sensitivity of Loan Size
+  4.1   Price Sensitivities of Loan Take-Up
 
-5.1   Pricing Strategy - Profit Maximization
+  4.2   Price Sensitivity of Loan Size
 
-5.2   Pricing Strategy - Targeted Access
+5.    Pricing Strategy
+
+  5.1   Profit Maximization
+
+  5.2   Targeted Access
 
 6.    Maturity Elasticities
 
@@ -623,6 +632,15 @@ $$
 
 In our model $a_i$ is the independent variable `applied` which can be either **1** if the client $i$ applied for a loan or **0** if he or she did not. The offer rate `offer4` $r$ is orthogonal to the standard errors $\epsilon_{ib}$ by construction and therefore $\beta$ is an unbiased estimate of the price sensitivity of loan take-up from direct mail offers. We will assume that $\beta < 0$ since almost every model of consumer choice predicts that the demand is downward sloping with an increase in price.
 
+
+***
+
+### Award: Gustav Fechner
+Wow, you now understand the Probit model. It's basic model is based on the *Weber-Fechner law* formulated by Gustav Fechner published in Fechner (1860). He was a German experimental psychologist, philosopher and physicist and he is said to be the founder of psychophysics.
+
+***
+
+
 Since you now learned a little bit about our theoretical model, let's do a short Quiz based on our data:
 
 
@@ -700,17 +718,29 @@ ggplot(stata_data, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_point()
 
 ```
 
-As you can see, it can be hard to identify a trend with just points alone. Therefore, we use another `geom-` function called `geom_smooth()` to replace the scatter plot with a smoothing line. We also have to add `se=FALSE` and `method="loess"` into the `geom_smooth()` command.
+As you can see, it can be hard to identify a trend with just points alone. Therefore, we use another `geom-` function called `geom_smooth()`, to replace the scatter plot with a smoothing line. We also have to add `se=FALSE` and `method="loess"` into the `geom_smooth()` command. We set `se=FALSE` because we would get an overflow otherwise, knowing our data set is quiet large.
 
-4.1.5) Replace the `geom_point()` function with the `geom_smooth()`. Afterwards press `Check`.
+
+***
+
+### Info: geom_smooth()
+The `geom-` function `geom_smooth()` is part of the `ggplot2` package. The function adds a smoothing line to a plot. It enables us to identify trends easier. The function adds confidence bands to the smoothing line as well which can lead to a overflow if the data set is large. We remove these by setting the command `se` to `FALSE` to avoid an overflow. Furthermore, we can edit the smoothness of the smooth line with the command `span=_`. The span can be adjusted from 1 very smooth to 0 very rough. We can also decide which type of smooths we consider by using the `method=_` command. We an choose between four types: `lm`, `glm`, `gam` and `loess`.
+
+For more information check: http://statseducation.com/Introduction-to-R/modules/graphics/smoothing/
+
+***
+
+
+
+4.1.5) Replace the `geom_point()` function with the `geom_smooth()` and add the above mentioned conditions. Afterwards press `Check`.
 ```{r "6_23",error=FALSE}
 # ggplot(stata_data, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_point()
 
-ggplot(stata_data, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_smooth(method="loess", se=FALSE)
+ggplot(stata_data, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_smooth(method="loess", se=FALSE, span=0.5)
 
 ```
 
-The demand curve confirms our thesis that an interest rate decrease is associated with a higher loan size and an increased offer rate with a lower loan size. However, a kink at approximately an interest rate increase of 250-basis-points is particular noticeable. It shows that if we increase the interest rate by more then 250-basis-points the demand curve or rather the loan size falls strongly.
+The demand curve confirms our thesis that an interest rate decrease is associated with a higher loan size and an increased offer rate with a lower loan size. However, a kink at approximately an interest rate increase of 150-basis-points is particular noticeable. It shows that if we increase the interest rate by more then 150-basis-points the demand curve or rather the loan size falls strongly.
 
 ### Borrowing from an outside lender
 
@@ -741,9 +771,9 @@ The results in columns (4+5) suggest that there is a positive relationship betwe
 
 ### Borrowing after the deadline
 
-There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher then the standard rate and then borrow at the lower rate. This is testable by examining the post-deadline borrowing behaviour of the clients. A logical outcome would be that clients with a higher offer rate then the standard rate will borrow after the deadline expired. In order to test this hypothesis we will peform the regression once again, but this time soley with clients who borrowed after the deadline. To find out which variable describes those clients press the `data` button.
+There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher then the standard rate and then borrow at the lower rate. This is testable by examining the post-deadline borrowing behaviour of the clients. A logical outcome would be that clients with a higher offer rate then the standard rate will borrow after the deadline expired. In order to test this hypothesis we will perform the regression once again, but this time soley with clients who borrowed after the deadline. To find out which variable describes those clients press the `data` button.
 
-4.1.6) This time you only have to replace the questionmarks with the variable which indicates if clients borrowed after the deadline. If you think your answer is correct press `Check`. If you can not find the variable in `data` just press `hint`.
+4.1.6) This time you only have to replace the question marks with the variable which indicates if clients borrowed after the deadline. If you think your answer is correct press `Check`. If you can not find the variable in `data` just press `hint`.
 ```{r "6_25",error=FALSE, results='asis'}
 # reg3_7 <- glm(??? ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
 # 
@@ -772,7 +802,7 @@ To put it in a nutshell, our results on non-linearities in price sensitivity see
 
 ## Exercise 4.2 -- Price Elasticity Results - Price Sensitivity of Loan Size
 
-In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (R). R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021). Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
+In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (R). For your information: R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021). Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
 
 4.2.1) Press `Check`to load in the data once again.
 ```{r "7_26"}
@@ -879,7 +909,7 @@ data_plot2 <- stata_data %>% filter(tookup==1)
 x_plot2 <- lm(offer4 ~ low + med + waved2 + waved3, data=data_plot2)
 y_plot2 <- lm(loansize ~ low + med + waved2 + waved3, data=data_plot2) 
  
-ggplot(data_plot2, aes(x=x_plot2$residuals, y=y_plot2$residuals)) + geom_smooth(method = "loess")
+ggplot(data_plot2, aes(x=x_plot2$residuals, y=y_plot2$residuals)) + geom_smooth(method = "loess", span=0.5)
 
 ```
 
@@ -1035,22 +1065,21 @@ stargazer(reg7_1, reg7_2, reg7_3, reg7_4, reg7_5, reg7_6, reg7_7, reg7_8, reg7_9
 
 ## Exercise Conclusion 
 
-## Exercise References
+## Exercise Bibliography
 
-### Bibliography
-- LPM https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf
-- South African Government (2021): South Africa's provinces. Retrieved from https://www.gov.za/about-sa/south-africas-provinces#
+### Books & Papers
+- Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty",  *PublicAffairs*
+- Dustan, A. (2010), "EEP/IAS 118 - Section Handout 13", Retrieved from https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout% 20Solved.pdf
 
 ### Packages
 
-- install.packages("hrbrthemes", repos = c("https://cinc.rud.is", "https://cloud.r-project.org/"))
- https://github.com/hrbrmstr/hrbrthemes
- 
-### Awards
-- Legendre https://www.risknet.de/wissen/whos-who/adrien-marie-legendre/
-- JJ ALLAIRE https://rstudio.com/speakers/j.j.-allaire/
-- Bartolomeu Dias https://www.bbc.com/news/world-africa-14094918
-- Marshall https://www.econlib.org/library/Enc/bios/Marshall.html
+### Websites
+- https://www.risknet.de/wissen/whos-who/adrien-marie-legendre/, retrieved 19. January 2021
+- https://rstudio.com/speakers/j.j.-allaire/, retrieved 21. January 2021
+- https://www.bbc.com/news/world-africa-14094918, retrieved 28. January 2021
+- https://www.econlib.org/library/Enc/bios/Marshall.html, retrieved 3. February 2021
+- https://en.wikipedia.org/wiki/Gustav_Fechner, retrieved  12. March 2021
+- South African Government (2021): South Africa's provinces, Retrieved from             https://www.gov.za/about-sa/south-africas-provinces#
 
 
 
