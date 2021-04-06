@@ -355,6 +355,15 @@ summary(???)
 
 In fact the p-value of all observable variables is significantly higher than the significance level. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful.
 
+We can also portray the changes that different explanatory variables have on the dependent variable in a regression model with the function `effectplot()` of the `regtools` package. The basic concept of an effect plot is to compare the effects of the explanatory variables if they change from their 10 percent to their 90 percent quantile or for binary variable the effect of changing from 1 to 0. To create an effectplot, we just have to add our regression into the function braces `effectplot(.reg)` (For further information checkout: https://github.com/skranz/regtools/blob/master/man/effectplot.Rd).
+
+2.2.2) Create an `effectplot()` of our regression `reg2_1`. Afterwards, press the `check` button.
+```{r "4_6"}
+# Enter your code here.
+```
+
+The effectplot confirms our assumption, that the randomization process was successful. The only explanatory variables which influence our response variable significantly are the controll variables of the month of the offer and the risk category of the client.
+
 Since we just learned, that it is reasonable to assume that the randomization process was successful, we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical.
 
 ```{r eval=FALSE}
@@ -364,8 +373,8 @@ info("Probit Regression with glm()")
 
 The theoretical model of a probit regression will be explained more in detail in exercise 3.
 
-2.2.2) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To Change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
-```{r "4_6"}
+2.2.3) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To Change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
+```{r "4_7"}
 reg2_2 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, data=stata_data)
 summary(reg2_2)
 
@@ -375,8 +384,8 @@ As we can see the p-value is 0.851 which is considerably higher than the signifi
 
 We can also observe the relationship between the take-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, then we will utilize the `stat_smooth()` (will be explained later in detail) to plot our probit regression `reg2_2`.
 
-2.2.3) Plot the probit regression `reg2_2`. Just press Check.
-```{r "4_7",error=FALSE, results='asis'}
+2.2.4) Plot the probit regression `reg2_2`. Just press Check.
+```{r "4_8",error=FALSE, results='asis'}
 ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ 
   stat_smooth(method='glm',family=binomial(link='probit'))+
   ylim(min=0, max=1)
@@ -393,8 +402,8 @@ info("stargazer()")
 
 We want to set `type="html"` and `header=FALSE`.
 
-2.2.4) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`. If you need a little hint, press `hint`.
-```{r "4_8",error=FALSE, results='asis'}
+2.2.5) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`. If you need a little hint, press `hint`.
+```{r "4_9",error=FALSE, results='asis'}
 reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, applied == 1))
 
 stargazer(???)

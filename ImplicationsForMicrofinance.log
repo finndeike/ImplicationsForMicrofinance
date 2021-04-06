@@ -2502,3 +2502,17 @@
 ,
 {"type":["check_chunk"],"time":["2021-04-06 12:46:22"],"user":["default_user"],"umph":[1617705982.9794],"ok":[true],"chunk":[16],"ex":[4],"e.ind":[0],"code":["ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ \n  stat_smooth(method='glm',family=binomial(link='probit'))+\n  ylim(min=0, max=1)"],"message":[""]}
 ,
+{"type":["init_ps"],"time":["2021-04-06 13:07:58"],"user":["default_user"],"umph":[1617707278.5247],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 13:08:13"],"user":["default_user"],"umph":[1617707293.4541],"ok":[true],"chunk":[10],"ex":[4],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)\n\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 13:08:13"],"user":["default_user"],"umph":[1617707293.9751],"ok":[true],"chunk":[11],"ex":[4],"e.ind":[0],"code":["stata_data %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 13:08:14"],"user":["default_user"],"umph":[1617707294.2478],"ok":[true],"chunk":[12],"ex":[4],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- stata_data %>% group_by(risk) %>% summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 13:08:14"],"user":["default_user"],"umph":[1617707294.3089],"ok":[true],"chunk":[13],"ex":[4],"e.ind":[0],"code":["# \nsum(stata_data$normrate_less)/nrow(stata_data)\nsum(stata_data$normrate_more)/nrow(stata_data)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 13:08:17"],"user":["default_user"],"umph":[1617707297.5311],"ok":[true],"chunk":[14],"ex":[4],"e.ind":[0],"code":["reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data)\n\nsummary(reg2_1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 13:09:23"],"user":["default_user"],"umph":[1617707363.2634],"ok":[true],"chunk":[15],"ex":[4],"e.ind":[0],"code":[" effectplot(reg2_1)"],"message":[""]}
+,

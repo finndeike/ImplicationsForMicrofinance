@@ -502,6 +502,15 @@ summary(reg2_1)
 
 In fact the p-value of all observable variables is significantly higher than the significance level. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful.
 
+We can also portray the changes that different explanatory variables have on the dependent variable in a regression model with the function `effectplot()` of the `regtools` package. The basic concept of an effect plot is to compare the effects of the explanatory variables if they change from their 10 percent to their 90 percent quantile or for binary variable the effect of changing from 1 to 0. To create an effectplot, we just have to add our regression into the function braces `effectplot(.reg)` (For further information checkout: https://github.com/skranz/regtools/blob/master/man/effectplot.Rd).
+
+2.2.2) Create an `effectplot()` of our regression `reg2_1`. Afterwards, press the `check` button.
+```{r "4_15"}
+ effectplot(reg2_1)
+```
+
+The effectplot confirms our assumption, that the randomization process was successful. The only explanatory variables which influence our response variable significantly are the controll variables of the month of the offer and the risk category of the client.
+
 Since we just learned, that it is reasonable to assume that the randomization process was successful, we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical.
 
 
@@ -517,8 +526,8 @@ Check out https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%20
 
 The theoretical model of a probit regression will be explained more in detail in exercise 3.
 
-2.2.2) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To Change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
-```{r "4_15"}
+2.2.3) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To Change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
+```{r "4_16"}
 # reg2_2 <- lm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, data=stata_data)
 # summary(reg2_2)
 
@@ -530,8 +539,8 @@ As we can see the p-value is 0.851 which is considerably higher than the signifi
 
 We can also observe the relationship between the take-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, then we will utilize the `stat_smooth()` (will be explained later in detail) to plot our probit regression `reg2_2`.
 
-2.2.3) Plot the probit regression `reg2_2`. Just press Check.
-```{r "4_16",error=FALSE, results='asis'}
+2.2.4) Plot the probit regression `reg2_2`. Just press Check.
+```{r "4_17",error=FALSE, results='asis'}
 ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ 
   stat_smooth(method='glm',family=binomial(link='probit'))+
   ylim(min=0, max=1)
@@ -554,8 +563,8 @@ For further information check: https://cran.r-project.org/web/packages/stargazer
 
 We want to set `type="html"` and `header=FALSE`.
 
-2.2.4) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`. If you need a little hint, press `hint`.
-```{r "4_17",error=FALSE, results='asis'}
+2.2.5) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`. If you need a little hint, press `hint`.
+```{r "4_18",error=FALSE, results='asis'}
 # reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, applied == 1))
 # 
 # stargazer(???)
@@ -593,7 +602,7 @@ We often use binary variables as independent variables in regressions. But in ou
 
 However the classic LPM has a fundamental problem. We will shows this by using the `mtcars` data set which is included in the `dplyr`-package. The following plots will show the difference between a LPM and a Probit or Logit model and why probit or logit models are better suited future regressions. Just press check to have a look at the following plots to answer the question bellow:
 
-```{r "5_18"}
+```{r "5_19"}
 
 lm_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + 
   stat_smooth(method="lm", se=TRUE) +
@@ -663,7 +672,7 @@ In the next section we will deal with this subject more intensively.
 So war far we talked a lot about our data set and our theoretical strategy. But in this section we want to get our first tangible results. In fact in the first part of exercise 4, we will be estimating the price elasticity of loan demand.
 
 4.1.1) Since this is a new exercise, press `Check`to load in the data once again.
-```{r "6_19"}
+```{r "6_20"}
 stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
@@ -674,7 +683,7 @@ As we mentioned in the last section we are using a probit model to estimate the 
 We want to start with the clients who received offers at or below the standard rate of their risk category. As a reminder, the offer rate per month for a low risk client was 7.75 percent, for a medium risk client 9.75 percent and for a client of the high risk category 11.75 percent. To do so we have to reduce the data set to only the clients who received a offer at or below the standard rates of the client (`normrate_less == 1`) with the `filter()` function. Recall that `applied` is our binary dependent variable and `offer4` as well as the control variables `low`, `med`, `waved2`and `waved3` are our explanatory variables.
 
 4.1.2) Use `glm()` to perform our first Probit regression. Regress `applied` on `offer4`, `low`, `med`, `waved2` and `waved3` and filter our data set `stata_data` for `normate_less == 1`. Store this regression in `reg3_1`. Afterwards display the regression results with the `summary()` command. Finally press `Check` or if you need help press `hint`.
-```{r "6_20",error=FALSE}
+```{r "6_21",error=FALSE}
 # Perform a Probit regression and show the regression results
 reg3_1 <- glm(applied ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
 summary(reg3_1)
@@ -695,7 +704,7 @@ The `showreg()`function from the `regtools`-package is used to extend and wrap e
 
 
 4.1.3) Just press `Check` to perform the two above explained regressions and show the marginal probit effects of all three regressions.
-```{r "6_21",error=FALSE, results='asis'}
+```{r "6_22",error=FALSE, results='asis'}
 reg3_2 <- glm(applied ~ offer4 + low + med, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 0))
 
 reg3_3 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=stata_data)
@@ -708,7 +717,7 @@ Column (1) presents the probit marginal effect of clients who received offers at
 We can illustrate the demand price sensitivity in graphically. For this we can use the `ggplot()` function of the `ggplot2` package we used in task 2.1.2). To generate the demand curve we need the x-axis to be the residual of a regression of the monthly interest rate on the conditions of the experiment, and the y-axis to be the residuals of a regression of take-up on the experimental conditions. One possibility would be to show the residuals in a scatter plot by using the function `geom_point()` also of the `ggplot2` package.
 
 4.1.4) Press `Check` to generate a scatter plot of the demand price sensitivity.
-```{r "6_22",error=FALSE}
+```{r "6_23",error=FALSE}
 
 x_plot1 <- lm(offer4 ~ low + med + waved2 + waved3, data=stata_data)
 y_plot1 <- lm(tookup ~ low + med + waved2 + waved3, data=stata_data)
@@ -732,7 +741,7 @@ For more information check: http://statseducation.com/Introduction-to-R/modules/
 
 
 4.1.5) Replace the `geom_point()` function with the `geom_smooth()` and add the above mentioned conditions. Afterwards press `Check`.
-```{r "6_23",error=FALSE}
+```{r "6_24",error=FALSE}
 # ggplot(stata_data, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_point()
 
 ggplot(stata_data, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_smooth(method="loess", se=FALSE, span=0.5)
@@ -746,7 +755,7 @@ The demand curve confirms our thesis that an interest rate decrease is associate
 An explanation for the kink in the demand curve could be that clients borrowed elsewhere if the offer rate was to high. To test this hypothesis we will perform the same regression as in 4.2.2 but this time we will only focus on clients who ended up borrowing from another financial institution. For this circumstance the lender obtained credit bureau data and it is described with the variable `tookup_outside_only` in our data set.
 
 4.1.5) Press `Check` to perform the regression of clients who borrowed from other financial institutions on the offer rate. Afterwards use the regression results to answer the question below.
-```{r "6_24",error=FALSE, results='asis'}
+```{r "6_25",error=FALSE, results='asis'}
 reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 1))
 
 reg3_5 <- glm(tookup_outside_only ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(stata_data, normrate_less == 0))
@@ -773,7 +782,7 @@ The results in columns (4+5) suggest that there is a positive relationship betwe
 There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher then the standard rate and then borrow at the lower rate. This is testable by examining the post-deadline borrowing behaviour of the clients. A logical outcome would be that clients with a higher offer rate then the standard rate will borrow after the deadline expired. In order to test this hypothesis we will perform the regression once again, but this time soley with clients who borrowed after the deadline. To find out which variable describes those clients press the `data` button.
 
 4.1.6) This time you only have to replace the question marks with the variable which indicates if clients borrowed after the deadline. If you think your answer is correct press `Check`. If you can not find the variable in `data` just press `hint`.
-```{r "6_25",error=FALSE, results='asis'}
+```{r "6_26",error=FALSE, results='asis'}
 # reg3_7 <- glm(??? ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(stata_data, normrate_less == 1))
 # 
 # reg3_8 <- glm(??? ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = stata_data)
@@ -804,7 +813,7 @@ To put it in a nutshell, our results on non-linearities in price sensitivity see
 In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (R). For your information: R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021). Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
 
 4.2.1) Press `Check`to load in the data once again.
-```{r "7_26"}
+```{r "7_27"}
 stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
@@ -829,7 +838,7 @@ For further information check out: https://rdrr.io/cran/lfe/man/felm.html
 
 4.2.2) Perform a linear regression with fixed effects stored in `reg4_1`. Regress the dependent variable `loansize` on the ordinary independent variable `offer4` and the fixed effects `low` + `med` + `waved2` + `waved3` and cluster it by `branchuse`. Replace the question marks with the missing variables. If you have no clue how to perform the regression, just press `hint` for help.
 
-```{r "7_27",warning=FALSE}
+```{r "7_28",warning=FALSE}
 # reg4_1 <- felm(??? ~ ??? | ??? |0| ???,  data = filter(stata_data, offer4==final4, normrate_less==1))
 # summary(reg4_1)
 
@@ -858,7 +867,7 @@ Answer: -0.32
 We also want to explore the loan price demand estimate for a sub-sample of non-borrowers. We will re-estimate the model from the previous regression, though we add additional control variables and branch fixed effects. The additional controls added to unconditional specifications include: quadratics in internal credit score, external credit score, and gross income at time of pre-approval, months since last loan with lender, number of prior loans with lender, gender, number of dependents, marital status, quadratic in age, rural residence, education, and province. Controls for conditional specifications include net income at the time of approval. The command `omit()` of the `stargazer` packages omits the control variables in our stargazer output below.
 
 4.2.3) Press `check`to reestimate the regression in 4.2.2) with additional control variables for non-borrowers.
-```{r "7_28",warning=FALSE, results='asis'}
+```{r "7_29",warning=FALSE, results='asis'}
 stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
 reg4_2 <- felm(loansize ~ offer4 + grossincome + grossincomesq + appscore + appscoresq + itcscore + itcscoresq + trcount + age + dormancy + dependants + agesq | low + med + waved2 + waved3 + female + married  + rural + edhi + appscore0 + itczero + branchuse + province |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
@@ -884,7 +893,7 @@ The elasticity of demand can be calculated with the use of the midpoint formula:
 
 
 4.2.4) Press `Check` to run the above mentioned regressions. 
-```{r "7_29",warning=FALSE, results='asis'}
+```{r "7_30",warning=FALSE, results='asis'}
 
 stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
@@ -902,7 +911,7 @@ As we can see in column (1) an increase of the offer rate by 100-basis-points fo
 We can portray our results of the conditional loan size in a demand curve graphically as we did in task 4.1.5).
 
 4.2.5) Press `Check` to generate the demand curve for borrowers only.
-```{r "7_30",warning=FALSE, results='asis'}
+```{r "7_31",warning=FALSE, results='asis'}
 data_plot2 <- stata_data %>% filter(tookup==1)
 
 x_plot2 <- lm(offer4 ~ low + med + waved2 + waved3, data=data_plot2)
@@ -919,7 +928,7 @@ The graph shows that the effect that an increase of the interest rate has a nega
 Now, we want to take a look at the log-log-specifications of our previous regressions. We can use the log-log-regression estimates as an alternative to determine the elasticities of demand. The difference between a normal linear-linear-model and a log-log-model is that the we use the logarithmized values of the $y$ and $x$ variable. The estimates of a log-log-regression can be interpreted as if we increase the $x$ variable by one percent the $y$ changes in average by $\beta_1$ percent.
 
 4.2.6) Change the `loansize` and `offer4` variables to their logarithmized (ln) values. Press `Check` afterwards.
-```{r "7_31",warning=FALSE, results='asis'}
+```{r "7_32",warning=FALSE, results='asis'}
 # reg4_6 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, tookup==1, normrate_less==1))
 # 
 # reg4_7 <- felm(loansize ~ offer4 + appscore + appscoresq + itcscore + itcscoresq + trcount + age + dormancy + dependants + agesq + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq | low + med + waved2 + waved3 + female + married  + rural + edhi + appscore0 + itczero + branchuse + province |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
@@ -956,7 +965,7 @@ Alfred Marshall was the first to develop the standard supply and demand graph. I
 In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition 
 
 5.1.1) Press `Check`to load in the data once again.
-```{r "8_32"}
+```{r "8_33"}
 stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
@@ -967,7 +976,7 @@ We already know what influence an adjusted offer rate has on the loan size and t
 To examine this thesis, let us have a look at the optimal price for the lender at first. For this we will aggregate the revenue and repayment results (`grossinterest`) over the entire sample frame for clients who borrowed at or below the lenders standard rate. This will provide us with information on the price sensitivity of gross revenue obtained on initial pre-deadline borrowing. Or in other words it will show us how an adjusted interest rate affects the lender's gross revenue.
 
 5.1.2) Just press `Check` to perform the regression of `grossinterest` on `offer4`.
-```{r "8_33",warning=FALSE, results='asis'}
+```{r "8_34",warning=FALSE, results='asis'}
 reg5_1 <- felm(grossinterest ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
 
 stargazer(reg5_1, type="html", header=FALSE)
@@ -976,7 +985,7 @@ stargazer(reg5_1, type="html", header=FALSE)
 Before we continue with the interpretation of the regression output. Let us create a regression adjusted demand curve for the revenue in respect to price.
 
 5.1.3) Just press `Check` and the code below will create the demand curve.
-```{r "8_34",warning=FALSE, results='asis'}
+```{r "8_35",warning=FALSE, results='asis'}
 data_plot3 <- stata_data %>% filter(offer4==final4, normrate_less==1)
 x_plot3 <- felm(offer4 ~ low + med + waved2 + waved3, data=data_plot3)
 y_plot3 <- felm(grossinterest ~ low + med + waved2 + waved3, data=data_plot3)
@@ -994,7 +1003,7 @@ Quiz: The gross revenue result implies that a 100-basis-point decrease of the of
 
 Answer: 2.6
 
-```{r "8_35",warning=FALSE, results='asis'}
+```{r "8_36",warning=FALSE, results='asis'}
 reg5_2 <- felm(pstdue_average ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
 
 reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(stata_data, offer4==final4, normrate_less==1, tookup==1))
@@ -1003,7 +1012,7 @@ reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = 
 stargazer(reg5_2, reg5_3, type="text",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
 ```
 
-```{r "8_36",warning=FALSE, results='asis'}
+```{r "8_37",warning=FALSE, results='asis'}
 stata_data <- stata_data %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
 reg6_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(stata_data, offer4==final4, normrate_less==1))
@@ -1024,11 +1033,11 @@ stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
 ## Exercise 5.2 -- Pricing Strategy: Targeted Access
 
 5.2.1) Press `Check`to load in the data once again.
-```{r "9_37"}
+```{r "9_38"}
 stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
-```{r "9_38",warning=FALSE, results='asis'}
+```{r "9_39",warning=FALSE, results='asis'}
 stata_data <- stata_data %>% mutate(grossincomecat2 = xtile(grossincome, n=2))
 stata_data <- stata_data %>% mutate(sales_grossincomecat2 = xtile(grossincome, n=10))
                                     
