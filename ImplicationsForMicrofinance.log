@@ -2516,3 +2516,5 @@
 ,
 {"type":["check_chunk"],"time":["2021-04-06 13:09:23"],"user":["default_user"],"umph":[1617707363.2634],"ok":[true],"chunk":[15],"ex":[4],"e.ind":[0],"code":[" effectplot(reg2_1)"],"message":[""]}
 ,
+{"type":["init_ps"],"time":["2021-04-06 13:18:21"],"user":["default_user"],"umph":[1617707901.695],"ok":[true]}
+,

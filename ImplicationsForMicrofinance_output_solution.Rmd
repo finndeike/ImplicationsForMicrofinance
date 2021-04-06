@@ -506,6 +506,7 @@ We can also portray the changes that different explanatory variables have on the
 
 2.2.2) Create an `effectplot()` of our regression `reg2_1`. Afterwards, press the `check` button.
 ```{r "4_15"}
+# Create an effectplot using the effectplot() function of the regression reg2_1
  effectplot(reg2_1)
 ```
 

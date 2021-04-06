@@ -359,7 +359,8 @@ We can also portray the changes that different explanatory variables have on the
 
 2.2.2) Create an `effectplot()` of our regression `reg2_1`. Afterwards, press the `check` button.
 ```{r "4_6"}
-# Enter your code here.
+# Create an effectplot using the effectplot() function of the regression reg2_1
+
 ```
 
 The effectplot confirms our assumption, that the randomization process was successful. The only explanatory variables which influence our response variable significantly are the controll variables of the month of the offer and the risk category of the client.
