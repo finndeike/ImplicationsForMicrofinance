@@ -265,13 +265,13 @@ stata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = 
 
 ```
 
-We want to find out more about the interest rate variable `offer4`. In this part of the section we will inspect the correlation of `offer4` and `maturity`, conditional on the risk category, with other observable variables and check if the randomization process was sucessfull.
+We want to find out more about the interest rate variable `offer4`. In this part of the section we will inspect the correlation of `offer4` and `maturity`, conditional on the risk category, with other observable variables and check if the randomization process was successful.
 
 An interesting function to look at the distribution of rates is `geom_density()`. The function is part of the package `ggplot2`. The package is used for creating elegant data visualizations and is based on "The Grammar of Graphics". `geom_density()` is often used in combination with the function `ggplot()` which is also a part of the `ggplot2`package. We want to create a density estimate of the offer rate in relation to the three risk categories.
 
 info("ggplot() & geom_density()")
 
-2.1.2) To areate a density estimate of the offer rates, just press the `Check` button.
+2.1.2) To create a density estimate of the offer rates, just press the `Check` button.
 ```{r "4_2"}
 stata_data %>%
 ggplot(aes(x=offer4, group=risk, fill=risk)) + 
@@ -318,7 +318,7 @@ The p-value will give us information about the outcome of the randomization. If 
 
 info("Evaluation of a Linear Regression")
 
-The variables `low`, `med`, `waved2` and `waved3` are control variables. Control variables are variables which are hold constant during an experiment. They are neither dependent or independent variables. Control variables are not part of the experiment itself but yet they still may influence the outcome of the experiment.
+We will also add control variables of the month of the offer(`waved2`, `waved3`) and the lender-defined risk level of the client prior to the experiment (`low`,`med`) and further characteristics of the client, to avoid endogeniety problems. Control variables are variables which are hold constant during an experiment. They are neither dependent or independent variables. Control variables are not part of the experiment itself but yet they still may influence the outcome of the experiment.
 
 2.2.1) Task: Regress the offer rate `offer4` on the given variables using the `lm()` regression and store it in the variable `reg2_1`. To do so, replace the question marks of the given code with you answer.
 ```{r "4_5"}
@@ -329,9 +329,11 @@ summary(reg2_1)
 
 In fact the p-value of all observable variables is significantly higher than the significance level. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful.
 
-Since we just learned, that it is reasonable to assume that the randomization process was successful, we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical. (https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf)
+Since we just learned, that it is reasonable to assume that the randomization process was successful, we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical.
 
-The Probit regression will be explained more in detail in exercise 3.
+info("Probit Regression with glm()")
+
+The theoretical model of a probit regression will be explained more in detail in exercise 3.
 
 2.2.2) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To Change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
 ```{r "4_6"}
@@ -454,8 +456,6 @@ stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08
 ### Extensive Margin
 
 As we mentioned in the last section we are using a probit model to estimate the price elasticity of loan demand. We begin with borrowers who applied for a loan before the deadline ended. Tough instead of the `lm()`-function, we will use the generalized linear model function `glm()` because it enables us to perform a probit regression. 
-
-info("Probit Regression with glm()")
 
 We want to start with the clients who received offers at or below the standard rate of their risk category. As a reminder, the offer rate per month for a low risk client was 7.75 percent, for a medium risk client 9.75 percent and for a client of the high risk category 11.75 percent. To do so we have to reduce the data set to only the clients who received a offer at or below the standard rates of the client (`normrate_less == 1`) with the `filter()` function. Recall that `applied` is our binary dependent variable and `offer4` as well as the control variables `low`, `med`, `waved2`and `waved3` are our explanatory variables.
 

@@ -2470,3 +2470,35 @@
 ,
 {"type":["init_ps"],"time":["2021-04-06 12:39:17"],"user":["default_user"],"umph":[1617705557.9297],"ok":[true]}
 ,
+{"type":["init_ps"],"time":["2021-04-06 12:44:57"],"user":["default_user"],"umph":[1617705897.7194],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:05"],"user":["default_user"],"umph":[1617705905.6443],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:06"],"user":["default_user"],"umph":[1617705906.5172],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:06"],"user":["default_user"],"umph":[1617705906.9292],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:07"],"user":["default_user"],"umph":[1617705907.0192],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:07"],"user":["default_user"],"umph":[1617705907.0858],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:07"],"user":["default_user"],"umph":[1617705907.1754],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:09"],"user":["default_user"],"umph":[1617705909.5828],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["provinces <- rbind(provinces, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA))\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:45:49"],"user":["default_user"],"umph":[1617705949.5831],"ok":[false],"chunk":[8],"ex":[3],"e.ind":[0],"code":["provinces <- mutate(provinces, \"Population\" = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":["evaluation error in \n  provinces <- mutate(provinces, Population = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n  Error: Problem with `mutate()` input `Population`.\n\u001b[31mx\u001b[39m Input `Population` can't be recycled to size 10.\n\u001b[34mℹ\u001b[39m Input `Population` is `c(...)`.\n\u001b[34mℹ\u001b[39m Input `Population` must be size 10 or 1, not 9.\n"]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:46:20"],"user":["default_user"],"umph":[1617705980.2098],"ok":[true],"chunk":[10],"ex":[4],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")\nstata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)\n\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:46:20"],"user":["default_user"],"umph":[1617705980.6726],"ok":[true],"chunk":[11],"ex":[4],"e.ind":[0],"code":["stata_data %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:46:21"],"user":["default_user"],"umph":[1617705981.3031],"ok":[true],"chunk":[12],"ex":[4],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- stata_data %>% group_by(risk) %>% summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:46:21"],"user":["default_user"],"umph":[1617705981.4717],"ok":[true],"chunk":[13],"ex":[4],"e.ind":[0],"code":["# \nsum(stata_data$normrate_less)/nrow(stata_data)\nsum(stata_data$normrate_more)/nrow(stata_data)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:46:21"],"user":["default_user"],"umph":[1617705981.8826],"ok":[true],"chunk":[14],"ex":[4],"e.ind":[0],"code":["reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=stata_data)\n\nsummary(reg2_1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:46:22"],"user":["default_user"],"umph":[1617705982.7921],"ok":[true],"chunk":[15],"ex":[4],"e.ind":[0],"code":["reg2_2 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = \"probit\"), data=stata_data)\nsummary(reg2_2)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 12:46:22"],"user":["default_user"],"umph":[1617705982.9794],"ok":[true],"chunk":[16],"ex":[4],"e.ind":[0],"code":["ggplot(stata_data,aes(x=offer4,y=tookup_afterdead_enforced))+ \n  stat_smooth(method='glm',family=binomial(link='probit'))+\n  ylim(min=0, max=1)"],"message":[""]}
+,
