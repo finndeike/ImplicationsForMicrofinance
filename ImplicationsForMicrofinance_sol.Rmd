@@ -140,8 +140,8 @@ There are a variety of ways to get an overview on a data set. We will use the R 
 ```{r "1 b) "}
 #< task
 # Use the function head() to show the first six rows of the data frame
-head(stata_data)
 #>
+head(stata_data)
 #< hint
 display("head(...)")
 #>
@@ -242,9 +242,9 @@ provinces
 
 ```
 
-As you can see our newly created data frame is grouped into eight provinces. Tough South Africa is actually divided into nine provinces, the province Northern Cape is missing because no client applied for a loan in this province. We want to create an interactive map of South Africa later in this problem set therefore we have to add the Northern Cape to our data frame `provinces`.
+As you can see our newly created data frame is grouped into eight provinces. Tough South Africa is actually divided into nine provinces, the province Northern Cape is missing because no client applied for a loan in this province. We want to create an interactive map of South Africa later in this problem set, therefore we have to add the province *Northern Cape* to our data frame `provinces`.
 
-1.7 a) Just press `Check` to add the Northern cape to the data frame.
+1.7 a) Just press `Check` to add the Northern Cape to the data frame.
 
 ```{r "1 d) 2"}
 #< task_notest
@@ -268,7 +268,8 @@ success: Your answer is correct!
 failure: Your answer is wrong, try again!
 #>
 
-The provinces  of South Africa vary substantial in size. The smallest but most crowded one is Gauteng. The province of Gauteng is a highly urbanized region. It includes the cities of Johannesburg, Ekurhuleni (East Rand) and Pretoria. Which are three of the five largest cities in the country. On the other hand the largest but most sparsely populated province is the Northern Cape. For comparison the province is slightly larger than Germany. To get a better idea of what we are talking about, let us import the data with the population of every province. 
+The provinces  of South Africa vary substantial in size. The smallest but most crowded one is Gauteng. The province of Gauteng is a highly urbanized region. It includes the cities of Johannesburg, Ekurhuleni (East Rand) and Pretoria. Which are three of the five largest cities in the country. On the other hand the largest but most sparsely populated province is the Northern Cape. For comparison the province is slightly larger than Germany (Government of South Africa: "South Africa's Provinces", at: https://www.gov.za/about-sa/south-africas-provinces, retrieved 20 January 2021).
+To get a better idea of what we are talking about, let us import the data with the population of every province. 
 In order to do this we can add a new variable or rather column to the data frame called `population`. A helpful function to add a variable to a data frame is called `mutate`.
 
 #< info "Function: mutate()"
@@ -332,7 +333,7 @@ tmap_leaflet(mymap)
 Great, you created a map of South Africa which shows the most important average characteristics of the loan contracts for each province! Maybe you now get a glimpse how Bartholomeu Dias felt when he was the first European who explored the coastline of South Africa!
 #>
 
-The map gives us information about how the clients are geographically distributed. We can see that a majority of the clients are from the Gauteng and KwaZulu-Natal provinces which are also the provinces with the most residents which is portrayed by the size of the black bubbles. As mentioned earlier we have no clients in the Northern Cape and only 1 in the North West. If we take a look at the average interest rates, which is portrayed by the color, we see that it varies from 7.18 in KwaZulu-Natal to 10.49 in North West. However, the average interest rate in North West is not very informative, because as we know, there is only one client in North West. The average interest rates of the remaining provinces are very similar. For further information, just click on the province you want to get more information about.
+The map gives us information about how the clients are geographically distributed. We can see that a majority of the clients are from the Gauteng and KwaZulu-Natal provinces which are also the provinces with the most residents which is portrayed by the size of the black bubbles. As mentioned earlier we have no clients in the Northern Cape and only 1 in the North West. If we take a look at the average interest rates, which is portrayed by color, we see that it varies from 7.18 in KwaZulu-Natal to 10.49 in North West. However, the average interest rate in North West is not very informative, because as we know, there is only one client in North West. The average interest rates of the remaining provinces are very similar. For further information, just click on the province you want to get more information about.
 
 ## Exercise 2 -- Experimental Design 
 
@@ -340,8 +341,8 @@ In the last section we loaded in the data file, got a rough look at our data and
 Now, we want to find out more about the experiment. In this part details we will discuss the experimental design, implementation and the validation of the random assignments.
 We will take a look especially at the earlier utilized interest rate `offer4`. 
 
-Let's start with the application process. The clients with good repayment histories received a limited-time offer including a randomized interest rate from our lender. Those who were eligible for maturities longer then  four month also received a randomized sample maturity of four, six or twelve month. The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. The offer rate randomization was based on the client's pre-approved risk category. The categories for a standard schedule for four-month loans were subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). Through the randomization program the individual rate for each client was randomly assigned based on the distribution for each category. Each offer contained a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications were evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients were assigned a proportional loan size and maturity. The maturity randomization was orthogonal to the offer rate randomization. But the difference was that only low- and medium-risk clients received the suggestion randomization . High-risk clients were not able to choose higher maturities than 4 months. The only value which was clearly stated on the letter and was not randomized was the loan size.
-The following graphic shows the operational steps of the experiment in detail.
+Let's start with the application process. The clients with good repayment histories received a limited-time offer including a randomized interest rate from our lender. Those who were eligible for maturities longer then  four month also received a randomized sample maturity of four, six or twelve month. The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. The offer rate randomization was based on the client's pre-approved risk category. The categories for a standard risk schedule for four-month loans were subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). Through the randomization program the individual rate for each client was randomly assigned based on the distribution for each category. Each offer contained a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications were evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients were assigned a proportional loan size and maturity. The maturity randomization was orthogonal to the offer rate randomization. But the difference was that only low- and medium-risk clients received the suggestion randomization . High-risk clients were not able to choose higher maturities than 4 months. The only value which was clearly stated on the letter and was not randomized was the loan size.
+The following graphic shows the operational steps of the experiment in detail:
 
 ![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](~/Documents/GitHub/thesis_code_rep//steps.png)
 
@@ -359,18 +360,18 @@ stata_data <- stata_data %>% mutate(itcscore_100 = itcscore/100, appscore_100 = 
 
 ```
 
-We want to find out more about the interest rate variable `offer4`. In this part of the section we will inspect the correlation of `offer4` and `maturity`, conditional on the risk category, with other observable variables and check if the randomization process was sucessfull.
+We want to find out more about the interest rate variable `offer4`. In this part of the section we will inspect the correlation of `offer4` and `maturity`, conditional on the risk category, with other observable variables and check if the randomization process was successful.
 
 An interesting function to look at the distribution of rates is `geom_density()`. The function is part of the package `ggplot2`. The package is used for creating elegant data visualizations and is based on "The Grammar of Graphics". `geom_density()` is often used in combination with the function `ggplot()` which is also a part of the `ggplot2`package. We want to create a density estimate of the offer rate in relation to the three risk categories.
 
 #< info "ggplot() & geom_density()"
 The `ggplot()` function from the `ggplot2` package is a simple way to convert specific data in a data frame into plots using the `data` argument. The aesthetics `aes` function in the template defines an aesthetic mapping, by selecting the specific variables to be plotted and specifying how to present them in the graph,  e.g. the positions of the x- and y-values or other characteristics such as color, size or shape. The `geoms-` functions define the graphical representation of the plotted data, e.g. `geom_ponit` for scatter plots, `geom_line()` for trend lines, `geom_boxplot()` for boxplots or `geom_density()`  kernel density estimate, which is a smoothed version of the histogram. To add an `geom-` to the template use the `+` operator. A basic template of a `ggplot()` looks as the following:
-*ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +  <GEOM_FUNCTION>()*
+*ggplot(data = .data, mapping = aes(<MAPPINGS>)) +  geom_function()*
 
 For further information check: https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html
 #>
 
-2.1.2) To areate a density estimate of the offer rates, just press the `Check` button.
+2.1.2) To create a density estimate of the offer rates, just press the `Check` button.
 ```{r "2 a) 2"}
 #< task_notest
 stata_data %>%
@@ -388,7 +389,7 @@ The graphic shows the distribution of the offer rates of the clients in relation
 These determinations are vague estimates of the graphic. But we can have a more detailed look at the distribution by using simple mathematical operations.
 
 #< info "Mathematic Operations"
-There are a variety of mathematical operators which can be used in R with the basic tamplate , e.g. `mean(<DATA>)` to calculate the average value of a data sequence, `min(<DATA>)` to determine the minimal value or `max(<DATA>)` to determine the maximum value of a data sequence, `sum(<DATA>)` to calculate the sum of a data area, `nrow(<DATA>)` to determine the length of a data vector or `(<DATA>)^n` to potentiate a value by n.
+There are a variety of mathematical operators which can be used in R with the basic tamplate , e.g. `mean(.data)` to calculate the average value of a data sequence, `min(.data)` to determine the minimal value or `max(.data)` to determine the maximum value of a data sequence, `sum(.data)` to calculate the sum of a data area, `nrow(.data)` to determine the length of a data vector or `(.data)^n` to potentiate a value by n.
 #>
 
 2.1.3) Calculate the minimal (`min_value`) and maximum (`max_value`) values of the offer rate in regarding the risk categories by using the `group_by()` function and mathematic operations. To do so create a new data frame `values`. If you finished the task press `Check`.
@@ -443,7 +444,7 @@ The **p-value** is the level of marginal significance within a statistical hypot
 Check out https://www.investopedia.com/terms/p/p-value.asp for further information.
 #>
 
-The variables `low`, `med`, `waved2` and `waved3` are control variables. Control variables are variables which are hold constant during an experiment. They are neither dependent or independent variables. Control variables are not part of the experiment itself but yet they still may influence the outcome of the experiment.
+We will also add control variables of the month of the offer(`waved2`, `waved3`) and the lender-defined risk level of the client prior to the experiment (`low`,`med`) and further characteristics of the client, to avoid endogeniety problems. Control variables are variables which are hold constant during an experiment. They are neither dependent or independent variables. Control variables are not part of the experiment itself but yet they still may influence the outcome of the experiment.
 
 2.2.1) Task: Regress the offer rate `offer4` on the given variables using the `lm()` regression and store it in the variable `reg2_1`. To do so, replace the question marks of the given code with you answer.
 ```{r "2 a) 5"}
@@ -459,9 +460,15 @@ summary(reg2_1)
 
 In fact the p-value of all observable variables is significantly higher than the significance level. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful.
 
-Since we just learned, that it is reasonable to assume that the randomization process was successful, we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical. (https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf)
+Since we just learned, that it is reasonable to assume that the randomization process was successful, we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical.
 
-The Probit regression will be explained more in detail in exercise 3.
+#< info "Probit Regression with glm()"
+The `glm()`function from the `stats`-package is used to fit generalized linear models. It is similar structure to the `lm()`regression, with the exception that with the argument *family* we can specify what kind of linear model we want to use. In our case we want to use a Probit link function. Then the function looks as follows: *glm(<FORMULA>, family=binomial(link="probit"), <DATA>)*
+
+Check out https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf for further information.
+#>
+
+The theoretical model of a probit regression will be explained more in detail in exercise 3.
 
 2.2.2) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To Change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
 ```{r "2 a) 6"}
@@ -614,10 +621,6 @@ stata_data <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08
 ### Extensive Margin
 
 As we mentioned in the last section we are using a probit model to estimate the price elasticity of loan demand. We begin with borrowers who applied for a loan before the deadline ended. Tough instead of the `lm()`-function, we will use the generalized linear model function `glm()` because it enables us to perform a probit regression. 
-
-#< info "Probit Regression with glm()"
-The `glm()`function from the `stats`-package is used to fit generalized linear models. It is similar structure to the `lm()`regression, with the exception that with the argument *family* we can specify what kind of linear model we want to use. In our case we want to use a Probit link function. Then the function looks as follows: *glm(<FORMULA>, family=binomial(link="probit"), <DATA>)*
-#>
 
 We want to start with the clients who received offers at or below the standard rate of their risk category. As a reminder, the offer rate per month for a low risk client was 7.75 percent, for a medium risk client 9.75 percent and for a client of the high risk category 11.75 percent. To do so we have to reduce the data set to only the clients who received a offer at or below the standard rates of the client (`normrate_less == 1`) with the `filter()` function. Recall that `applied` is our binary dependent variable and `offer4` as well as the control variables `low`, `med`, `waved2`and `waved3` are our explanatory variables.
 

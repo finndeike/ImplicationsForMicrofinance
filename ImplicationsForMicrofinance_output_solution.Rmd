@@ -133,7 +133,7 @@ Before we can take a look at our data set **_kz_demandelasts_aer08.dta_**, we ha
 ***
 
 ### Info: How do we read a Stata File in R?
-`read_dta` from the package `haven` reads a file in Stata version 5-12 binary format into a data frame in R. This function only supports Stata formats after 12, but since we have a 5-12 format it can be used. We are able to load in the package with the `library(.package)` command and the data with the `read_dta(.data)` command.
+At first we have to load in the package with the `library(".package")` command.The `read_dta(.data)` from the package `haven` reads a file in Stata version 5-12 binary format into a data frame in R. This function only supports Stata formats after 12, but since we have a 5-12 format it can be used. 
 
 For further information check: https://stat.ethz.ch/R-manual/R-devel/library/foreign/html/read.dta.html
 
@@ -275,9 +275,9 @@ provinces
 
 ```
 
-As you can see our newly created data frame is grouped into eight provinces. Tough South Africa is actually divided into nine provinces, the province Northern Cape is missing because no client applied for a loan in this province. We want to create an interactive map of South Africa later in this problem set therefore we have to add the Northern Cape to our data frame `provinces`.
+As you can see our newly created data frame is grouped into eight provinces. Tough South Africa is actually divided into nine provinces, the province Northern Cape is missing because no client applied for a loan in this province. We want to create an interactive map of South Africa later in this problem set, therefore we have to add the province *Northern Cape* to our data frame `provinces`.
 
-1.7 a) Just press `Check` to add the Northern cape to the data frame.
+1.7 a) Just press `Check` to add the Northern Cape to the data frame.
 
 ```{r "3_7"}
 provinces <- rbind(provinces, c("Northern Cape", NA, NA, NA, NA, NA, NA))
@@ -298,7 +298,8 @@ Quiz: Why did so many clients applied for a loan in Gauteng and none in the Nort
 - Gauteng is a highly urbanized province and the Northern Cape consists mostly of sedimentary rocks. [x]
 
 
-The provinces  of South Africa vary substantial in size. The smallest but most crowded one is Gauteng. The province of Gauteng is a highly urbanized region. It includes the cities of Johannesburg, Ekurhuleni (East Rand) and Pretoria. Which are three of the five largest cities in the country. On the other hand the largest but most sparsely populated province is the Northern Cape. For comparison the province is slightly larger than Germany. To get a better idea of what we are talking about, let us import the data with the population of every province. 
+The provinces  of South Africa vary substantial in size. The smallest but most crowded one is Gauteng. The province of Gauteng is a highly urbanized region. It includes the cities of Johannesburg, Ekurhuleni (East Rand) and Pretoria. Which are three of the five largest cities in the country. On the other hand the largest but most sparsely populated province is the Northern Cape. For comparison the province is slightly larger than Germany (Government of South Africa: "South Africa's Provinces", at: https://www.gov.za/about-sa/south-africas-provinces, retrieved 20 January 2021).
+To get a better idea of what we are talking about, let us import the data with the population of every province. 
 In order to do this we can add a new variable or rather column to the data frame called `population`. A helpful function to add a variable to a data frame is called `mutate`.
 
 
@@ -369,7 +370,7 @@ Great, you created a map of South Africa which shows the most important average 
 ***
 
 
-The map gives us information about how the clients are geographically distributed. We can see that a majority of the clients are from the Gauteng and KwaZulu-Natal provinces which are also the provinces with the most residents which is portrayed by the size of the black bubbles. As mentioned earlier we have no clients in the Northern Cape and only 1 in the North West. If we take a look at the average interest rates, which is portrayed by the color, we see that it varies from 7.18 in KwaZulu-Natal to 10.49 in North West. However, the average interest rate in North West is not very informative, because as we know, there is only one client in North West. The average interest rates of the remaining provinces are very similar. For further information, just click on the province you want to get more information about.
+The map gives us information about how the clients are geographically distributed. We can see that a majority of the clients are from the Gauteng and KwaZulu-Natal provinces which are also the provinces with the most residents which is portrayed by the size of the black bubbles. As mentioned earlier we have no clients in the Northern Cape and only 1 in the North West. If we take a look at the average interest rates, which is portrayed by color, we see that it varies from 7.18 in KwaZulu-Natal to 10.49 in North West. However, the average interest rate in North West is not very informative, because as we know, there is only one client in North West. The average interest rates of the remaining provinces are very similar. For further information, just click on the province you want to get more information about.
 
 ## Exercise 2 -- Experimental Design 
 
@@ -377,8 +378,8 @@ In the last section we loaded in the data file, got a rough look at our data and
 Now, we want to find out more about the experiment. In this part details we will discuss the experimental design, implementation and the validation of the random assignments.
 We will take a look especially at the earlier utilized interest rate `offer4`. 
 
-Let's start with the application process. The clients with good repayment histories received a limited-time offer including a randomized interest rate from our lender. Those who were eligible for maturities longer then  four month also received a randomized sample maturity of four, six or twelve month. The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. The offer rate randomization was based on the client's pre-approved risk category. The categories for a standard schedule for four-month loans were subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). Through the randomization program the individual rate for each client was randomly assigned based on the distribution for each category. Each offer contained a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications were evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients were assigned a proportional loan size and maturity. The maturity randomization was orthogonal to the offer rate randomization. But the difference was that only low- and medium-risk clients received the suggestion randomization . High-risk clients were not able to choose higher maturities than 4 months. The only value which was clearly stated on the letter and was not randomized was the loan size.
-The following graphic shows the operational steps of the experiment in detail.
+Let's start with the application process. The clients with good repayment histories received a limited-time offer including a randomized interest rate from our lender. Those who were eligible for maturities longer then  four month also received a randomized sample maturity of four, six or twelve month. The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. The offer rate randomization was based on the client's pre-approved risk category. The categories for a standard risk schedule for four-month loans were subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). Through the randomization program the individual rate for each client was randomly assigned based on the distribution for each category. Each offer contained a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications were evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients were assigned a proportional loan size and maturity. The maturity randomization was orthogonal to the offer rate randomization. But the difference was that only low- and medium-risk clients received the suggestion randomization . High-risk clients were not able to choose higher maturities than 4 months. The only value which was clearly stated on the letter and was not randomized was the loan size.
+The following graphic shows the operational steps of the experiment in detail:
 
 ![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](~/Documents/GitHub/thesis_code_rep//steps.png)
 
