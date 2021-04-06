@@ -4,11 +4,7 @@
 user.name = 'Jane Doe'
 ```
 
----
-output:
-  word_document: default
-  html_document: default
----
+
 
 # Credit Elasticities in Less-Developed Economics: Implications for Microfinance
 

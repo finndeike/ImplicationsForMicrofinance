@@ -54,11 +54,7 @@ RTutor::set.knit.print.opts(data.frame.theme="code", table.max.rows=25, table.ma
 knitr::opts_chunk$set(error = TRUE) 
 ```
 
----
-output:
-  word_document: default
-  html_document: default
----
+
 
 # Credit Elasticities in Less-Developed Economics: Implications for Microfinance
 
@@ -137,7 +133,7 @@ Before we can take a look at our data set **_kz_demandelasts_aer08.dta_**, we ha
 ***
 
 ### Info: How do we read a Stata File in R?
-`read_dta` from the package `haven` reads a file in Stata version 5-12 binary format into a data frame in R. This function only supports Stata formats after 12, but since we have a 5-12 format it can be used.
+`read_dta` from the package `haven` reads a file in Stata version 5-12 binary format into a data frame in R. This function only supports Stata formats after 12, but since we have a 5-12 format it can be used. We are able to load in the package with the `library(.package)` command and the data with the `read_dta(.data)` command.
 
 For further information check: https://stat.ethz.ch/R-manual/R-devel/library/foreign/html/read.dta.html
 
