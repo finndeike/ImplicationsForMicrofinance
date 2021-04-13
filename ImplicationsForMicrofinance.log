@@ -2518,3 +2518,177 @@
 ,
 {"type":["init_ps"],"time":["2021-04-06 13:18:21"],"user":["default_user"],"umph":[1617707901.695],"ok":[true]}
 ,
+{"type":["init_ps"],"time":["2021-04-06 14:03:31"],"user":["default_user"],"umph":[1617710611.2937],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 14:08:29"],"user":["default_user"],"umph":[1617710909.2652],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 14:08:36"],"user":["default_user"],"umph":[1617710916.3512],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["stata_data <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 14:09:17"],"user":["default_user"],"umph":[1617710957.8204],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(stata_data)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 14:09:33"],"user":["default_user"],"umph":[1617710973.3468],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(stata_data,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 14:11:03"],"user":["default_user"],"umph":[1617711063.986],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- stata_data %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-06 14:11:52"],"user":["default_user"],"umph":[1617711112.7896],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["provinces <- borrowed %>% group_by(province) %>% summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-08 09:54:31"],"user":["default_user"],"umph":[1617868471.9479],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-08 10:01:48"],"user":["default_user"],"umph":[1617868908.3881],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-09 09:20:46"],"user":["default_user"],"umph":[1617952846.2366],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-09 12:48:37"],"user":["default_user"],"umph":[1617965317.0968],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-09 12:49:20"],"user":["default_user"],"umph":[1617965360.2963],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 13:06:27"],"user":["default_user"],"umph":[1617966387.6474],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 13:06:28"],"user":["default_user"],"umph":[1617966388.413],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 13:06:40"],"user":["default_user"],"umph":[1617966400.22],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-09 14:42:46"],"user":["default_user"],"umph":[1617972166.2982],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:42:51"],"user":["default_user"],"umph":[1617972171.8738],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:42:52"],"user":["default_user"],"umph":[1617972172.6311],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:42:53"],"user":["default_user"],"umph":[1617972173.3836],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:42:55"],"user":["default_user"],"umph":[1617972175.1325],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(dat,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-09 14:44:03"],"user":["default_user"],"umph":[1617972243.6885],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:09"],"user":["default_user"],"umph":[1617972249.4096],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:10"],"user":["default_user"],"umph":[1617972250.1957],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:10"],"user":["default_user"],"umph":[1617972250.5234],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:11"],"user":["default_user"],"umph":[1617972251.56],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(dat,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-09 14:44:41"],"user":["default_user"],"umph":[1617972281.0679],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:49"],"user":["default_user"],"umph":[1617972289.0772],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:49"],"user":["default_user"],"umph":[1617972289.8158],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:50"],"user":["default_user"],"umph":[1617972290.1138],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:44:51"],"user":["default_user"],"umph":[1617972291.1447],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(dat,6)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-09 14:57:50"],"user":["default_user"],"umph":[1617973070.6553],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:03"],"user":["default_user"],"umph":[1617973083.882],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:04"],"user":["default_user"],"umph":[1617973084.6476],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:05"],"user":["default_user"],"umph":[1617973085.5116],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:05"],"user":["default_user"],"umph":[1617973085.5668],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(dat,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:05"],"user":["default_user"],"umph":[1617973085.6155],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- dat %>% filter(tookup == 1)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:05"],"user":["default_user"],"umph":[1617973085.6763],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- dat %>% group_by(risk) %>% summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:05"],"user":["default_user"],"umph":[1617973085.7302],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["dat %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:06"],"user":["default_user"],"umph":[1617973086.223],"ok":[true],"chunk":[8],"ex":[3],"e.ind":[0],"code":["# \nsum(dat$normrate_less)/nrow(dat)\nsum(dat$normrate_more)/nrow(dat)\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:06"],"user":["default_user"],"umph":[1617973086.2946],"ok":[true],"chunk":[9],"ex":[3],"e.ind":[0],"code":["zaf <- borrowed %>%\n  group_by(province) %>%\n  summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:19"],"user":["default_user"],"umph":[1617973099.6678],"ok":[true],"chunk":[10],"ex":[3],"e.ind":[0],"code":["provinces <- rbind(zaf, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA))\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:35"],"user":["default_user"],"umph":[1617973115.6913],"ok":[true],"chunk":[11],"ex":[3],"e.ind":[0],"code":["provinces <- mutate(provinces, \"Population\" = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 14:58:39"],"user":["default_user"],"umph":[1617973119.6285],"ok":[true],"chunk":[12],"ex":[3],"e.ind":[0],"code":["\nlibrary(sf)\nlibrary(ggplot2)\nlibrary(tmap)\nlibrary(tmaptools)\nlibrary(leaflet)\nlibrary(dplyr)\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\n# reads the features from the shapefile\nmymap <- st_read(\"~/Documents/GitHub/thesis_code_rep/gadm36_ZAF_shp/gadm36_ZAF_1.shp\", stringsAsFactors=FALSE)\n\n# joining the data of the shapefile and our dataframe\nmap_data <- inner_join(mymap, provinces)\n\nmap_data$`Average Interest Rate` <- as.numeric(map_data$`Average Interest Rate`)\nmap_data$`Average Loansize` <- as.numeric(map_data$`Average Loansize`)\n\nmymap <- tm_shape(map_data) +\n  tm_polygons(\"Average Interest Rate\",\n              id = \"NAME_1\",\n              style = \"quantile\",\n              palette=\"Greens\",\n              popup.vars=c(\"Population\", \"Number of Clients\", \"Average Interest Rate\",  \"Average Offer Rate\", \"Average Dynamic Repayment Incentive\",\"Average Loansize\", \"Average Maturity\")) +\n  tm_bubbles(size = \"Population\", col= \"black\", id=\"NAME_1\", scale = 2) +\n  tm_borders() +\n  tm_scale_bar()\n\n\ntmap_leaflet(mymap)\n# tmap mode set to interactive leaflet map"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-09 15:01:03"],"user":["default_user"],"umph":[1617973263.7682],"ok":[true],"chunk":[19],"ex":[5],"e.ind":[0],"code":["\nlm_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"lm\", se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Linear Probability Model\")\n\nprobit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"glm\", method.args=list(family=\"binomial\"(link=\"probit\")), se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Probit Model\")\n\nlogit_plot <- ggplot(mtcars, aes(x=mpg, y=vs)) + geom_point() + \n  stat_smooth(method=\"glm\", method.args=list(family=\"binomial\"(link=\"logit\")), se=TRUE) +\n  geom_hline(yintercept=0, col=\"red\") +\n  geom_hline(yintercept=1, col=\"red\") +\n  ylim(-0.25, 1.5) +\n  ggtitle(\"Logit Model\")\n\ngrid.arrange(lm_plot, probit_plot, logit_plot, ncol=2)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-09 15:44:34"],"user":["default_user"],"umph":[1617975874.1814],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-12 11:08:55"],"user":["default_user"],"umph":[1618218535.6834],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-12 13:26:14"],"user":["default_user"],"umph":[1618226774.5408],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-12 19:40:51"],"user":["default_user"],"umph":[1618249251.7718],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-13 10:19:17"],"user":["default_user"],"umph":[1618301957.1205],"ok":[true]}
+,
+{"type":["init_ps"],"time":["2021-04-13 10:19:34"],"user":["default_user"],"umph":[1618301974.5971],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 10:19:45"],"user":["default_user"],"umph":[1618301985.5225],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 10:19:46"],"user":["default_user"],"umph":[1618301986.8595],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 10:19:47"],"user":["default_user"],"umph":[1618301987.1873],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 10:19:47"],"user":["default_user"],"umph":[1618301987.2512],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["sample_n(dat,6)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 10:19:49"],"user":["default_user"],"umph":[1618301989.6407],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["borrowed <- dat %>%\n  sum(tookup == 1)\n\napplication <- dat %>%\n  sum(applied == 1)\n\nfull <- len(stata_data.columns)\n\nbarplot(full, application, borrowed)"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-13 13:55:41"],"user":["default_user"],"umph":[1618314941.7501],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:57:21"],"user":["default_user"],"umph":[1618315041.8005],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:57:22"],"user":["default_user"],"umph":[1618315042.4658],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:57:22"],"user":["default_user"],"umph":[1618315042.7856],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:57:24"],"user":["default_user"],"umph":[1618315044.2527],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["dat_takeup <- dat %>%\n  filter(tookup == 1)\n\nhead(dat_takeup)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:57:49"],"user":["default_user"],"umph":[1618315069.6004],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["\nrec <- 58168\nfull <- nrow(dat) \napp <- sum(dat$applied)\nbor <- sum(dat$tookup)\n\nbp_1 <- data.frame(clients = c(\"Intended to Recieve\", \"Recieved an Offer Letter\", \"Applied\", \"Borrowed\"),\n                   number = c(rec, full, app, bor))\n\nggplot(bp_1, aes(x=reorder(clients, -number), y=number)) + \n  geom_bar(stat = \"identity\", position=position_dodge(), width=0.8, fill = c(\"darkgreen\", \"green4\", \"green3\", \"green\")) +\n  geom_text(aes(label=number), vjust=1.8, size=3) +\n  labs(title = \"Clients Overview\", y=\"Number of Clients\") +\n    theme(axis.title.x = element_blank())"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:58:28"],"user":["default_user"],"umph":[1618315108.1299],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["dat %>%\n  ggplot(aes(x=\"Full Data Set\", y=offer4)) +\n  geom_boxplot() +\n  stat_summary(fun = mean, geom = \"point\", size=3, col=\"red\", shape=18)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:58:35"],"user":["default_user"],"umph":[1618315115.0931],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- dat %>%\n  group_by(risk) %>%\n  summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:58:40"],"user":["default_user"],"umph":[1618315120.922],"ok":[true],"chunk":[8],"ex":[3],"e.ind":[0],"code":["dat %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 13:59:41"],"user":["default_user"],"umph":[1618315181.733],"ok":[false],"chunk":[9],"ex":[3],"e.ind":[1],"code":[".PH_._ <- .PH_._ %>%\n  .PH_._ %>%\n  .PH_._(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup)\n                                                      )\n\n# show the data frame\n\n"],"message":["\nYou have not yet made an assignment to zaf."]}
+,
+{"type":["init_ps"],"time":["2021-04-13 14:02:24"],"user":["default_user"],"umph":[1618315344.8569],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:33"],"user":["default_user"],"umph":[1618315353.0515],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:33"],"user":["default_user"],"umph":[1618315353.8618],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:34"],"user":["default_user"],"umph":[1618315354.1996],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:34"],"user":["default_user"],"umph":[1618315354.3015],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["dat_takeup <- dat %>%\n  filter(tookup == 1)\n\nhead(dat_takeup)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:34"],"user":["default_user"],"umph":[1618315354.3646],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["\nrec <- 58168\nfull <- nrow(dat) \napp <- sum(dat$applied)\nbor <- sum(dat$tookup)\n\nbp_1 <- data.frame(clients = c(\"Intended to Recieve\", \"Recieved an Offer Letter\", \"Applied\", \"Borrowed\"),\n                   number = c(rec, full, app, bor))\n\nggplot(bp_1, aes(x=reorder(clients, -number), y=number)) + \n  geom_bar(stat = \"identity\", position=position_dodge(), width=0.8, fill = c(\"darkgreen\", \"green4\", \"green3\", \"green\")) +\n  geom_text(aes(label=number), vjust=1.8, size=3) +\n  labs(title = \"Clients Overview\", y=\"Number of Clients\") +\n    theme(axis.title.x = element_blank())\n\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:35"],"user":["default_user"],"umph":[1618315355.2329],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["dat %>%\n  ggplot(aes(x=\"Full Data Set\", y=offer4)) +\n  geom_boxplot() +\n  stat_summary(fun = mean, geom = \"point\", size=3, col=\"red\", shape=18)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:35"],"user":["default_user"],"umph":[1618315355.5478],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- dat %>%\n  group_by(risk) %>%\n  summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:02:35"],"user":["default_user"],"umph":[1618315355.6003],"ok":[true],"chunk":[8],"ex":[3],"e.ind":[0],"code":["dat %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["init_ps"],"time":["2021-04-13 14:03:14"],"user":["default_user"],"umph":[1618315394.0438],"ok":[true]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:22"],"user":["default_user"],"umph":[1618315402.2397],"ok":[true],"chunk":[1],"ex":[3],"e.ind":[0],"code":["# Load the package with the library() command\nlibrary(haven)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:22"],"user":["default_user"],"umph":[1618315402.9976],"ok":[true],"chunk":[2],"ex":[3],"e.ind":[0],"code":["dat <- read_dta(\"kz_demandelasts_aer08.dta\")"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:23"],"user":["default_user"],"umph":[1618315403.3265],"ok":[true],"chunk":[3],"ex":[3],"e.ind":[0],"code":["# Use the function head() to show the first six rows of the data frame\nhead(dat)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:23"],"user":["default_user"],"umph":[1618315403.3874],"ok":[true],"chunk":[4],"ex":[3],"e.ind":[0],"code":["dat_takeup <- dat %>%\n  filter(tookup == 1)\n\nhead(dat_takeup)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:23"],"user":["default_user"],"umph":[1618315403.4371],"ok":[true],"chunk":[5],"ex":[3],"e.ind":[0],"code":["\nrec <- 58168\nfull <- nrow(dat) \napp <- sum(dat$applied)\nbor <- sum(dat$tookup)\n\nbp_1 <- data.frame(clients = c(\"Intended to Recieve\", \"Recieved an Offer Letter\", \"Applied\", \"Borrowed\"),\n                   number = c(rec, full, app, bor))\n\nggplot(bp_1, aes(x=reorder(clients, -number), y=number)) + \n  geom_bar(stat = \"identity\", position=position_dodge(), width=0.8, fill = c(\"darkgreen\", \"green4\", \"green3\", \"green\")) +\n  geom_text(aes(label=number), vjust=1.8, size=3) +\n  labs(title = \"Clients Overview\", y=\"Number of Clients\") +\n    theme(axis.title.x = element_blank())\n\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:23"],"user":["default_user"],"umph":[1618315403.6642],"ok":[true],"chunk":[6],"ex":[3],"e.ind":[0],"code":["dat %>%\n  ggplot(aes(x=\"Full Data Set\", y=offer4)) +\n  geom_boxplot() +\n  stat_summary(fun = mean, geom = \"point\", size=3, col=\"red\", shape=18)"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:23"],"user":["default_user"],"umph":[1618315403.8561],"ok":[true],"chunk":[7],"ex":[3],"e.ind":[0],"code":["# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards\nvalues <- dat %>%\n  group_by(risk) %>%\n  summarise(min_value=min(offer4), max_value=max(offer4))\n\nvalues"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:23"],"user":["default_user"],"umph":[1618315403.8968],"ok":[true],"chunk":[8],"ex":[3],"e.ind":[0],"code":["dat %>%\nggplot(aes(x=offer4, group=risk, fill=risk)) + \n  geom_density(adjust = 1.5, alpha = 0.4) +\n  scale_fill_discrete(name = \"Risk Category\", breaks = c(\"LOW\", \"MEDIUM\", \"HIGH\")) +\n  xlab(\"Randomized Offer Rate (%)\") +\n  ylab(\"Density\") +\n  geom_vline(xintercept= c(7.75, 9.75, 11.75), col = c(\"green\", \"blue\", \"red\"))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:24"],"user":["default_user"],"umph":[1618315404.1237],"ok":[true],"chunk":[9],"ex":[3],"e.ind":[0],"code":["borrowed <- dat %>% filter(tookup == 1)\n\nzaf <- borrowed %>%\n  group_by(province) %>%\n  summarise(\"Average Interest Rate\" = round(mean(offer4, na.rm=TRUE),3),\n                                                      \"Average Offer Rate\" = round(mean(final4, na.rm=TRUE),3),\n                                                      \"Average Dynamic Repayment Incentive\" = round(mean(yearlong, na.rm=TRUE),3),\n                                                      \"Average Loansize\" = round(mean(loansize, na.rm=TRUE),3),\n                                                      \"Average Maturity\" = round(mean(term, na.rm=TRUE),3),\n                                                      \"Number of Clients\" = sum(tookup)\n                                                      )\n                                                      \nprovinces\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:24"],"user":["default_user"],"umph":[1618315404.1842],"ok":[true],"chunk":[10],"ex":[3],"e.ind":[0],"code":["provinces <- rbind(zaf, c(\"Northern Cape\", NA, NA, NA, NA, NA, NA))\n\nprovinces$province <- c(\"Eastern Cape\", \"Free State\", \"Gauteng\", \"KwaZulu-Natal\", \"Limpopo\", \"Mpumalanga\", \"North West\", \"Western Cape\", \"Northern Cape\")\nnames(provinces)[names(provinces) == \"province\"] <- \"NAME_1\""],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:24"],"user":["default_user"],"umph":[1618315404.2206],"ok":[true],"chunk":[11],"ex":[3],"e.ind":[0],"code":["provinces <- mutate(provinces, \"Population\" = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))\n"],"message":[""]}
+,
+{"type":["check_chunk"],"time":["2021-04-13 14:03:39"],"user":["default_user"],"umph":[1618315419.2805],"ok":[true],"chunk":[12],"ex":[3],"e.ind":[0],"code":["\nlibrary(sf)\nlibrary(ggplot2)\nlibrary(tmap)\nlibrary(tmaptools)\nlibrary(leaflet)\nlibrary(dplyr)\n# set options so numbers don't display as scientific notation\noptions(scipen=999)\n\n# reads the features from the shapefile\nmymap <- st_read(\"~/Documents/GitHub/thesis_code_rep/gadm36_ZAF_shp/gadm36_ZAF_1.shp\", stringsAsFactors=FALSE)\n\n# joining the data of the shapefile and our dataframe\nmap_data <- inner_join(mymap, provinces)\n\nmap_data$`Average Interest Rate` <- as.numeric(map_data$`Average Interest Rate`)\nmap_data$`Average Loansize` <- as.numeric(map_data$`Average Loansize`)\n\nmymap <- tm_shape(map_data) +\n  tm_polygons(\"Average Interest Rate\",\n              id = \"NAME_1\",\n              style = \"quantile\",\n              palette=\"Greens\",\n              popup.vars=c(\"Population\", \"Number of Clients\", \"Average Interest Rate\",  \"Average Offer Rate\", \"Average Dynamic Repayment Incentive\",\"Average Loansize\", \"Average Maturity\")) +\n  tm_bubbles(size = \"Population\", col= \"black\", id=\"NAME_1\", scale = 2) +\n  tm_borders() +\n  tm_scale_bar()\n\n\ntmap_leaflet(mymap)\n# tmap mode set to interactive leaflet map"],"message":[""]}
+,
