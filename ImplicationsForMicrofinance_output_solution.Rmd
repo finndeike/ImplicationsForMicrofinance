@@ -111,7 +111,7 @@ The book inspired me to find out more about lending micro credits to the poorest
 
 Over three billion people in developing countries are still without effective access to loan and deposit services. The problem is particularly acute in Sub-Saharan Africa, where only between five and twenty-five percent of households have a formal relationship with a financial institution. The region is also home to just two percent of the world’s microfinance institutions.
 Lack of access to financial services is therefore one of the largest constraints to private sector development in Africa. Addressing this shortfall requires creating new institutions and building operational and managerial capacity from the ground up. (IFC)
-Though, providing  access  to  microcredit  is  expensive  for  lenders  in  view  of  the  high transaction costs relative to the small  amounts borrowed. Therefore,  to encourage micro-lending, profit-driven microfinance organization, including retail and furniture stores, are permitted to charge interest rates that are higher than those payable in respect of debt procured from the formal financial sector. Cash lenders focusing on high-risk segments often charge 30 percent interest per month on a one month maturity loan. Lenders in the informal sector do charge even more, around 30 to 100 percent interest per month. Which seems extremely high compared to lenders targeting low-risk markets where they partially charge less then three percent per month on a 12+ maturity loan.
+Though, providing  access  to  microcredit  is  expensive  for  lenders  in  view  of  the  high transaction costs relative to the small  amounts borrowed. Therefore,  to encourage micro-lending, profit-driven microfinance organization, including retail and furniture stores, are permitted to charge interest rates that are higher than those payable in respect of debt procured from the formal financial sector. Cash lenders focusing on high-risk segments often charge 30 percent interest per month on a one month maturity loan. Lenders in the informal sector do charge even more, around 30 to 100 percent interest per month. Which seems extremely high compared to lenders targeting low-risk markets where they partially charge less than three percent per month on a 12+ maturity loan.
 
 Another explanation for this could be, that microfinance institutions (MFI) are often forced to increase interest rates to eliminate reliance of subsidies by policymakers. Though, this only makes sense if the poor are actually insensitive to interest rates. Otherwise increasing interest rates would limit the access. Many economic model suggest that loan pricing is tightly related to reliance on subsidies and therefore also to the functioning of the MFI market. However there is little evidence indicating interest rate sensitivities in MFI markets.
 
@@ -126,9 +126,9 @@ In this first section we will explain the experiment and get to know the data we
 
 ### Experimental Design
 
-The cooperating lender of Karlan and Zinma operated for more then 20 years as one of the largest and most-profitable micro lenders in South Africa. He competed in a cash loan industry segment that offer small, high-interest, short-term uncollateralized credit fixed monthly repayment schedules to the working poor population.
+The cooperating lender of Karlan and Zinma operated for more than 20 years as one of the largest and most-profitable micro lenders in South Africa. He competed in a cash loan industry segment that offer small, high-interest, short-term uncollateralized credit fixed monthly repayment schedules to the working poor population.
 
-The experiment was conducted via a direct mail solicitation in form of pre-qualified limited-time offer letters that were mailed to 58,168 former clients of the Lender with good repayment histories and which did not have a loan with the Lender as of 30 days prior to the mailer. The offer letters clearly stated an interest rate and maturity, both randomized by the lender, and a loan size based on the clients last loan size. Most of the offers were at relatively low rates. The individual rate for each client was randomly assigned based on the distribution for each risk category because risk determined the loan price under standard operations. The categories for a standard risk schedule for four-month loans were subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). The maturity randomization was orthogonal to the offer rate randomization. But the difference was that only low- and medium-risk clients received the suggestion randomization. Those who were eligible for the suggestion randomization or in other words maturities longer then four month, received a randomized sample maturity of six or twelve month. High-risk clients were not able to choose higher maturities than 4 months. The only value which was presented on the offer letter and was not randomized was the loan size. The loan size was equal to the last loan size of each client. The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and then the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. 
+The experiment was conducted via a direct mail solicitation in form of pre-qualified limited-time offer letters that were mailed to 58,168 former clients of the Lender with good repayment histories and which did not have a loan with the Lender as of 30 days prior to the mailer. The offer letters clearly stated an interest rate and maturity, both randomized by the lender, and a loan size based on the clients last loan size. Most of the offers were at relatively low rates. The individual rate for each client was randomly assigned based on the distribution for each risk category because risk determined the loan price under standard operations. The categories for a standard risk schedule for four-month loans were subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). The maturity randomization was orthogonal to the offer rate randomization. But the difference was that only low- and medium-risk clients received the suggestion randomization. Those who were eligible for the suggestion randomization or in other words maturities longer than four month, received a randomized sample maturity of six or twelve month. High-risk clients were not able to choose higher maturities than 4 months. The only value which was presented on the offer letter and was not randomized was the loan size. The loan size was equal to the last loan size of each client. The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First a pilot test in three branches in July 2003, and than the experiment was expended to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. 
 
 Each offer contained a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications were evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients were assigned a proportional loan size and maturity.
 The following graphic shows the operational steps of the experiment in detail:
@@ -291,7 +291,12 @@ There are a variety of mathematical operators which can be used in R with the ba
 
 1.7) Calculate the minimal (`min_value`) and maximum (`max_value`) values of the offer rate in regarding the risk categories by using the `group_by()` function and mathematic operations. To do so create a new data frame `values`. If you finished the task press `Check`.
 ```{r "3_7"}
-# create a data frame `values` which contains the min and max interest rate values of each risk category and show the output aftwerwards
+# values <- dat %>%
+#   group_by(???) %>%
+#   summarise(min_value=???(offer4), max_value=???(offer4))
+# 
+# values
+
 values <- dat %>%
   group_by(risk) %>%
   summarise(min_value=min(offer4), max_value=max(offer4))
@@ -315,7 +320,7 @@ ggplot(aes(x=offer4, group=risk, fill=risk)) +
 
 ```
 
-The graphic shows the distribution of the offer rates of the clients in relation to their risk category. We can see that the interest rates of all clients are mostly under their categorical standard schedule. The lowest randomized offer rate is slightly higher then 3% per month and the highest is slightly lower then 15% per month. If we consider the different risk categories it becomes apparent that a offer rate of a low risk client has the highest density between slightly less than 6% and slightly more then 7% at around 0.3. If we now have a look at clients of the medium risk category we see that the offer rate has the highest density between 7% and a bit more then 9% having a ratio of about 0.22. Whereas the density of high risk category is the highest at about 7.5% and between 9% and 11% at 0.16.
+The graphic shows the distribution of the offer rates of the clients in relation to their risk category. We can see that the interest rates of all clients are mostly under their categorical standard schedule. The lowest randomized offer rate is slightly higher than 3% per month and the highest is slightly lower than 15% per month. If we consider the different risk categories it becomes apparent that a offer rate of a low risk client has the highest density between slightly less than 6% and slightly more than 7% at around 0.3. If we now have a look at clients of the medium risk category we see that the offer rate has the highest density between 7% and a bit more than 9% having a ratio of about 0.22. Whereas the density of high risk category is the highest at about 7.5% and between 9% and 11% at 0.16.
 
 
 Another aspect that could by interesting is to analyze the geographic circumstances. Our data frame `dat` contains a column named `province`, which contains the province in which the applicant applied for a loan. Hence we can create a new data frame grouped by the provinces by using the functions `group_by()` and `summarise()`.
@@ -332,11 +337,10 @@ For further information check: https://dplyr.tidyverse.org/reference/group_by.ht
 
 
 
-1.9) Group the data frame `borrowed` by the `province` the applicant applied in using the function `group_by()`. The new data frame should be named `zaf`. Then use the function `summarise()` to apply the given operations for each group. Afterwards show the new data frame `provinces`. 
+1.9) Group the data frame `data` by the `province` the applicant applied in using the function `group_by()`. The filter condition is already given. The new data frame should be named `zaf`. than use the function `summarise()` to apply the given operations for each group. Afterwards show the new data frame `provinces`. 
 ```{r "3_9"}
-# borrowed <- dat %>% filter(tookup == 1)
-# 
 # ___ <- ___ %>%
+#   filter(tookup == 1) %>%
 #   ___ %>%
 #   ___("Average Interest Rate" = round(mean(offer4, na.rm=TRUE),3),
 #                                                       "Average Offer Rate" = round(mean(final4, na.rm=TRUE),3),
@@ -349,9 +353,8 @@ For further information check: https://dplyr.tidyverse.org/reference/group_by.ht
 # # show the data frame
 # 
 
-borrowed <- dat %>% filter(tookup == 1)
-
-zaf <- borrowed %>%
+zaf <- dat %>%
+  filter(tookup == 1) %>%
   group_by(province) %>%
   summarise("Average Interest Rate" = round(mean(offer4, na.rm=TRUE),3),
                                                       "Average Offer Rate" = round(mean(final4, na.rm=TRUE),3),
@@ -361,7 +364,7 @@ zaf <- borrowed %>%
                                                       "Number of Clients" = sum(tookup)
                                                       )
                                                       
-provinces
+zaf
 
 ```
 
@@ -499,17 +502,6 @@ For further information check: https://www.rdocumentation.org/packages/stats/ver
 
 The p-value will give us information about the outcome of the randomization. If our hypothesis is correct, the p-value will be comparatively high for each variable and higher than the significance level.
 
-
-***
-
-### Info: Evaluation of a Linear Regression
-The **p-value** is the level of marginal significance within a statistical hypothesis test, representing the probability of the occurrence of a given event or rather a measure of the probability that an observed difference could have occurred just by random chance. The value always lies between 1 and zero. The lower the **p-value** is, the stronger is the evidence that you should reject the null hypothesis. A p-value of 0.05 is generally speaking statistically significant. Moreover, the significance level is portrayed by little stars.
-
-Check out https://www.investopedia.com/terms/p/p-value.asp for further information.
-
-***
-
-
 We will also add control variables of the month of the offer(`waved2`, `waved3`) and the lender-defined risk level of the client prior to the experiment (`low`,`med`) and further characteristics of the client, to avoid endogeniety problems. Control variables are variables which are hold constant during an experiment. They are neither dependent or independent variables. Control variables are not part of the experiment itself but yet they still may influence the outcome of the experiment.
 
 2.2.1) Task: Regress the offer rate `offer4` on the given variables using the `lm()` regression and store it in the variable `reg2_1`. To do so, replace the question marks of the given code with you answer.
@@ -522,6 +514,17 @@ reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lna
 
 summary(reg2_1)
 ```
+
+
+***
+
+### Info: Evaluation of a Linear Regression
+The **p-value** is the level of marginal significance within a statistical hypothesis test, representing the probability of the occurrence of a given event or rather a measure of the probability that an observed difference could have occurred just by random chance. The value always lies between 1 and zero. The lower the **p-value** is, the stronger is the evidence that you should reject the null hypothesis. A p-value of 0.05 is generally speaking statistically significant. Moreover, the significance level is portrayed by little stars.
+
+Check out https://www.investopedia.com/terms/p/p-value.asp for further information.
+
+***
+
 
 In fact the p-value of all observable variables is significantly higher than the significance level. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful.
 
@@ -541,7 +544,7 @@ Since we just learned, that it is reasonable to assume that the randomization pr
 ***
 
 ### Info: Probit Regression with glm()
-The `glm()`function from the `stats`-package is used to fit generalized linear models. It is similar structure to the `lm()`regression, with the exception that with the argument *family* we can specify what kind of linear model we want to use. In our case we want to use a Probit link function. Then the function looks as follows: *glm(<FORMULA>, family=binomial(link="probit"), <DATA>)*
+The `glm()`function from the `stats`-package is used to fit generalized linear models. It is similar structure to the `lm()`regression, with the exception that with the argument *family* we can specify what kind of linear model we want to use. In our case we want to use a Probit link function. than the function looks as follows: *glm(<FORMULA>, family=binomial(link="probit"), <DATA>)*
 
 Check out https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf for further information.
 
@@ -561,13 +564,15 @@ summary(reg2_2)
 
 As we can see the p-value is 0.851 which is considerably higher than the significance level which substantiates that offer rates at or below the standard rate did not influence the take-up after the deadline. This seems conclusive since the clients borrowed at the standard rate schedule after the deadline.
 
-We can also observe the relationship between the take-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, then we will utilize the `stat_smooth()` (will be explained later in detail) to plot our probit regression `reg2_2`.
+We can also observe the relationship between the take-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, than we will utilize the `stat_smooth()` (will be explained later in detail) to plot our probit regression `reg2_2`.
 
 2.2.4) Plot the probit regression `reg2_2`. Just press Check.
 ```{r "4_17",error=FALSE, results='asis'}
-ggplot(dat,aes(x=offer4,y=tookup_afterdead_enforced))+ 
-  stat_smooth(method='glm',family=binomial(link='probit'))+
-  ylim(min=0, max=1)
+ggplot(dat,aes(x=offer4 + low + med + waved2 + waved3, y=tookup_afterdead_enforced)) + 
+  stat_smooth(method='glm',family=binomial(link='probit')) +
+  ylim(min=0, max=1) +
+  ylab("Borrowed after the deadline") +
+  xlab("Offer Rate")
 ```
 
 The graph corroborates our thesis since there is no clear tendency that the probability of a take-up after the deadline increases or decreases with a higher offer rate.  
@@ -585,9 +590,8 @@ For further information check: https://cran.r-project.org/web/packages/stargazer
 ***
 
 
-We want to set `type="html"` and `header=FALSE`.
 
-2.2.5) Execute the Regression `reg2_3` then use the function `stargazer()` to create an output table of all three regressions: `2_1`; `2_2`; `2_3`. If you need a little hint, press `hint`.
+2.2.5) Execute the Regression `reg2_3` than use the function `stargazer()` to create a nicer-looking output table of the regression. We want to set `type="html"` and `header=FALSE`. If you need a little hint, press `hint`.
 ```{r "4_18",error=FALSE, results='asis'}
 # reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(dat, applied == 1))
 # 
@@ -595,10 +599,10 @@ We want to set `type="html"` and `header=FALSE`.
 
 reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(dat, applied == 1))
 
-stargazer(reg2_1, reg2_2, reg2_3, type="html", header=FALSE)
+stargazer(reg2_3, type="html", header=FALSE)
 ```
 
-The first column shows the result of our first regression `reg2_1`, the second column the result of our second regression `reg2_2` and the third our third regression `reg2_3`. We see that the p-value is once again substantially higher than the significance level which corroborates that the rejection decision was not influenced by the offer rate.
+We see that the p-value is once again substantially higher than the significance level which corroborates that the rejection decision was not influenced by the offer rate.
 
 To sum up everything that has been stated so far we found out that our randomization process is was successful not affected by other observable characteristics.
 
@@ -665,6 +669,8 @@ Quiz: What could be the problem with the Linear Probability Model?
 
 As you see in the plots above, Probit and Logit models are better fitted for a regression with a binary dependent variable. They are in fact specifically made for regression with a binary dependent variable and always results in a probability between zero and 1. Now we have to choose between the probit and logit model. The real big difference between the logit and probit model is the assumptions made about the error distributions. Logit assumes you have a logistic error distribution while probit assumes you have a normal error distribution. Since their is a lot more known about the normal error distribution, we will use the probit model in our future regressions with a binary dependent variable. Now we are able to use this to analyze the response of loan demand to changes in price and maturity.
 
+### Probit Model
+
 A difficulty with estimating loan demand elasticities is that the contract terms are often subjected to external influences, such as alternative financing opportunities or other supply decisions. As far as the price sensitivity we approached the problem be randomizing the interest rate based on the clients risk category. This allows us to observe what happen if we change the loan price or in our instance the interest rate. To achieve this, we estimate a probit model of the form:
 
 $$
@@ -678,6 +684,8 @@ In our model $a_i$ is the independent variable `applied` which can be either **1
 
 ### Award: Gustav Fechner
 Wow, you now understand the Probit model. It's basic model is based on the *Weber-Fechner law* formulated by Gustav Fechner published in Fechner (1860). He was a German experimental psychologist, philosopher and physicist and he is said to be the founder of psychophysics.
+
+![Fig. 5  | Gustave Theodor Fechner, retrieved from https://vlp.mpiwg-berlin.mpg.de/people/data?id=per68))](Award Pictures/g_fechner.jpg)
 
 ***
 
@@ -704,7 +712,9 @@ dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 
 As we mentioned in the last section we are using a probit model to estimate the price elasticity of loan demand. We begin with borrowers who applied for a loan before the deadline ended. Tough instead of the `lm()`-function, we will use the generalized linear model function `glm()` because it enables us to perform a probit regression. 
 
-We want to start with the clients who received offers at or below the standard rate of their risk category. As a reminder, the offer rate per month for a low risk client was 7.75 percent, for a medium risk client 9.75 percent and for a client of the high risk category 11.75 percent. To do so we have to reduce the data set to only the clients who received a offer at or below the standard rates of the client (`normrate_less == 1`) with the `filter()` function. Recall that `applied` is our binary dependent variable and `offer4` as well as the control variables `low`, `med`, `waved2`and `waved3` are our explanatory variables.
+#### Marginal Effects
+
+We want to start with a regression limited to clients who received offers at or below the standard rate of their risk category. In the second regression we want to focus on clients who received a higher rate than their interest rate under standard operations. The variable `normrate_less()` indicates if a client recieved a offer rate at or below their interest rate under standard operations (1) or not (0). As a reminder, the interest rate per month under standard operations for a low risk client was 7.75 percent, for a medium risk client 9.75 percent and for a client of the high risk category 11.75 percent. To do so we have to reduce the data set to only the clients who received a offer at or below their standard rate of their risk category (`normrate_less == 1`) with the `filter()` function. Recall that `applied` is our binary dependent variable and `offer4` and the experimental validation variables `low`, `med`, `waved2`and `waved3` are our explanatory or rather independent variables.
 
 4.1.2) Use `glm()` to perform our first Probit regression. Regress `applied` on `offer4`, `low`, `med`, `waved2` and `waved3` and filter our data set `dat` for `normate_less == 1`. Store this regression in `reg3_1`. Afterwards display the regression results with the `summary()` command. Finally press `Check` or if you need help press `hint`.
 ```{r "6_21",error=FALSE}
@@ -714,9 +724,15 @@ summary(reg3_1)
 
 ```
 
-From our computed summary we can see that the offer rate `offer4` is significant at the 0.1 percent level which means that a coincidental connection between `applied` and `offer4` is very unlikely. Unfortunately an Probit output is not equal to the marginal effects. Though we can say that an increase of the offer rate by 100-basis-point is negatively associated with the loan take-up. Suggesting that clients who received an offer at or below the standard rates are less likely to apply if the offer rate would be 100-basis-points higher.
+From our computed summary we can see that the offer rate `offer4` is significant at the 0.1 percent level which means that a coincidental connection between `applied` and `offer4` is very unlikely. Unfortunately a probit output is not equal to the marginal effects. Though we can say that an increase of the offer rate by 100-basis-point is negatively associated with the loan take-up. Suggesting that clients who received an offer at or below the standard rates are less likely to apply if the offer rate would be 100-basis-points higher. We get similar results if we examine the opposite group of clients, those who received an offer rate higher than their standard ones (`normrate_more == 1`), in the regression `reg3_2` below (we remove the control variables `waved2` and `waved3` from the regression, because no client who were assigned a higher offer rate than standard for their risk category received an offer in the second or third mailer wave). The lender was primarily interested in testing price sensitivities of low rates and therefore only 632 client received a higher than standard rate.
 
-Next, we want to estimate price elasticity of loan demand of clients who received an offer higher its standard ones and if the price sensitivity changed when the lender offered rates higher then the standard rates. To estimate the price sensitivity of clients who were offered a rate higher then the standard for their risk category, we can use the same regression as we did in task 4.2.1), although we must change the variable `normrate_less`to zero. To analyze if the price sensitivity changed when the lender offered higher then the clients standard rate, we have to regress `applied` on `normrate_more`. This time, however, we will estimate the probit regression model and calculate the corresponding marginal effects of the two regressions and the regression `reg3_1` from task 4.2.1). To do this we are using functions from the `regtools` package. In particular the `showreg()` function which can show marginal effects in a glm model and it allows for robust standard errors (https://rdrr.io/github/skranz/regtools/src/R/showreg.r).
+4.1.2 b) Just press `Check` to perform the regression.
+```{r "6_22",error=FALSE}
+reg3_2 <- glm(applied ~ offer4 + low + med, family = binomial(link = "probit"), data=filter(dat, normrate_more == 1))
+summary(reg3_2)
+```
+
+In order to interpret the results more precisely, we will now calculate the corresponding marginal effects of both regressions. To do this we are using functions from the `regtools` package. In particular the `showreg()` function which can show marginal effects in a `glm` model and it allows for robust standard errors 
 
 
 ***
@@ -724,69 +740,77 @@ Next, we want to estimate price elasticity of loan demand of clients who receive
 ### Info: showreg()
 The `showreg()`function from the `regtools`-package is used to extend and wrap either `stargazer` or the `screenreg`, `texreg` and `htmlreg` functions in the `texreg` package. It allows for robust standard errors and can show marginal effects in glm models. To show the marginal effects of a Probit regression it uses the argument `coef.transform="mfx"` from the `mfx`-package.
 
+For further information check: https://rdrr.io/github/skranz/regtools/src/R/showreg.r
+
 ***
 
 
-4.1.3) Just press `Check` to perform the two above explained regressions and show the marginal probit effects of all three regressions.
-```{r "6_22",error=FALSE, results='asis'}
-reg3_2 <- glm(applied ~ offer4 + low + med, family = binomial(link = "probit"), data=filter(dat, normrate_less == 0))
+4.1.3) Just press `Check` to perform the two above explained regressions and show the marginal probit effects of the two regressions.
+```{r "6_23",error=FALSE, results='asis'}
+showreg(list("(1)"=reg3_1,"(2)"=reg3_2), coef.transform=c("mfx", "mfx"), omit.coef = "(Intercept)", digits=3, type="html")
+```
 
+Column (1) presents the probit marginal effect of clients who received offers at or below the standard rate of their risk category. A 100-basis-point increase in the monthly interest rate can be associated with reduced take-up by 0.3 percentage points. This seems to be a very small effect since we know from exercise 2 that the price ranges between 3.25% and 11.75%. This means that price decrease from the maximum to the minimum would increase the take-up by only 2.6 percentage points ((11.75%-3.25%)*-0.003 = 0.026). In column (2) we can see that a 100-basis-point increase in the monthly interest rate has a higher effect on clients who received offers higher the standard rate of their risk category. In this case the price increase results in a 1.7 percentage points lower take-up. This means that the effect or rather the price sensitivity is nearly six times higher for clients who received offers above their risk category.
+
+To estimate if the price sensitivity changed when the lender offered higher than the clients standard rate, we have to regress `applied` on `normrate_more` and the experimental validation variables. The regression shows that higher interest rates reduced the level of take-up. Clients who received a higher than standard rate were 3 percent less likely to apply for a loan.
+
+4.1.4) Press `Check` to perform the regression and present the probit marginal effects.
+```{r "6_24",error=FALSE, results='asis'}
 reg3_3 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=dat)
-
-showreg(list("(1)"=reg3_1,"(2)"=reg3_2, "(3)"=reg3_3), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", digits=3)
-```
-
-Column (1) presents the probit marginal effect of clients who received offers at or below the standard rate of their risk category. A 100-basis-point increase in the monthly interest rate can be associated with reduced take-up by 0.3 percentage points. This seems to be a very small effect since we know from exercise 2 that the price ranges between 3.25% and 11.75%. This means that price decrease from the maximum to the minimum would increase the take-up by only 2.6 percentage points ((11.75%-3.25%)*-0.003 = 0.026). In column (2) we can see that a 100-basis-point increase in the monthly interest rate has a higher effect on clients who received offers higher the standard rate of their risk category. In this case the price increase results in a 1.7 percentage points lower take-up. This means that the effect or rather the price sensitivity is nearly six times higher for clients who received offers above their risk category. If we now inspect column (3) is becomes apparent that higher interest rates are associated with a depressed level of take-up. In fact clients are 3 percentage points less likely to apply for a loan.
-
-We can illustrate the demand price sensitivity in graphically. For this we can use the `ggplot()` function of the `ggplot2` package we used in task 2.1.2). To generate the demand curve we need the x-axis to be the residual of a regression of the monthly interest rate on the conditions of the experiment, and the y-axis to be the residuals of a regression of take-up on the experimental conditions. One possibility would be to show the residuals in a scatter plot by using the function `geom_point()` also of the `ggplot2` package.
-
-4.1.4) Press `Check` to generate a scatter plot of the demand price sensitivity.
-```{r "6_23",error=FALSE}
-
-x_plot1 <- lm(offer4 ~ low + med + waved2 + waved3, data=dat)
-y_plot1 <- lm(tookup ~ low + med + waved2 + waved3, data=dat)
-
-ggplot(dat, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_point()
+showreg(list("(3)"=reg3_3), coef.transform=c("mfx"), omit.coef = "(Intercept)", digits=3)
 
 ```
 
-As you can see, it can be hard to identify a trend with just points alone. Therefore, we use another `geom-` function called `geom_smooth()`, to replace the scatter plot with a smoothing line. We also have to add `se=FALSE` and `method="loess"` into the `geom_smooth()` command. We set `se=FALSE` because we would get an overflow otherwise, knowing our data set is quiet large.
+#### Price Elasticity
+
+Another way to classify the estimated results is to calculate the take-up elasticity. In a economic sense, the elasticity can be quantified as the ratio of the percentage change in one variable to the percentage change in another variable if a non-coincidental connection between the two variables exists. 
+
+We can use our result to calculate the elasticity. To do so we need the average values of the response variable `applied` and the average value of the explanatory variable `offer4`. than we can use the formula for elasticity of demand:
+
+**elasticity = marginal effect x (Ø explanatory variable/ Ø response variable)**
 
 
-***
+Quiz: Calculate the price elasticity of demand for our sub-sample in regression `reg3_1`. The mean offer rate is 8 and the mean of clients who applied is 0.085. Type in you answer in the box below rounded by two digits.
 
-### Info: geom_smooth()
-The `geom-` function `geom_smooth()` is part of the `ggplot2` package. The function adds a smoothing line to a plot. It enables us to identify trends easier. The function adds confidence bands to the smoothing line as well which can lead to a overflow if the data set is large. We remove these by setting the command `se` to `FALSE` to avoid an overflow. Furthermore, we can edit the smoothness of the smooth line with the command `span=_`. The span can be adjusted from 1 very smooth to 0 very rough. We can also decide which type of smooths we consider by using the `method=_` command. We an choose between four types: `lm`, `glm`, `gam` and `loess`.
+Answer: -0.28
 
-For more information check: http://statseducation.com/Introduction-to-R/modules/graphics/smoothing/
+#### Graphical Analysis
 
-***
+We can illustrate the relationship between the monthly offer rate and an application or rather demand price sensitivity graphically in a **partial regression plot**. In a partial regression plot we compute the residuals by regressing the response variable `offer4` on the independent variables excluding `applied`. We than compute the residuals by regressing the independent variable `applied`on th remaining independent variables. The partial regression plot is a plot that 
 
-
+We use another `geom-` function called `geom_smooth()`, to illustrate the marginal effects with a smoothing line. We also have to add `se=FALSE` and `method="loess"` into the `geom_smooth()` command. We set `se=FALSE` because we would get an overflow otherwise, knowing our data set is quiet large.
 
 4.1.5) Replace the `geom_point()` function with the `geom_smooth()` and add the above mentioned conditions. Afterwards press `Check`.
-```{r "6_24",error=FALSE}
-# ggplot(dat, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_point()
+```{r "6_25",error=FALSE}
+x_resid <- resid(lm(offer4 ~ low + med + waved2 + waved3, data=dat))
+y_resid <- resid(lm(applied ~ low + med + waved2 + waved3, data=dat))
+# ggplot(dat, aes(x=x_resid, y=y_resid)) +
+#   geom_smootht(method="???", se=???, span=0.5)
 
-ggplot(dat, aes(x=x_plot1$residuals, y=y_plot1$residuals)) + geom_smooth(method="loess", se=FALSE, span=0.5)
+ggplot(dat, aes(x=x_resid, y=y_resid)) +
+  geom_smooth(method="loess", se=FALSE, span=0.5)
 
 ```
 
-The demand curve confirms our thesis that an interest rate decrease is associated with a higher loan size and an increased offer rate with a lower loan size. However, a kink at approximately an interest rate increase of 150-basis-points is particular noticeable. It shows that if we increase the interest rate by more then 150-basis-points the demand curve or rather the loan size falls strongly.
+The demand curve confirms our thesis that an interest rate decrease is associated with a higher loan size and an increased offer rate with a lower loan size. However, a kink at approximately an interest rate increase of 150-basis-points is particular noticeable. It shows that if we increase the interest rate by more than 150-basis-points the demand curve or rather the loan size falls strongly.
 
-### Borrowing from an outside lender
+### Possible Explanations for the Kink
 
-An explanation for the kink in the demand curve could be that clients borrowed elsewhere if the offer rate was to high. To test this hypothesis we will perform the same regression as in 4.2.2 but this time we will only focus on clients who ended up borrowing from another financial institution. For this circumstance the lender obtained credit bureau data and it is described with the variable `tookup_outside_only` in our data set.
+One explanation for the kink is selection based on discounting or rates of return. Since our sample consists only of prior borrowers, it could be that everyone in the experiment has a discount or return rate approximately equal to the Lender’s standard rates. Hence, prior borrowers were roughly indifferent about borrowing at their standard rate, and a rate increase leaves them strictly unwilling to borrow. There are two problems with this explanation. First, it delivers the counterfactual prediction that lowering the interest rate should affect only the intensive margin, since everyone in the sample had already demonstrated a willingness to borrow at standard rates. Second, it seems likely that rates of return for potential borrowers vary over time with the severity of liquidity constraints and opportunity sets. In this case, we would not necessarily expect to find an indifference point at standard rates, and it would be unlikely that selection on rates of return is a sufficient explanation for the kink.
+
+#### Borrowing from an outside lender
+
+A second explanation for the kink in the demand curve could be that clients borrowed elsewhere if the offer rate was to high. To test this hypothesis we will perform the same regression as in the previous tasks but this time we will only focus on clients who ended up borrowing from another financial institution. For this purpose the lender obtained credit bureau data and it is described with the variable `tookup_outside_only` in our data set.
 
 4.1.5) Press `Check` to perform the regression of clients who borrowed from other financial institutions on the offer rate. Afterwards use the regression results to answer the question below.
-```{r "6_25",error=FALSE, results='asis'}
+```{r "6_26",error=FALSE, results='asis'}
 reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(dat, normrate_less == 1))
 
-reg3_5 <- glm(tookup_outside_only ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(dat, normrate_less == 0))
+reg3_5 <- glm(tookup_outside_only ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(dat, normrate_more == 1))
 
 reg3_6 <- glm(tookup_outside_only ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = dat)
 
-showreg(list("(4)"=reg3_4,"(5)"=reg3_5, "(6)"=reg3_6), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)",  digits=3)
+showreg(list("(4)"=reg3_4,"(5)"=reg3_5, "(6)"=reg3_6), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)",  digits=3, type="html", omit.stat = c("low", "med", "waved2", "waved3"))
 ```
 
 
@@ -799,34 +823,34 @@ Quiz: Did higher offer rates induce more borrowing from other financial institut
 - A 100-basis-point increase can be associated with a -0.1 lower take-up from an outside borrower for clients at or below the standard rate and a increase in take-up by 0.1 for clients who received offers higher the standard rate of their risk category.. [ ]
 
 
-The results in columns (4+5) suggest that there is a positive relationship between a higher offer rate and clients who received an offer rate at or below their standard ones and ended up borrowing from another financial institution. As well as a negative relationship for clients who received a higher offer rate then the standard for their risk category. In addition (6) indicates that a higher offer rate strengthened the take-up from other financial institutions. However the confidence intervals rule out economically large substitution. Therefore we can not say that higher interest rates influenced the borrowing behaviour of clients in respect to borrowing from other financial institutions. Hence, we cannot rule out other financing opportunities like i.e. family, friends or moneylenders.
+The results in columns 4 and 5 suggest that there is a positive relationship between a higher offer rate and clients who received an offer rate at or below their standard ones and ended up borrowing from another financial institution. As well as a negative relationship for clients who received a higher offer rate than the standard for their risk category. In addition (6) indicates that a higher offer rate strengthened the take-up from other financial institutions. However the confidence intervals rule out economically large substitution. Therefore we can not say that higher interest rates influenced the borrowing behaviour of clients in respect to borrowing from other financial institutions. Hence, we cannot rule out other financing opportunities like i.e. family, friends or moneylenders.
 
-### Borrowing after the deadline
+#### Borrowing after the deadline
 
-There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher then the standard rate and then borrow at the lower rate. This is testable by examining the post-deadline borrowing behaviour of the clients. A logical outcome would be that clients with a higher offer rate then the standard rate will borrow after the deadline expired. In order to test this hypothesis we will perform the regression once again, but this time soley with clients who borrowed after the deadline. To find out which variable describes those clients press the `data` button.
+There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher than the standard rate and than borrow at the lower rate. This is testable by examining the post-deadline borrowing behaviour of the clients. A logical outcome would be that clients with a higher offer rate than the standard rate will borrow after the deadline expired. In order to test this hypothesis we will perform the regression once again, but this time soley with clients who borrowed after the deadline. To find out which variable describes those clients press the `data` button.
 
 4.1.6) This time you only have to replace the question marks with the variable which indicates if clients borrowed after the deadline. If you think your answer is correct press `Check`. If you can not find the variable in `data` just press `hint`.
-```{r "6_26",error=FALSE, results='asis'}
+```{r "6_27",error=FALSE, results='asis'}
 # reg3_7 <- glm(??? ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(dat, normrate_less == 1))
 # 
-# reg3_8 <- glm(??? ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = dat)
+# reg3_8 <- glm(??? ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(dat, normrate_more == 1))
 # 
-# reg3_9 <- glm(??? ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(dat, normrate_less == 0))
+# reg3_9 <- glm(??? ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = dat)
 # 
 # showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", output = "html", digits=3)
 
 
 reg3_7 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(dat, normrate_less == 1))
 
-reg3_8 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = dat)
+reg3_8 <- glm(tookup_afterdead_enforced ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(dat, normrate_more == 1))
 
-reg3_9 <- glm(tookup_afterdead_enforced ~ offer4 + low + med, family = binomial(link = "probit"), data = filter(dat, normrate_less == 0))
+reg3_9 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = dat)
 
-showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", output = "html", digits=3)
+showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", digits=3)
 
 ```
 
-In fact, we get a unexpected result - higher offer rates are associated with less post-deadline borrowing. The result of the regression `reg3_8` in column (8) indicate that higher offer rates lead to -0.036 percentage points less post-deadline borrowing. Moreover, in column (9) we can see that the likelihood of borrowing decreases by -0.012 percentage points. The result in column (7) does suggest any economically large substitution.
+In fact, we get a unexpected result - higher offer rates are associated with less post-deadline borrowing. The result of the regression `reg3_8` in column (9) indicate that higher offer rates lead to -0.036 percentage points less post-deadline borrowing. However, the results in column (7) and (8) do not suggest any economically large substitution.
 
 Our pattern of results with respect to timing is consistent with switching costs. The regression results of this exercise show that pre- and post-deadline borrowing decreases in price. Therefore an explanation for our result could be that clients borrowed from other financial institutions pre-deadline. Afterwards the clients found it to cost-intensive to switch back to our lender after the deadline.
 
@@ -837,7 +861,7 @@ To put it in a nutshell, our results on non-linearities in price sensitivity see
 In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (R). For your information: R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021). Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
 
 4.2.1) Press `Check`to load in the data once again.
-```{r "7_27"}
+```{r "7_28"}
 dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
@@ -862,7 +886,7 @@ For further information check out: https://rdrr.io/cran/lfe/man/felm.html
 
 4.2.2) Perform a linear regression with fixed effects stored in `reg4_1`. Regress the dependent variable `loansize` on the ordinary independent variable `offer4` and the fixed effects `low` + `med` + `waved2` + `waved3` and cluster it by `branchuse`. Replace the question marks with the missing variables. If you have no clue how to perform the regression, just press `hint` for help.
 
-```{r "7_28",warning=FALSE}
+```{r "7_29",warning=FALSE}
 # reg4_1 <- felm(??? ~ ??? | ??? |0| ???,  data = filter(dat, offer4==final4, normrate_less==1))
 # summary(reg4_1)
 
@@ -870,28 +894,12 @@ reg4_1 <- felm(loansize ~ offer4 |low + med + waved2 + waved3 |0| branchuse,  da
 summary(reg4_1)
 ```
 
-The estimate coefficient shows that for each 100 basis-point increase in the interest rate the loan size can be associated with a decrease by approximately 4.4R. We can use our result to calculate the elasticity. To do so we need the mean loan size and offer rate. Then we can use the formula for elasticity of demand.
-
-
-***
-
-### Info: Elastcity of Demand
-The elasticity of demand can be calculated with the use of the midpoint formula:
-
-**elasticity = estimate coefficient x (Ø average Offer Rate/ Ø loan size)**
-
-***
-
-
-
-Quiz: Calculate the price elasticity of demand for our sub-sample. The mean offer rate is 7.8 and the mean loan size 106. Type in you answer in the box below rounded by two digits.
-
-Answer: -0.32
+The estimate coefficient shows that for each 100 basis-point increase in the interest rate the loan size can be associated with a decrease by approximately 4.4R. Given the unconditional loan size of 106 and average offered interest rate of 7.8 percent, the implied elasticity is -0.32.
 
 We also want to explore the loan price demand estimate for a sub-sample of non-borrowers. We will re-estimate the model from the previous regression, though we add additional control variables and branch fixed effects. The additional controls added to unconditional specifications include: quadratics in internal credit score, external credit score, and gross income at time of pre-approval, months since last loan with lender, number of prior loans with lender, gender, number of dependents, marital status, quadratic in age, rural residence, education, and province. Controls for conditional specifications include net income at the time of approval. The command `omit()` of the `stargazer` packages omits the control variables in our stargazer output below.
 
-4.2.3) Press `check`to reestimate the regression in 4.2.2) with additional control variables for non-borrowers.
-```{r "7_29",warning=FALSE, results='asis'}
+4.2.3) Press `check`to re-estimate the regression in 4.2.2) with additional control variables for non-borrowers.
+```{r "7_30",warning=FALSE, results='asis'}
 dat <- dat %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
 reg4_2 <- felm(loansize ~ offer4 + grossincome + grossincomesq + appscore + appscoresq + itcscore + itcscoresq + trcount + age + dormancy + dependants + agesq | low + med + waved2 + waved3 + female + married  + rural + edhi + appscore0 + itczero + branchuse + province |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
@@ -917,7 +925,7 @@ The elasticity of demand can be calculated with the use of the midpoint formula:
 
 
 4.2.4) Press `Check` to run the above mentioned regressions. 
-```{r "7_30",warning=FALSE, results='asis'}
+```{r "7_31",warning=FALSE, results='asis'}
 
 dat <- dat %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
@@ -930,12 +938,12 @@ reg4_5 <- censReg(loansize ~ offer4 + low + med + waved2 + waved3 + appscore + a
 stargazer(reg4_3, reg4_4, reg4_5, omit = c("low", "med", "waved2" ,"waved3","grossincome" , "grossincomesq" , "dormancy" , "trcount" , "female" , "dependants" , "married" ,"age" , "agesq" , "rural" ,"edhi" , "appscore", "appscoresq" , "appscore0" , "itcscore" , "itcscoresq" , "itczero" , "branchuse" , "province"), type="html", header = FALSE, digits=5)
 ```
 
-As we can see in column (1) an increase of the offer rate by 100-basis-points for borrowers can be associated with a -25.876R lower loan size. We can also apply the formula for the loan demand elasticity on our result, then we get an implied elasticity of -0.13 which seems comparatively small. Column (2) presents our estimate of loan size price sensitivity conditional on borrowing and with the additional control variables. It estimates a slightly higher decrease of the loan size compared to column (1) of -33.715R and an increased elasticity of -0.17. The result of the Tobit regression in column (3), without branch fixed effects, does not change significantly in comparison to the regression column (2), which indicates that the loan size demand is not censored by supply constraints
+As we can see in column (1) an increase of the offer rate by 100-basis-points for borrowers can be associated with a -25.876R lower loan size. We can also apply the formula for the loan demand elasticity on our result, than we get an implied elasticity of -0.13 which seems comparatively small. Column (2) presents our estimate of loan size price sensitivity conditional on borrowing and with the additional control variables. It estimates a slightly higher decrease of the loan size compared to column (1) of -33.715R and an increased elasticity of -0.17. The result of the Tobit regression in column (3), without branch fixed effects, does not change significantly in comparison to the regression column (2), which indicates that the loan size demand is not censored by supply constraints
 
 We can portray our results of the conditional loan size in a demand curve graphically as we did in task 4.1.5).
 
 4.2.5) Press `Check` to generate the demand curve for borrowers only.
-```{r "7_31",warning=FALSE, results='asis'}
+```{r "7_32",warning=FALSE, results='asis'}
 data_plot2 <- dat %>% filter(tookup==1)
 
 x_plot2 <- lm(offer4 ~ low + med + waved2 + waved3, data=data_plot2)
@@ -952,7 +960,7 @@ The graph shows that the effect that an increase of the interest rate has a nega
 Now, we want to take a look at the log-log-specifications of our previous regressions. We can use the log-log-regression estimates as an alternative to determine the elasticities of demand. The difference between a normal linear-linear-model and a log-log-model is that the we use the logarithmized values of the $y$ and $x$ variable. The estimates of a log-log-regression can be interpreted as if we increase the $x$ variable by one percent the $y$ changes in average by $\beta_1$ percent.
 
 4.2.6) Change the `loansize` and `offer4` variables to their logarithmized (ln) values. Press `Check` afterwards.
-```{r "7_32",warning=FALSE, results='asis'}
+```{r "7_33",warning=FALSE, results='asis'}
 # reg4_6 <- felm(loansize ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, tookup==1, normrate_less==1))
 # 
 # reg4_7 <- felm(loansize ~ offer4 + appscore + appscoresq + itcscore + itcscoresq + trcount + age + dormancy + dependants + agesq + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq | low + med + waved2 + waved3 + female + married  + rural + edhi + appscore0 + itczero + branchuse + province |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1, tookup==1))
@@ -991,7 +999,7 @@ Alfred Marshall was the first to develop the standard supply and demand graph. I
 In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition 
 
 5.1.1) Press `Check`to load in the data once again.
-```{r "9_33"}
+```{r "9_34"}
 dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
@@ -1002,7 +1010,7 @@ We already know what influence an adjusted offer rate has on the loan size and t
 To examine this thesis, let us have a look at the optimal price for the lender at first. For this we will aggregate the revenue and repayment results (`grossinterest`) over the entire sample frame for clients who borrowed at or below the lenders standard rate. This will provide us with information on the price sensitivity of gross revenue obtained on initial pre-deadline borrowing. Or in other words it will show us how an adjusted interest rate affects the lender's gross revenue.
 
 5.1.2) Just press `Check` to perform the regression of `grossinterest` on `offer4`.
-```{r "9_34",warning=FALSE, results='asis'}
+```{r "9_35",warning=FALSE, results='asis'}
 reg5_1 <- felm(grossinterest ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
 
 stargazer(reg5_1, type="html", header=FALSE)
@@ -1011,12 +1019,13 @@ stargazer(reg5_1, type="html", header=FALSE)
 Before we continue with the interpretation of the regression output. Let us create a regression adjusted demand curve for the revenue in respect to price.
 
 5.1.3) Just press `Check` and the code below will create the demand curve.
-```{r "9_35",warning=FALSE, results='asis'}
+```{r "9_36",warning=FALSE, results='asis'}
 data_plot3 <- dat %>% filter(offer4==final4, normrate_less==1)
 x_plot3 <- felm(offer4 ~ low + med + waved2 + waved3, data=data_plot3)
 y_plot3 <- felm(grossinterest ~ low + med + waved2 + waved3, data=data_plot3)
 
-ggplot(data_plot3, aes(x=x_plot3$residuals, y=y_plot3$residuals)) + geom_smooth(method = "loess", span=0.8, se=FALSE)
+ggplot(data_plot3, aes(x=x_plot3$residuals, y=y_plot3$residuals)) +
+  geom_smooth(method = "loess", span=0.8, se=FALSE)
 
 ```
 
@@ -1029,7 +1038,7 @@ Quiz: The gross revenue result implies that a 100-basis-point decrease of the of
 
 Answer: 2.6
 
-```{r "9_36",warning=FALSE, results='asis'}
+```{r "9_37",warning=FALSE, results='asis'}
 reg5_2 <- felm(pstdue_average ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
 
 reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(dat, offer4==final4, normrate_less==1, tookup==1))
@@ -1038,7 +1047,7 @@ reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = 
 stargazer(reg5_2, reg5_3, type="text",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
 ```
 
-```{r "9_37",warning=FALSE, results='asis'}
+```{r "9_38",warning=FALSE, results='asis'}
 dat <- dat %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
 reg6_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(dat, offer4==final4, normrate_less==1))
@@ -1059,11 +1068,11 @@ stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
 ## Exercise 5.2 -- Targeted Access
 
 5.2.1) Press `Check`to load in the data once again.
-```{r "10_38"}
+```{r "10_39"}
 dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
-```{r "10_39",warning=FALSE, results='asis'}
+```{r "10_40",warning=FALSE, results='asis'}
 dat <- dat %>% mutate(grossincomecat2 = xtile(grossincome, n=2))
 dat <- dat %>% mutate(sales_grossincomecat2 = xtile(grossincome, n=10))
                                     
