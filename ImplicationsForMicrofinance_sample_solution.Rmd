@@ -561,7 +561,7 @@ The demand curve confirms our thesis that an interest rate decrease is associate
 
 ### Possible Explanations for the Kink
 
-One explanation for the kink is selection based on discounting or rates of return. Since our sample consists only of prior borrowers, it could be that everyone in the experiment has a discount or return rate approximately equal to the Lender’s standard rates. Hence, prior borrowers were roughly indifferent about borrowing at their standard rate, and a rate increase leaves them strictly unwilling to borrow. There are two problems with this explanation. First, it delivers the counterfactual prediction that lowering the interest rate should affect only the intensive margin, since everyone in the sample had already demonstrated a willingness to borrow at standard rates. Second, it seems likely that rates of return for potential borrowers vary over time with the severity of liquidity constraints and opportunity sets. In this case, we would not necessarily expect to find an indifference point at standard rates, and it would be unlikely that selection on rates of return is a sufficient explanation for the kink.
+One explanation for the kink is selection based on rates of return. Since our sample consists only of prior borrowers, it could be that everyone in the experiment has a discount or return rate approximately equal to the Lender’s standard rates. Hence, prior borrowers were roughly indifferent about borrowing at their standard rate, and a rate increase leaves them strictly unwilling to borrow. There are two problems with this explanation. First, it delivers the counterfactual prediction that lowering the interest rate should affect only the intensive margin, since everyone in the sample had already demonstrated a willingness to borrow at standard rates. Second, it seems likely that rates of return for potential borrowers vary over time with the severity of liquidity constraints and opportunity sets. In this case, we would not necessarily expect to find an indifference point at standard rates, and it would be unlikely that selection on rates of return is a sufficient explanation for the kink.
 
 #### Borrowing from an outside lender
 
@@ -609,9 +609,9 @@ showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "
 
 In fact, we get a unexpected result - higher offer rates are associated with less post-deadline borrowing. The result of the regression `reg3_8` in column (9) indicate that higher offer rates lead to -0.036 percentage points less post-deadline borrowing. However, the results in column (7) and (8) do not suggest any economically large substitution.
 
-Our pattern of results with respect to timing is consistent with switching costs. The regression results of this exercise show that pre- and post-deadline borrowing decreases in price. Therefore an explanation for our result could be that clients borrowed from other financial institutions pre-deadline. Afterwards the clients found it to cost-intensive to switch back to our lender after the deadline.
+Our pattern of results with respect to timing is consistent with switching costs. The regression results of this exercise show that pre- and post-deadline borrowing decreases in price. Therefore an explanation for our result could be that clients applied for a loan from other financial institutions pre-deadline and found it to cost-intensive to switch back to our lender after the deadline. Our estimated behavioral pattern also corresponds with the general assumption that consumers evaluate prices in comparison to prior experiences. In this context a price increase is often seen as more decision-relevant as a potential gain.
 
-To put it in a nutshell, our results on non-linearities in price sensitivity seem to be consistent with explanations of their behaviour and in regards to other financing options in informal markets with switching costs. 
+Our results on non-linearities in price sensitivity seem to be consistent with explanations of general consumer behavior in regards to other financing options in the informal markets with switching costs. 
 
 ## Exercise 4.2 -- Price Elasticity of Loan Size
 
@@ -622,9 +622,14 @@ In this second section of exercise 4 we want to examine the price sensitivity of
 dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
-### Unconditional Loan Size
+### Intensive Margin
 
-In the first part of this exercise we are focusing on clients who were randomly assigned with an equal offer and contract rate as well as below the Lender's standard rate for each individual risk category. Want to compare the price sensitivity of the amount borrowed, unconditional on borrowing, of all clients who were at our below the standrad rate and non-borrowers. In our first subsample of clients the dependent variable `loansize` only includes pre-deadline borrowing and we condition just on the risk category (`med` + `low`) and the mailer wave (`wave2` + `wave3`). However, this time we will perform a `felm()` regression of the `lfe` package. It is similar to `lm()` which we used in exercise 2. Though, `felm()` used to fit linear models with group fixed effect. It uses the Method of Alternating projections to sweep out multiple group effects from the normal equations before estimating the remaining coefficients with OLS.
+
+
+#### Unconditional Loan Size
+In the first part of this exercise we are focusing on clients who were randomly assigned with an equal offer and contract rate as well as below the Lender's standard rate for each individual risk category. Want to compare the price sensitivity of the amount borrowed, unconditional on borrowing, of all clients who were at our below the standard rate and non-borrowers. 
+
+In our first subsample of clients the dependent variable `loansize` only includes pre-deadline borrowing and we condition just on the risk category (`med` + `low`) and the mailer wave (`wave2` + `wave3`). However, this time we will perform a `felm()` regression of the `lfe` package. It is similar to `lm()` which we used in exercise 2. Though, `felm()` used to fit linear models with group fixed effect. It uses the Method of Alternating projections to sweep out multiple group effects from the normal equations before estimating the remaining coefficients with OLS.
 
 info("Linear regression with multiple group fixed effects with felm()")
 
@@ -635,7 +640,7 @@ reg4_1 <- felm(loansize ~ offer4 |low + med + waved2 + waved3 |0| branchuse,  da
 summary(reg4_1)
 ```
 
-The estimate coefficient shows that for each 100 basis-point increase in the interest rate the loan size can be associated with a decrease by approximately 4.4R. Given the unconditional loan size of 106 and average offered interest rate of 7.8 percent, the implied elasticity is -0.32.
+The estimate coefficient shows that for each 100 basis-point increase in the interest rate the loan size can be associated with a decrease by approximately 4.4R. Given the unconditional loan size of 106 and average offered interest rate of 7.8 percent, the implied elasticity is -0.32. Which implies that a one percent higher interest rate is associated with a 0.32 percent lower loan size.
 
 We also want to explore the loan price demand estimate for a sub-sample of non-borrowers. We will re-estimate the model from the previous regression, though we add additional control variables and branch fixed effects. The additional controls added to unconditional specifications include: quadratics in internal credit score, external credit score, and gross income at time of pre-approval, months since last loan with lender, number of prior loans with lender, gender, number of dependents, marital status, quadratic in age, rural residence, education, and province. Controls for conditional specifications include net income at the time of approval. The command `omit()` of the `stargazer` packages omits the control variables in our stargazer output below.
 
@@ -650,7 +655,7 @@ stargazer(reg4_1, reg4_2, omit = c("grossincome", "grossincomesq", "dormancy", "
 
 As we can see, the result does not change for non-borrowers. This seems to be consistent with non-borrowers having the same intensive margin price sensitivity as borrowers, which we saw in exercise 4.1. However, as also discussed in the previous exercises, the result is difficult to interpret, because of the fact that the price sensitivity is nonzero and inconsistent on the extensive margin. The loan size demanded may be affected by characteristics other than the risk category. Therefore, an interpretation of our loan size elasticity results is more useful for a subsample of clients who actually borrowed from our lender.
 
-### Conditional Loan Size
+#### Conditional Loan Size
 
 No we perform the regression conditional on borrowing or in other words on only borrowers. In column (1) we run the regression of the loan size on the standard conditions of the experiment for borrowers only. In column (2) we add the additional controls for selection and in column (3) we run a **Tobit** regression to find out if the loan size demand may be censored by supply constraints.
 
@@ -687,7 +692,7 @@ ggplot(data_plot2, aes(x=x_plot2$residuals, y=y_plot2$residuals)) + geom_smooth(
 
 The graph shows that the effect that an increase of the interest rate has a negative effect on the loan size and a decreased offer rate an positive effect on the amount borrowed.
 
-### Log-Log-Specifications
+#### Log-Log-Specifications
 
 Now, we want to take a look at the log-log-specifications of our previous regressions. We can use the log-log-regression estimates as an alternative to determine the elasticities of demand. The difference between a normal linear-linear-model and a log-log-model is that the we use the logarithmized values of the $y$ and $x$ variable. The estimates of a log-log-regression can be interpreted as if we increase the $x$ variable by one percent the $y$ changes in average by $\beta_1$ percent.
 
@@ -710,60 +715,76 @@ After all, we still find elasticities of loan size demand that are quite low.
 
 ## Exercise 5 -- Pricing Stratgey
 
-## Exercise 5.1 -- Profit Maximation
+In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition will exemplify a pricing strategy that could be used to pursue specific demographic objectives.
 
-In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition 
+We already know what influence an adjusted offer rate has on the loan size and take-up for clients. Now we want to define the consequences for the lender or rather if an increased offer rate would be more profitable for the lender. We are in particular interested in the effects of an amended offer rate on the gross revenue of the lender and the loan defaults of the clients.
+Here we encounter an alleged point of criticism of micro credits. It is often assumed that for lenders the best strategy for profit maximization is to charge horrendous interest rates. Which seems logical at first sight. We want to evaluate this assumption and answer the question hwether the lender should raise or cut offer rates.
 
 5.1.1) Press `Check`to load in the data once again.
-```{r "9_1"}
+```{r "8_1"}
 dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
-### Gross Revenue, Repayment Senisitivities and Short-Run Pricing Strategy
+### Short-Run Pricing Strategy
 
-We already know what influence an adjusted offer rate has on the loan size and take-up for clients. Now we want to define the consequences for the lender or rather if an increased offer rate would be profitable for the lender. Here we encounter an alleged point of criticism of micro credits. It is often assumed that for lenders the best strategy for profit maximization is to charge horrendous interest rates. Which seems logical at first sight. 
-
-To examine this thesis, let us have a look at the optimal price for the lender at first. For this we will aggregate the revenue and repayment results (`grossinterest`) over the entire sample frame for clients who borrowed at or below the lenders standard rate. This will provide us with information on the price sensitivity of gross revenue obtained on initial pre-deadline borrowing. Or in other words it will show us how an adjusted interest rate affects the lender's gross revenue.
+To examine this thesis, let us have a look at the optimal price in the short-run for the lender at first. For this we will aggregate the revenue and repayment results (`grossinterest`) over the entire sample frame for clients who borrowed at or below the lenders standard rate (`normrate_less == 1`). This will provide us with information on the price sensitivity of gross revenue obtained on initial pre-deadline borrowing. Or in other words it will show us how an adjusted interest rate affects the lender's gross revenue. Hence, we want to perform a regression of lender's gross revenue on the offer rate. Afterwards we can interpret the regression estimates by answering the question down below.
 
 5.1.2) Just press `Check` to perform the regression of `grossinterest` on `offer4`.
-```{r "9_2",warning=FALSE, results='asis'}
+```{r "8_2",warning=FALSE, results='asis'}
 reg5_1 <- felm(grossinterest ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
 
 stargazer(reg5_1, type="html", header=FALSE)
 ```
 
-Before we continue with the interpretation of the regression output. Let us create a regression adjusted demand curve for the revenue in respect to price.
-
-5.1.3) Just press `Check` and the code below will create the demand curve.
-```{r "9_3",warning=FALSE, results='asis'}
-data_plot3 <- dat %>% filter(offer4==final4, normrate_less==1)
-x_plot3 <- felm(offer4 ~ low + med + waved2 + waved3, data=data_plot3)
-y_plot3 <- felm(grossinterest ~ low + med + waved2 + waved3, data=data_plot3)
-
-ggplot(data_plot3, aes(x=x_plot3$residuals, y=y_plot3$residuals)) +
-  geom_smooth(method = "loess", span=0.8, se=FALSE)
-
-```
-
-If we take a look at both, our regression output in 5.1.2) and our demand curve in 5.1.3), we see that the demand curve for revenue is slightly sloping upwards for clients who borrowed at or below the standard rate. Furthermore, our results provide information about the effect of an adjusted offer rate.
-
 Finish the following sentence (rounded by one digit) and write your answer in the answer-box below:
 
 
-Quiz: The gross revenue result implies that a 100-basis-point decrease of the offer rate reduces gross revenue by R???.
+Quiz: The gross revenue result implies that a 100-basis-point increase of the offer rate increase the gross revenue by R???.
 
 Answer: 2.6
 
-```{r "9_4",warning=FALSE, results='asis'}
-reg5_2 <- felm(pstdue_average ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
+Our result implies that an increased offer rate would generate a higher revenue for our lender. Though, this seems to contradiction with to our demand curve analysis in task 4.1.5) which suggested that a higher loan price would reduce the loan take-up at a certain point significantly. Thus, let us have a look at our demand curve for revenue in respect to price. 
 
-reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(dat, offer4==final4, normrate_less==1, tookup==1))
+5.1.3) Just press `Check` and the code below will create the demand curve.
+```{r "8_3",warning=FALSE, results='asis'}
+data_plot3 <- dat %>% filter(offer4==final4, normrate_less==1)
+x_resid3 <- resid(felm(offer4 ~ low + med + waved2 + waved3, data=data_plot3))
+y_resid3 <- resid(felm(grossinterest ~ low + med + waved2 + waved3, data=data_plot3))
 
-
-stargazer(reg5_2, reg5_3, type="text",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
+ggplot(data_plot3, aes(x=x_resid3, y=y_resid3)) +
+  geom_smooth(method = "loess", span=0.8, se=FALSE) +
+  xlab("Offer Rate") +
+  ylab("Gross Revenue per Client")
 ```
 
-```{r "9_5",warning=FALSE, results='asis'}
+The lender's gross revenue curve is slightly upwards sloping over the range of rates below the ones under standard operations. However, at an increased offer of more then approximately 300-basis-points, the additional revenue from the price increase, decreases clearly. An explanation for this kink could be our obtained findings in exercise 4.1 that a higher interest rate reduces loan take-up at a certain point and therefore also the total revenue of the lender.
+
+Having said this, the lender could still raise the offer rate to a certain degree to increase his gross revenue. However, a higher loan price could also influence the clients solvency due to moral hazards, adverse selection or other shocks that the clients can not offset. Our regression in 5.1.4) suggests that the same loan price increase, increases loan default. In a narrow sense, the past-due amount increases by 12.1R per client for each 100-basis-point increase of the offer rate.
+
+5.1.4) Press the button with the `Check` label to show the regression results.
+```{r "8_4",warning=FALSE, results='asis'}
+reg5_2 <- felm(pstdue_average ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
+
+stargazer(reg5_2, type="text",align=TRUE, covariate.labels=c("interest rate in pp terms (e.g., 8.2)"), no.space=TRUE, type="html")
+```
+
+Our results suggest strongly that the lender should not raise the offer rates, it would lead to a lower gross revenue. But the question whether the lender should cut the offer rates to generate a higher revenue still remains.
+
+
+Quiz: What do you think, would a lower offer rate increase the lenders revenue significantly?
+
+- Yes. [ ]
+
+- No. [x]
+
+
+The results of regression the regression in 5.1.3) suggest that a 100-basis-point lower loan price would lead to 2.6R less revenue per client, but increase the repayment by 12.6R. Knowing that the average take-up rate is 7.4 percent, an offer rate cut produces 0.9R (2.6R * 0.074) more repayment or rather revenue per client offered the loan, but in total a 1.7R (-2.6R + 0.9R) lower net revenue per client. 
+
+Our estimation suggests that the lender nether a loan price cut or raise offers an incentive for the lender.
+
+### Targeted 
+
+```{r "8_5",warning=FALSE, results='asis'}
 dat <- dat %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
 reg6_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(dat, offer4==final4, normrate_less==1))
@@ -779,78 +800,6 @@ reg6_4 <- lm(loansize ~ offer4+ low + med + waved2 + waved3 + grossincome + gros
 
 
 stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
-```
-
-## Exercise 5.2 -- Targeted Access
-
-5.2.1) Press `Check`to load in the data once again.
-```{r "10_1"}
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
-```
-
-```{r "10_2",warning=FALSE, results='asis'}
-dat <- dat %>% mutate(grossincomecat2 = xtile(grossincome, n=2))
-dat <- dat %>% mutate(sales_grossincomecat2 = xtile(grossincome, n=10))
-                                    
-# * EXTENSIVE
-# dprobit applied offer4 low med waved2 waved3 if (female==1 & normrate_less==1), cluster(branchuse)
-# estimates store m1, title((1))
-# sum offer4 applied if e(sample)
-
-reg7_1 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(dat, female==1, normrate_less==1))
-
-# dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & normrate_less==1), cluster(branchuse)
-# estimates store m2, title((2))
-# sum offer4 applied if e(sample)
-
-reg7_2 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(dat, normrate_less==1, grossincomecat2==1))
-
-# dprobit applied offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less==1), cluster(branchuse)
-# estimates store m3, title((3))
-# sum offer4 applied if e(sample)
-
-reg7_3 <- lm(applied ~ offer4 + low + med + waved2 + waved3, data=filter(dat, normrate_less==1, grossincomecat2==1, female==1))
-
-# *UNCONDITIONAL LOAN SIZE
-# regress loansize offer4 low med waved2 waved3 if (female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
-# sum loansize offer4 if e(sample)
-# estimates store m4, title((4))
-
-reg7_4 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(dat, normrate_less==1, offer4==final4, female==1))
-
-# regress loansize offer4 low med waved2 waved3 if (grossincomecat2==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
-# sum loansize offer4 if e(sample)
-# estimates store m5, title((5))
-
-reg7_5 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(dat, normrate_less==1, offer4==final4, grossincomecat2==1))
-
-# regress loansize offer4 low med waved2 waved3 if (grossincomecat2==1 & female==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
-# sum loansize offer4 if e(sample)
-# estimates store m6, title((6))
-
-reg7_6 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(dat, normrate_less==1, offer4==final4, grossincomecat2==1, female==1))
-
-# *CONDITIONAL LOAN SIZE
-# regress loansize offer4 low med waved2 waved3 if (female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
-# sum loansize offer4 if e(sample)
-# estimates store m7, title((7))
-
-reg7_7 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(dat, tookup==1, normrate_less==1, offer4==final4, female==1))
-
-# regress loansize offer4 low med waved2 waved3 if (sales_grossincomecat2==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
-# sum loansize offer4 if e(sample)
-# estimates store m8, title((8))
-
-reg7_8 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(dat, sales_grossincomecat2==1, normrate_less==1, offer4==final4, tookup==1))
-
-# regress loansize offer4 low med waved2 waved3 if (sales_grossincomecat2==1 & female==1 & tookup==1 & normrate_less== 1 & (offer4==final4)), cluster(branchuse)
-# sum loansize offer4 if e(sample)
-# estimates store m9, title((9))
-
-reg7_9 <- lm(loansize ~ offer4 + low + med + waved2 + waved3, data=filter(dat, sales_grossincomecat2==1, normrate_less==1, offer4==final4, female==1, tookup==1))
-
-
-stargazer(reg7_1, reg7_2, reg7_3, reg7_4, reg7_5, reg7_6, reg7_7, reg7_8, reg7_9, type="html", header = FALSE)
 ```
 
 ## Exercise Conclusion 

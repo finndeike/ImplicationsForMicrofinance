@@ -966,7 +966,10 @@ Alfred Marshall was the first to develop the standard supply and demand graph. I
 
 ## Exercise 5 -- Pricing Stratgey
 
-In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition 
+In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition will exemplify a pricing strategy that could be used to pursue specific demographic objectives.
+
+We already know what influence an adjusted offer rate has on the loan size and take-up for clients. Now we want to define the consequences for the lender or rather if an increased offer rate would be more profitable for the lender. We are in particular interested in the effects of an amended offer rate on the gross revenue of the lender and the loan defaults of the clients.
+Here we encounter an alleged point of criticism of micro credits. It is often assumed that for lenders the best strategy for profit maximization is to charge horrendous interest rates. Which seems logical at first sight. We want to evaluate this assumption and answer the question hwether the lender should raise or cut offer rates.
 
 5.1.1) Press `Check`to load in the data once again.
 ```{r "5.1 a) 1"}
@@ -975,14 +978,12 @@ dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 #>
 ```
 
-### Gross Revenue, Repayment Senisitivities and Short-Run Pricing Strategy
+### Short-Run Pricing Strategy
 
-We already know what influence an adjusted offer rate has on the loan size and take-up for clients. Now we want to define the consequences for the lender or rather if an increased offer rate would be profitable for the lender. Here we encounter an alleged point of criticism of micro credits. It is often assumed that for lenders the best strategy for profit maximization is to charge horrendous interest rates. Which seems logical at first sight. 
-
-To examine this thesis, let us have a look at the optimal price for the lender at first. For this we will aggregate the revenue and repayment results (`grossinterest`) over the entire sample frame for clients who borrowed at or below the lenders standard rate. This will provide us with information on the price sensitivity of gross revenue obtained on initial pre-deadline borrowing. Or in other words it will show us how an adjusted interest rate affects the lender's gross revenue.
+To examine this thesis, let us have a look at the optimal price in the short-run for the lender at first. For this we will aggregate the revenue and repayment results (`grossinterest`) over the entire sample frame for clients who borrowed at or below the lenders standard rate (`normrate_less == 1`). This will provide us with information on the price sensitivity of gross revenue obtained on initial pre-deadline borrowing. Or in other words it will show us how an adjusted interest rate affects the lender's gross revenue. Hence, we want to perform a regression of lender's gross revenue on the offer rate. Afterwards we can interpret the regression estimates by answering the question down below.
 
 5.1.2) Just press `Check` to perform the regression of `grossinterest` on `offer4`.
-```{r "5.1.2 a)", warning=FALSE, results='asis'}
+```{r "5.1.2)", warning=FALSE, results='asis'}
 #< task_notest
 reg5_1 <- felm(grossinterest ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
 
@@ -990,44 +991,62 @@ stargazer(reg5_1, type="html", header=FALSE)
 #>
 ```
 
-Before we continue with the interpretation of the regression output. Let us create a regression adjusted demand curve for the revenue in respect to price.
-
-5.1.3) Just press `Check` and the code below will create the demand curve.
-```{r "5.1.2 b)", warning=FALSE, results='asis'}
-#< task_notest
-data_plot3 <- dat %>% filter(offer4==final4, normrate_less==1)
-x_plot3 <- felm(offer4 ~ low + med + waved2 + waved3, data=data_plot3)
-y_plot3 <- felm(grossinterest ~ low + med + waved2 + waved3, data=data_plot3)
-
-ggplot(data_plot3, aes(x=x_plot3$residuals, y=y_plot3$residuals)) +
-  geom_smooth(method = "loess", span=0.8, se=FALSE)
-
-#>
-```
-
-If we take a look at both, our regression output in 5.1.2) and our demand curve in 5.1.3), we see that the demand curve for revenue is slightly sloping upwards for clients who borrowed at or below the standard rate. Furthermore, our results provide information about the effect of an adjusted offer rate.
-
 Finish the following sentence (rounded by one digit) and write your answer in the answer-box below:
 
 #< quiz "Demand Curve Revenue"
-question: The gross revenue result implies that a 100-basis-point decrease of the offer rate reduces gross revenue by R???.
+question: The gross revenue result implies that a 100-basis-point increase of the offer rate increase the gross revenue by R???.
 answer: 2.6
-success: Your answer is correct, the gross revenue result implies that a 100-basis-point decrease of the offer rate reduces gross revenue by R2.6!
+success: Your answer is correct, the gross revenue result implies that a 100-basis-point increase in the offer rate increases gross revenue by R2.6!
 failure: Your answer is wrong, take another look a the regression estimate in 5.1.2)!
 #>
 
-```{r "5.1.2 c)", warning=FALSE, results='asis'}
+Our result implies that an increased offer rate would generate a higher revenue for our lender. Though, this seems to contradiction with to our demand curve analysis in task 4.1.5) which suggested that a higher loan price would reduce the loan take-up at a certain point significantly. Thus, let us have a look at our demand curve for revenue in respect to price. 
+
+5.1.3) Just press `Check` and the code below will create the demand curve.
+```{r "5.1.3)", warning=FALSE, results='asis'}
 #< task_notest
-reg5_2 <- felm(pstdue_average ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
+data_plot3 <- dat %>% filter(offer4==final4, normrate_less==1)
+x_resid3 <- resid(felm(offer4 ~ low + med + waved2 + waved3, data=data_plot3))
+y_resid3 <- resid(felm(grossinterest ~ low + med + waved2 + waved3, data=data_plot3))
 
-reg5_3 <- censReg(pstdue_average ~ offer4 + low + med + waved2 + waved3, data = filter(dat, offer4==final4, normrate_less==1, tookup==1))
-
-
-stargazer(reg5_2, reg5_3, type="text",align=TRUE, dep.var.labels=c("Gross interest revenue","Average past due", "Average past due"), covariate.labels=c("interest rate in pp terms (e.g., 8.2)"),no.space=TRUE)
+ggplot(data_plot3, aes(x=x_resid3, y=y_resid3)) +
+  geom_smooth(method = "loess", span=0.8, se=FALSE) +
+  xlab("Offer Rate") +
+  ylab("Gross Revenue per Client")
 #>
 ```
 
-```{r "5.1.2 a)", warning=FALSE, results='asis'}
+The lender's gross revenue curve is slightly upwards sloping over the range of rates below the ones under standard operations. However, at an increased offer of more then approximately 300-basis-points, the additional revenue from the price increase, decreases clearly. An explanation for this kink could be our obtained findings in exercise 4.1 that a higher interest rate reduces loan take-up at a certain point and therefore also the total revenue of the lender.
+
+Having said this, the lender could still raise the offer rate to a certain degree to increase his gross revenue. However, a higher loan price could also influence the clients solvency due to moral hazards, adverse selection or other shocks that the clients can not offset. Our regression in 5.1.4) suggests that the same loan price increase, increases loan default. In a narrow sense, the past-due amount increases by 12.1R per client for each 100-basis-point increase of the offer rate.
+
+5.1.4) Press the button with the `Check` label to show the regression results.
+```{r "5.1.4)", warning=FALSE, results='asis'}
+#< task_notest
+reg5_2 <- felm(pstdue_average ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
+
+stargazer(reg5_2, type="text",align=TRUE, covariate.labels=c("interest rate in pp terms (e.g., 8.2)"), no.space=TRUE, type="html")
+#>
+```
+
+Our results suggest strongly that the lender should not raise the offer rates, it would lead to a lower gross revenue. But the question whether the lender should cut the offer rates to generate a higher revenue still remains.
+
+#< quiz "Cut offer rate?"
+question: What do you think, would a lower offer rate increase the lenders revenue significantly?
+sc:
+- Yes.
+- No.*
+success: Your answer is correct, for the explanation check out below!
+failure: Your answer is wrong!
+#>
+
+The results of regression the regression in 5.1.3) suggest that a 100-basis-point lower loan price would lead to 2.6R less revenue per client, but increase the repayment by 12.6R. Knowing that the average take-up rate is 7.4 percent, an offer rate cut produces 0.9R (2.6R * 0.074) more repayment or rather revenue per client offered the loan, but in total a 1.7R (-2.6R + 0.9R) lower net revenue per client. 
+
+Our estimation suggests that the lender nether a loan price cut or raise offers an incentive for the lender.
+
+### Targeted 
+
+```{r "5.1.5", warning=FALSE, results='asis'}
 #< task_notest
 dat <- dat %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
 
