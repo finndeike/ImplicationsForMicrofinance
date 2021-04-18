@@ -61,7 +61,7 @@ knitr::opts_chunk$set(error = TRUE)
 Author: Finn Deike
 
 
-Welcome to my interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published by the American Economic Review in 2008.
+Welcome to my interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
@@ -101,7 +101,7 @@ Good work and patience will be awarded with interesting awards which include som
 
 ― Muhammad Yunus, Banker to the Poor: Micro-Lending and the Battle Against World Poverty ("https://microfinancingafrica.org/10-profound-quotes-about-microfinance/")
 
-Muhammad Yunus is a Bangladeshi social entrepreneur, banker, economist,civil society leader and Nobel Prize winner. He is one of the pioneers of microcredit and microfinance and the founder of the "Grameen Bank" which is also known as "The Bank of the Poor". In his book "Banker To The Poor" (1997), Yunus describes how he devoted to the "Grameen Bank" to provide the poorest people of Bangladesh with minuscule loans. The quintessence of the book implies that a small amount of credit can transform the lives of the poorest people in the world tremendously.
+Muhammad Yunus is a Bangladeshi social entrepreneur, banker, economist and civil society leader. He is one of the pioneers of microcredit and microfinance and the founder of the "Grameen Bank" which is also known as "The Bank of the Poor". In his book "Banker To The Poor" (1997), Yunus describes how he devoted to the "Grameen Bank" to provide the poorest people of Bangladesh with minuscule loans. The quintessence of the book implies that a small amount of credit can transform the lives of the poorest people in the world tremendously.
 
 The book inspired me to find out more about lending micro credits to the poorest in the world and therefore I decided to replicate the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Sean S. Karlan and Jonathan Zinma in my Bachelor thesis.
 
@@ -113,7 +113,7 @@ Another explanation for this could be, that microfinance institutions (MFI) are 
 
 Therefore we will replicate the testing of Sean S. Karlan and Jonathan Zinma on the hypotheses of price inelastic demand for consumer credit using randomized trials conducted by a high-risk consumer lender in South Africa. Furthermore, we will examine the optimal pricing strategy of the lender in terms of profit maximization. The field experiment is based on randomized individual interest rate and maturity direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate.
 
-The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section validates the integrity of the randomly assigned mail offer letters using different statistical test. After that we will explain the theoretical model. Using the theoretical model, we will estimate price elasticities of demand for consumer credit in respect to price and loan size. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
+The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section validates the integrity of the randomly assigned mail offer letters using different statistical tests. After that we will explain the theoretical model. Using the theoretical model, we will estimate price elasticities of demand for consumer credit in respect to price and loan size. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
  
 Good luck and have fun solving this interactive problem set to increase your knowledge about micro credit lending in South Africa!
 
@@ -705,7 +705,7 @@ So war far we talked a lot about our data set and our theoretical strategy. But 
 dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
-### Extensive Margin
+### Extensive Margin - Loan Price
 
 As we mentioned in the last section we are using a probit model to estimate the price elasticity of loan demand. We begin with borrowers who applied for a loan before the deadline ended. Tough instead of the `lm()`-function, we will use the generalized linear model function `glm()` because it enables us to perform a probit regression. 
 
@@ -754,7 +754,7 @@ To estimate if the price sensitivity changed when the lender offered higher than
 4.1.4) Press `Check` to perform the regression and present the probit marginal effects.
 ```{r "6_24",error=FALSE, results='asis'}
 reg3_3 <- glm(applied ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data=dat)
-showreg(list("(3)"=reg3_3), coef.transform=c("mfx"), omit.coef = "(Intercept)", digits=3)
+showreg(list("(3)"=reg3_3), coef.transform=c("mfx"), omit.coef = "(Intercept)", digits=3, type="html")
 
 ```
 
@@ -799,7 +799,7 @@ One explanation for the kink is selection based on rates of return. Since our sa
 
 A second explanation for the kink in the demand curve could be that clients borrowed elsewhere if the offer rate was to high. To test this hypothesis we will perform the same regression as in the previous tasks but this time we will only focus on clients who ended up borrowing from another financial institution. For this purpose the lender obtained credit bureau data and it is described with the variable `tookup_outside_only` in our data set.
 
-4.1.5) Press `Check` to perform the regression of clients who borrowed from other financial institutions on the offer rate. Afterwards use the regression results to answer the question below.
+4.1.6) Press `Check` to perform the regression of clients who borrowed from other financial institutions on the offer rate. Afterwards use the regression results to answer the question below.
 ```{r "6_26",error=FALSE, results='asis'}
 reg3_4 <- glm(tookup_outside_only ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data = filter(dat, normrate_less == 1))
 
@@ -826,7 +826,7 @@ The results in columns 4 and 5 suggest that there is a positive relationship bet
 
 There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher than the standard rate and than borrow at the lower rate. This is testable by examining the post-deadline borrowing behaviour of the clients. A logical outcome would be that clients with a higher offer rate than the standard rate will borrow after the deadline expired. In order to test this hypothesis we will perform the regression once again, but this time soley with clients who borrowed after the deadline. To find out which variable describes those clients press the `data` button.
 
-4.1.6) This time you only have to replace the question marks with the variable which indicates if clients borrowed after the deadline. If you think your answer is correct press `Check`. If you can not find the variable in `data` just press `hint`.
+4.1.7) This time you only have to replace the question marks with the variable which indicates if clients borrowed after the deadline. If you think your answer is correct press `Check`. If you can not find the variable in `data` just press `hint`.
 ```{r "6_27",error=FALSE, results='asis'}
 # reg3_7 <- glm(??? ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(dat, normrate_less == 1))
 # 
@@ -843,15 +843,26 @@ reg3_8 <- glm(tookup_afterdead_enforced ~ offer4 + low + med, family = binomial(
 
 reg3_9 <- glm(tookup_afterdead_enforced ~ normrate_more + low + med + waved2 + waved3, family = binomial(link = "probit"), data = dat)
 
-showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", digits=3)
+showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "mfx", "mfx"), omit.coef = "(Intercept)", digits=3, type="html")
 
 ```
+
+
+***
+
+### Award: Daniel Kahneman
+The psychologists Daniel Kahneman and Amos Tversky identified a specific type of consumer behavior of decision under risk. In their in 1979 published article "Prospect Theory: An Analysis of Decision under Risk". They describe that experience of a consumer losing money weights greater than the possibility with gaining the same amount of money. 
+
+![Fig. 7  | Daniel Kahneman, retrieved from https://de.pokerstrategy.com/news/world-of-poker/GTO-Pokertheorie:-Die-Prospect-Theory_104328/))](Award Pictures/d_kahneman.jpg)
+
+***
+
 
 In fact, we get a unexpected result - higher offer rates are associated with less post-deadline borrowing. The result of the regression `reg3_8` in column (9) indicate that higher offer rates lead to -0.036 percentage points less post-deadline borrowing. However, the results in column (7) and (8) do not suggest any economically large substitution.
 
 Our pattern of results with respect to timing is consistent with switching costs. The regression results of this exercise show that pre- and post-deadline borrowing decreases in price. Therefore an explanation for our result could be that clients applied for a loan from other financial institutions pre-deadline and found it to cost-intensive to switch back to our lender after the deadline. Our estimated behavioral pattern also corresponds with the general assumption that consumers evaluate prices in comparison to prior experiences. In this context a price increase is often seen as more decision-relevant as a potential gain.
 
-Our results on non-linearities in price sensitivity seem to be consistent with explanations of general consumer behavior in regards to other financing options in the informal markets with switching costs. 
+Our results on non-linearities in price sensitivity seem to be consistent with explanations of general consumer behavior of Daniel Kahnemann and Amos Tversky (1979) and the possibility other financing options in the informal markets with switching costs. 
 
 ## Exercise 4.2 -- Price Elasticity of Loan Size
 
@@ -862,9 +873,7 @@ In this second section of exercise 4 we want to examine the price sensitivity of
 dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
 ```
 
-### Intensive Margin
-
-
+### Intensive Margin - Loan Size
 
 #### Unconditional Loan Size
 In the first part of this exercise we are focusing on clients who were randomly assigned with an equal offer and contract rate as well as below the Lender's standard rate for each individual risk category. Want to compare the price sensitivity of the amount borrowed, unconditional on borrowing, of all clients who were at our below the standard rate and non-borrowers. 
@@ -989,7 +998,9 @@ After all, we still find elasticities of loan size demand that are quite low.
 ***
 
 ### Award: Alfred Marshall
-Alfred Marshall was the first to develop the standard supply and demand graph. In his most important book, Principles of Economics, Marshall emphasized that the price and output of a good are determined by both supply and demand: the two curves are like scissor blades that intersect at equilibrium.
+Alfred Marshall was the first to develop the standard supply and demand graph. In his most important book, Principles of Economics, Marshall emphasized that the price and output of a good are determined by both supply and demand: the two curves are like scissor blades that intersect at equilibrium. Did you know that the term "elasticity of deman is also credited to Alfred Marshall? He described price elasticity of demand as: "And we may say generally — the elasticity of demand in a market is great or small according as the amount demanded increases much or little for a given fall in price, and diminishes much or little for a given rise in price".
+
+![Fig. 6  | Alfred Marshall, retrieved from http://www.hagen-bobzin.de/mikro/Marshall.html))](Award Pictures/a_marshall.jpeg)
 
 ***
 
@@ -1046,7 +1057,7 @@ Having said this, the lender could still raise the offer rate to a certain degre
 ```{r "8_37",warning=FALSE, results='asis'}
 reg5_2 <- felm(pstdue_average ~ offer4 | low + med + waved2 + waved3 |0| branchuse, data = filter(dat, offer4==final4, normrate_less==1))
 
-stargazer(reg5_2, type="text",align=TRUE, covariate.labels=c("interest rate in pp terms (e.g., 8.2)"), no.space=TRUE, type="html")
+stargazer(reg5_2, align=TRUE, covariate.labels=c("interest rate in pp terms (e.g., 8.2)"), no.space=TRUE, type="html")
 ```
 
 Our results suggest strongly that the lender should not raise the offer rates, it would lead to a lower gross revenue. But the question whether the lender should cut the offer rates to generate a higher revenue still remains.
@@ -1063,6 +1074,17 @@ The results of regression the regression in 5.1.3) suggest that a 100-basis-poin
 
 Since our lender had no targeting objectives, our estimation suggests that nether, a loan price cut nor a loan price raise, offers an incentive for the lender. The cost of reducing the loan price or rather the interest rates slightly exceeded the benefits. Furthermore, it suggests that raising the rate would on the one hand decrease the revenue of the lender and on the other hand reduce repayment of the clients as well.
 
+
+***
+
+### Award: Muhammad Yunus
+Congratulations, you nearly finished the problem set. As earlier mentioned, Muhammad Yunus is one of the pioneers of microcredit and microfinance. But did you know that he won a novel price for his "Grameen Bank"?
+
+![Fig. 7  | Muhammed Yunus, https://www.expert-marketplace.de/redner/muhammed-yunus-friedensnobelpreistraeger/))](Award Pictures/m_yunus.jpg)
+
+***
+
+
 ## Exercise Conclusion
 
 The aim of this problem set was to test the hypotheses of price inelastic demand for consumer credit using randomized trials conducted by a high-risk consumer lender in South Africa. Furthermore, we wanted to determine the optimal short-run pricing strategy for a microlender. To do so we evaluated a randomized field experiment from a South African consumer microlender to the working poor.
@@ -1076,8 +1098,11 @@ However, the question if our results would apply to other settings still remains
 ## Exercise Bibliography
 
 ### Books & Papers
-- Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty",  *PublicAffairs*
+- Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty", PublicAffairs
 - Dustan, A. (2010), "EEP/IAS 118 - Section Handout 13", Retrieved from https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout% 20Solved.pdf
+- Wächter, L. (2017): "Marshall, Alfred. In Ökonomen auf einen Blick" (pp. 211-219), Springer Gabler, Wiesbaden
+- Kahneman, D., & Tversky, A. (2013). Prospect theory: An analysis of decision under risk. In Handbook of the fundamentals of financial decision making: Part I (p.279).
+
 
 ### Packages
 
