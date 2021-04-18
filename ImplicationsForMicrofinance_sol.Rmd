@@ -30,7 +30,7 @@ stop()
 
 #>
 
-Welcome to my interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published by the American Economic Review in 2008.
+Welcome to my interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
@@ -82,7 +82,7 @@ Another explanation for this could be, that microfinance institutions (MFI) are 
 
 Therefore we will replicate the testing of Sean S. Karlan and Jonathan Zinma on the hypotheses of price inelastic demand for consumer credit using randomized trials conducted by a high-risk consumer lender in South Africa. Furthermore, we will examine the optimal pricing strategy of the lender in terms of profit maximization. The field experiment is based on randomized individual interest rate and maturity direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate.
 
-The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section validates the integrity of the randomly assigned mail offer letters using different statistical test. After that we will explain the theoretical model. Using the theoretical model, we will estimate price elasticities of demand for consumer credit in respect to price and loan size. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
+The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section validates the integrity of the randomly assigned mail offer letters using different statistical tests. After that we will explain the theoretical model. Using the theoretical model, we will estimate price elasticities of demand for consumer credit in respect to price and loan size. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
  
 Good luck and have fun solving this interactive problem set to increase your knowledge about micro credit lending in South Africa!
 

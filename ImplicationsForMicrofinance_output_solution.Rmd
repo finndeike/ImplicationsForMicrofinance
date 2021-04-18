@@ -79,9 +79,9 @@ The paper, the data and a supplemental appendix are available online at the foll
 
 4.    Theoretical Model
 
-  4.1   Price Sensitivity of Loan Take-Up
+  4.1   Price Elasticities of Loan Take-Up
 
-  4.2   Price Sensitivity of Loan Size
+  4.2   Price Elasticities of Loan Size
 
 5.    Pricing Strategy
 
