@@ -85,10 +85,6 @@ The paper, the data and a supplemental appendix are available online at the foll
 
 5.    Pricing Strategy
 
-  5.1   Profit Maximization
-
-  5.2   Targeted Access
-
 6.    Conclusion
 
 7.    References
@@ -115,9 +111,10 @@ Though, providing  access  to  microcredit  is  expensive  for  lenders  in  vie
 
 Another explanation for this could be, that microfinance institutions (MFI) are often forced to increase interest rates to eliminate reliance of subsidies by policymakers. Though, this only makes sense if the poor are actually insensitive to interest rates. Otherwise increasing interest rates would limit the access. Many economic model suggest that loan pricing is tightly related to reliance on subsidies and therefore also to the functioning of the MFI market. However there is little evidence indicating interest rate sensitivities in MFI markets.
 
-Therefore we will replicate the testing of Sean S. Karlan and Jonathan Zinma on the hypotheses of price inelastic demand using randomized trials conducted by a high-risk consumer lender in South Africa. The field experiment is based on randomized individual interest rate and maturity direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate.
- 
+Therefore we will replicate the testing of Sean S. Karlan and Jonathan Zinma on the hypotheses of price inelastic demand for consumer credit using randomized trials conducted by a high-risk consumer lender in South Africa. Furthermore, we will examine the optimal pricing strategy of the lender in terms of profit maximization. The field experiment is based on randomized individual interest rate and maturity direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate.
 
+The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section validates the integrity of the randomly assigned mail offer letters using different statistical test. After that we will explain the theoretical model. Using the theoretical model, we will estimate price elasticities of demand for consumer credit in respect to price and loan size. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
+ 
 Good luck and have fun solving this interactive problem set to increase your knowledge about micro credit lending in South Africa!
 
 ## Exercise 2 -- Experimental Design and Data Overview
@@ -1002,7 +999,7 @@ Alfred Marshall was the first to develop the standard supply and demand graph. I
 In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition will exemplify a pricing strategy that could be used to pursue specific demographic objectives.
 
 We already know what influence an adjusted offer rate has on the loan size and take-up for clients. Now we want to define the consequences for the lender or rather if an increased offer rate would be more profitable for the lender. We are in particular interested in the effects of an amended offer rate on the gross revenue of the lender and the loan defaults of the clients.
-Here we encounter an alleged point of criticism of micro credits. It is often assumed that for lenders the best strategy for profit maximization is to charge horrendous interest rates. Which seems logical at first sight. We want to evaluate this assumption and answer the question hwether the lender should raise or cut offer rates.
+Here we encounter an alleged point of criticism of micro credits. It is often assumed that for lenders the best strategy for profit maximization is to charge horrendous interest rates. Which seems logical at first sight. We want to evaluate this assumption and answer the question wether the lender should raise or cut offer rates.
 
 5.1.1) Press `Check`to load in the data once again.
 ```{r "8_34"}
@@ -1064,29 +1061,17 @@ Quiz: What do you think, would a lower offer rate increase the lenders revenue s
 
 The results of regression the regression in 5.1.3) suggest that a 100-basis-point lower loan price would lead to 2.6R less revenue per client, but increase the repayment by 12.6R. Knowing that the average take-up rate is 7.4 percent, an offer rate cut produces 0.9R (2.6R * 0.074) more repayment or rather revenue per client offered the loan, but in total a 1.7R (-2.6R + 0.9R) lower net revenue per client. 
 
-Our estimation suggests that the lender nether a loan price cut or raise offers an incentive for the lender.
+Since our lender had no targeting objectives, our estimation suggests that nether, a loan price cut nor a loan price raise, offers an incentive for the lender. The cost of reducing the loan price or rather the interest rates slightly exceeded the benefits. Furthermore, it suggests that raising the rate would on the one hand decrease the revenue of the lender and on the other hand reduce repayment of the clients as well.
 
-### Targeted 
+## Exercise Conclusion
 
-```{r "8_38",warning=FALSE, results='asis'}
-dat <- dat %>% mutate(grossincomesq = grossincome^2, agesq = age^2, appscoresq = appscore^2, itcscoresq = itcscore^2, sales_netincomesq = sales_netincome^2, sales_grossincomesq = sales_grossincome^2)
+The aim of this problem set was to test the hypotheses of price inelastic demand for consumer credit using randomized trials conducted by a high-risk consumer lender in South Africa. Furthermore, we wanted to determine the optimal short-run pricing strategy for a microlender. To do so we evaluated a randomized field experiment from a South African consumer microlender to the working poor.
 
-reg6_1 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(dat, offer4==final4, normrate_less==1))
-# edhi=1 -> High education
+We find downward-sloping but relatively flat demand with respect to price throughout a wide range of prices at and below the Lender’s standard rates (which are the rates members of our sample received on their prior loans). In the Lender’s case, the cost of reducing interest rates slightly exceeded the benefits (increased gross revenue from marginal borrowing, increased net revenue from higher repayment rates).
 
-reg6_2 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + trcount + female + dependants + married + age + agesq + rural + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(dat, offer4==final4, normrate_less==1, edhi==1))
+Since our lender had no targeting objectives, our estimation suggests that a loan price cut does not offer an incentive for the lender. The cost of reducing the loan price or rather the interest rates slightly exceeded the benefits. Futhermore, our evidence shows that this would have been disastrous for our Lender to raise the loan price. Our results also strongly suggest that raising rates would reduce repayments. Moreover, a small sample in our experiment shows that take-up elasticities of demand kinked sharply at the Lender’s standard rates, rising to well above unity. Raising rates would have decreased revenue and the Lender’s client base.  Which seems contradictory, since Policymakers keen on avoiding subsidies often prescribe that MFIs should raise rates. In all, we find that the Lender could not have increased profits by changing rates.
 
-# dormancy<10 -> Borrowed in last 9 months
-
-reg6_3 <- lm(loansize ~ offer4 + low + med + waved2 + waved3 + grossincome + grossincomesq + trcount + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(dat, offer4==final4, normrate_less==1, dormancy<10))
-
-reg6_4 <- lm(loansize ~ offer4+ low + med + waved2 + waved3 + grossincome + grossincomesq + dormancy + female + dependants + married + age + agesq + rural + edhi + appscore + appscoresq + appscore0 + itcscore + itcscoresq + itczero + province + branchuse, data = filter(dat, offer4==final4, normrate_less==1, trcount>2))
-
-
-stargazer(reg6_1, reg6_2, reg6_3, reg6_4, type="html", header = FALSE)
-```
-
-## Exercise Conclusion 
+However, the question if our results would apply to other settings still remains. We can not rule out personal preferences of clients, other financing options or othr experimental settings that may influence the outcome of our experiment.
 
 ## Exercise Bibliography
 
