@@ -30,7 +30,7 @@ stop()
 
 #>
 
-Welcome to this interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review in 2008.
+Welcome to this interactive RTutor problemset! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the working paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
@@ -1073,22 +1073,96 @@ However, the question if our results would apply to other settings still remains
 ## Exercise Bibliography
 
 ### Books & Papers
-- Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty", PublicAffairs
-- Dustan, A. (2010), "EEP/IAS 118 - Section Handout 13", Retrieved from https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout% 20Solved.pdf
-- Wächter, L. (2017): "Marshall, Alfred. In Ökonomen auf einen Blick" (pp. 211-219), Springer Gabler, Wiesbaden
-- Kahneman, D., & Tversky, A. (2013). Prospect theory: An analysis of decision under risk. In Handbook of the fundamentals of financial decision making: Part I (p.279).
+
+- Dustan, A. (2010), "EEP/IAS 118 - Section Handout 13", Retrieved from https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf.
 - Earne, J., Jansson, T., Koning, A., & Flaming, M. (2014): "Greenfield MFIs in Sub-Saharan Africa A Business Model for Advancing Access to Finance. In Access to Finance Forum", CGAP and Its Partners (No. 8).
+- Kahneman, D., & Tversky, A. (2013). Prospect theory: An analysis of decision under risk. In Handbook of the fundamentals of financial decision making: Part I, p.279.
+- Karlan, D. S., & Zinman, J. (2008). Credit elasticities in less-developed economies: Implications for microfinance. American Economic Review, 98(3), pp. 1040-68.
+- Wächter, L. (2017): "Marshall, Alfred. In Ökonomen auf einen Blick" (pp. 211-219), Springer Gabler, Wiesbaden.
+- Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty", PublicAffairs.
 
 
 ### Packages
 
+- Baptiste Auguie (2017). gridExtra: Miscellaneous Functions for "Grid" Graphics. R package
+  version 2.3. https://CRAN.R-project.org/package=gridExtra.
+- Joe Cheng, Bhaskar Karambelkar and Yihui Xie (2021). leaflet: Create Interactive Web Maps
+  with the JavaScript 'Leaflet' Library. R package version 2.0.4.1.
+  https://CRAN.R-project.org/package=leaflet.
+- Peter DeWitt (2020). qwraps2: Quick Wraps 2. R package version 0.5.0.
+  https://CRAN.R-project.org/package=qwraps2.
+- S. Gaure. lfe: Linear group fixed effects. R package version 2.8-6, 2021.
+- Matthieu Gomez (2020). statar: Tools Inspired by 'Stata' to Manipulate Tabular Data. R
+  package version 0.7.3. https://CRAN.R-project.org/package=statar.
+- Arne Henningsen (2020). censReg: Censored Regression (Tobit) Models. R package version
+  0.5-32. https://CRAN.R-project.org/package=censReg.
+- Marek Hlavac (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.
+  R package version 5.2.1. https://CRAN.R-project.org/package=stargazer.
+- Christian Kleiber and Achim Zeileis (2008). Applied Econometrics with R. New York:
+  Springer-Verlag. ISBN 978-0-387-77316-2. URL https://CRAN.R-project.org/package=AER.
+- Sebastian Kranz (2018). regtools: Some tools for regressions and presentation of
+  regressions results. R package version 2018.11.20.
+- Sebastian Kranz (2020). RTutor: Interactive R problem sets with automatic testing of
+  solutions and automatic hints. R package version 2020.11.25.
+- Josh Pasek, with some assistance from Alex Tahk, some code modified from R-core;
+  Additional contributions by Gene Culter and Marcus Schwemmle. (2020). weights: Weighting
+  and Weighted Statistics. R package version 1.0.1.
+  https://CRAN.R-project.org/package=weights.
+- E. Pebesma, 2018. Simple Features for R: Standardized Support for Spatial Vector Data.
+  The R Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009.
+- Martijn Tennekes (2018). “tmap: Thematic Maps in R.”Journal of Statistical Software, 84(6),
+  1-39. doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06).
+- Martijn Tennekes (2021). tmaptools: Thematic Map Tools. R package version 3.1-1.
+  https://CRAN.R-project.org/package=tmaptools.
+- Hadley Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+- Hadley Wickham and Evan Miller (2020). haven: Import and Export 'SPSS', 'Stata' and 'SAS'
+  Files. R package version 2.3.1. https://CRAN.R-project.org/package=haven.
+- Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr: A Grammar
+  of Data Manipulation. R package version 1.0.2. https://CRAN.R-project.org/package=dplyr.
+- Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43),
+  1686, https://doi.org/10.21105/joss.01686.
+- Hadley Wickham and Jim Hester (2020). readr: Read Rectangular Text Data. R package
+  version 1.4.0. https://CRAN.R-project.org/package=readr.
+- Thomas W. Yee (2020). VGAM: Vector Generalized Linear and Additive Models. R package
+  version 1.1-4. URL https://CRAN.R-project.org/package=VGAM.
+- Achim Zeileis, Torsten Hothorn (2002). lmtest: Diagnostic Checking in Regression Relationships. R News 2(3), 7-10. URL https://CRAN.R-project.org/doc/Rnews/.
+
+
 ### Websites
+
+- https://www.bbc.com/news/world-africa-14094918, retrieved 28. January 2021
+- https://cran.r-project.org/web/packages/stargazer/stargazer.pdf, retrieved 20. February 2021
+- https://datacarpentry.org/R-ecology-lesson/04-visualization-ggplot2.html, retrieved 2. February 2021
+- https://dplyr.tidyverse.org/reference/filter.html, retrieved 23. January
+- https://dplyr.tidyverse.org/reference/group_by.html, retrieved 26. January 2021
+- https://dplyr.tidyverse.org/reference/summarise.html, retrieved 26. January 2021
+- https://dplyr.tidyverse.org/reference/mutate.html, retrieved 27. January 2021
+- https://www.econlib.org/library/Enc/bios/Marshall.html, retrieved 3. February 2021
+- https://escola.britannica.com.br/artigo/Bartolomeu-Dias/481145, retrieved 15. April 2021
+- https://www.expert-marketplace.de/redner/muhammed-yunus-friedensnobelpreistraeger/, retrieved 20. March 2021
+- https://github.com/skranz/regtools/blob/master/man/effectplot.Rd, retrieved 18. February 2021
+- South African Government (2021): South Africa's provinces, Retrieved from             https://www.gov.za/about-sa/south-africas-provinces#
+- http://www.hagen-bobzin.de/mikro/Marshall.html, retrieved 20. March 2021
+- https://www.investopedia.com/terms/p/p-value.asp, retrieved 12. February 2021
+- https://microfinancingafrica.org/10-profound-quotes-about-microfinance/, retrieved 19. January 2021
+- https://de.pokerstrategy.com/news/world-of-poker/GTO-Pokertheorie:-Die-Prospect-Theory_104328/, retrieved 20. March 2021
+- https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm, retrieved 01. February 2021
+- https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary, retrieved 01. February 2021
+- https://rdrr.io/github/skranz/regtools/src/R/showreg.r, retrieved 12. March 2021
+- https://rdrr.io/cran/lfe/man/felm.html, retrieved 18. March 2021
 - https://www.risknet.de/wissen/whos-who/adrien-marie-legendre/, retrieved 19. January 2021
 - https://rstudio.com/speakers/j.j.-allaire/, retrieved 21. January 2021
-- https://www.bbc.com/news/world-africa-14094918, retrieved 28. January 2021
-- https://www.econlib.org/library/Enc/bios/Marshall.html, retrieved 3. February 2021
+- https://stat.ethz.ch/R-manual/R-devel/library/foreign/html/read.dta.html, retrieved 22. January 2021
 - https://en.wikipedia.org/wiki/Gustav_Fechner, retrieved  12. March 2021
-- South African Government (2021): South Africa's provinces, Retrieved from             https://www.gov.za/about-sa/south-africas-provinces#
+- https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, retrieved 30. March 2021
+- https://www.youtube.com/channel/UC8wovsufF42uACug27bO3wQ, retrieved 15. April 2021
+
+
+
+
+
+
+
 
 
 
