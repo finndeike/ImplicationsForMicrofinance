@@ -61,7 +61,7 @@ knitr::opts_chunk$set(error = TRUE)
 Author: Finn Deike
 
 
-Welcome to my interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review in 2008.
+Welcome to this interactive RTutor Problemset, containing the main results from the paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
