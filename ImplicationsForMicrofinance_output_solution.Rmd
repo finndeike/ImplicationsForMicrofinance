@@ -61,7 +61,7 @@ knitr::opts_chunk$set(error = TRUE)
 Author: Finn Deike
 
 
-Welcome to this interactive RTutor problemset! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the working paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
+Welcome to this interactive RTutor problem set! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the working paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
@@ -132,7 +132,7 @@ The experiment was carried out in three mailer waves of start dates grouped by d
 Each offer contains a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications are evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients are assigned a proportional loan size and maturity.
 The following graphic shows the operational steps of the experiment in detail:
 
-![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](figures/steps.png)
+![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](images/steps.png)
 
 Fig 1. Source: Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008)
 
@@ -215,7 +215,7 @@ We will examine the most important variables in the following exercises.
 ### Award: JJ Allaire
 You successfully loaded our data file and got to know our important variables. Now we have a basis to build on our analysis! The founder of R Studio JJ Allaire would be proud of you!
 
-![Fig. 2  | JJ Allaire, retrieved from https://www.youtube.com/channel/UC8wovsufF42uACug27bO3wQ))](figures/Award Pictures/jj_allaire.png)
+![Fig. 2  | JJ Allaire, retrieved from https://www.youtube.com/channel/UC8wovsufF42uACug27bO3wQ))](images/Award Pictures/jj_allaire.png)
 
 ***
 
@@ -434,7 +434,7 @@ library(dplyr)
 options(scipen=999)
 
 # reads the features from the shapefile
-mymap <- st_read("~/Documents/GitHub/thesis_code_rep/gadm36_ZAF_shp/gadm36_ZAF_1.shp", stringsAsFactors=FALSE)
+mymap <- st_read("data/gadm36_ZAF_shp/gadm36_ZAF_1.shp", stringsAsFactors=FALSE)
 
 # joining the data of the shapefile and our dataframe
 map_data <- inner_join(mymap, provinces)
@@ -464,7 +464,7 @@ tmap_leaflet(mymap)
 ### Award: Bartolomeu Dias
 Great, you created a map of South Africa which shows the most important average characteristics of the loan contracts for each province! Maybe you now get a glimpse how Bartholomeu Dias felt when he was the first European who explored the coastline of South Africa!
 
-![Fig. 3  | Bartolomeu Dias, retrieved from https://escola.britannica.com.br/artigo/Bartolomeu-Dias/481145))](figures/Award Pictures/bartolomeu_dias.png)
+![Fig. 3  | Bartolomeu Dias, retrieved from https://escola.britannica.com.br/artigo/Bartolomeu-Dias/481145))](images/Award Pictures/bartolomeu_dias.png)
 
 ***
 
@@ -613,7 +613,7 @@ To sum up everything that has been stated so far we found out that our randomiza
 ### Award: Adrien-Marie Legendre
 You successfully completed the first part of our regression analysis! You are on the way to become the next Adrien-Marie Legendre who was the first person to discover the method of least squares!
 
-![Fig. 4  | Andrien-Marie Legendre, retrieved from https://commons.wikimedia.org/wiki/File:Adrien-Marie_LEGENDRE,_mathématicien_français_du_XIXème_siècle.jpg))](figures/Award Pictures/am_legendre.jpg)
+![Fig. 4  | Andrien-Marie Legendre, retrieved from https://commons.wikimedia.org/wiki/File:Adrien-Marie_LEGENDRE,_mathématicien_français_du_XIXème_siècle.jpg))](images/Award Pictures/am_legendre.jpg)
 
 ***
 
@@ -688,7 +688,7 @@ In our model $a_i$ is the independent variable `applied` which can be either **1
 ### Award: Gustav Fechner
 Wow, you now understand the Probit model. It's basic model is based on the *Weber-Fechner law* formulated by Gustav Fechner published in Fechner (1860). He was a German experimental psychologist, philosopher and physicist and he is said to be the founder of psychophysics.
 
-![Fig. 5  | Gustave Theodor Fechner, retrieved from https://vlp.mpiwg-berlin.mpg.de/people/data?id=per68))](figures/Award Pictures/g_fechner.jpg)
+![Fig. 5  | Gustave Theodor Fechner, retrieved from https://vlp.mpiwg-berlin.mpg.de/people/data?id=per68))](images/Award Pictures/g_fechner.jpg)
 
 ***
 
@@ -859,7 +859,7 @@ showreg(list("(7)"=reg3_7,"(8)"=reg3_8, "(9)"=reg3_9), coef.transform=c("mfx", "
 ### Award: Daniel Kahneman
 The psychologists Daniel Kahneman and Amos Tversky identified a specific type of consumer behavior of decision under risk. In their in 1979 published article "Prospect Theory: An Analysis of Decision under Risk". They describe that experience of a consumer losing money weights greater than the possibility with gaining the same amount of money. 
 
-![Fig. 7  | Daniel Kahneman, retrieved from https://de.pokerstrategy.com/news/world-of-poker/GTO-Pokertheorie:-Die-Prospect-Theory_104328/))](figures/Award Pictures/d_kahneman.jpg)
+![Fig. 6  | Daniel Kahneman, retrieved from https://de.pokerstrategy.com/news/world-of-poker/GTO-Pokertheorie:-Die-Prospect-Theory_104328/))](images/Award Pictures/d_kahneman.jpg)
 
 ***
 
@@ -1005,9 +1005,9 @@ After all, we still find elasticities of loan size demand that are quite low.
 ***
 
 ### Award: Alfred Marshall
-Alfred Marshall was the first to develop the standard supply and demand graph. In his most important book, Principles of Economics, Marshall emphasized that the price and output of a good are determined by both supply and demand: the two curves are like scissor blades that intersect at equilibrium. Did you know that the term "elasticity of deman is also credited to Alfred Marshall? He described price elasticity of demand as: "And we may say generally — the elasticity of demand in a market is great or small according as the amount demanded increases much or little for a given fall in price, and diminishes much or little for a given rise in price".
+Alfred Marshall was the first to develop the standard supply and demand graph. In his most important book, Principles of Economics, Marshall emphasized that the price and output of a good are determined by both supply and demand: the two curves are like scissor blades that intersect at equilibrium. Did you know that the term "elasticity of demand is also credited to Alfred Marshall? He described price elasticity of demand as: "And we may say generally — the elasticity of demand in a market is great or small according as the amount demanded increases much or little for a given fall in price, and diminishes much or little for a given rise in price".
 
-![Fig. 6  | Alfred Marshall, retrieved from http://www.hagen-bobzin.de/mikro/Marshall.html))](figures/Award Pictures/a_marshall.jpeg)
+![Fig. 7  | Alfred Marshall, retrieved from http://www.hagen-bobzin.de/mikro/Marshall.html))](images/Award Pictures/a_marshall.jpeg)
 
 ***
 
@@ -1087,7 +1087,7 @@ Since our lender had no targeting objectives, our estimation suggests that nethe
 ### Award: Muhammad Yunus
 Congratulations, you nearly finished the problem set. As earlier mentioned, Muhammad Yunus is one of the pioneers of microcredit and microfinance. But did you know that he won a novel price for his "Grameen Bank"?
 
-![Fig. 7  | Muhammed Yunus, https://www.expert-marketplace.de/redner/muhammed-yunus-friedensnobelpreistraeger/))](figures/Award Pictures/m_yunus.jpg)
+![Fig. 8  | Muhammed Yunus, https://www.expert-marketplace.de/redner/muhammed-yunus-friedensnobelpreistraeger/))](images/Award Pictures/m_yunus.jpg)
 
 ***
 

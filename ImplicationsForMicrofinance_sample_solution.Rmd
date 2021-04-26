@@ -11,7 +11,7 @@ user.name = 'Jane Doe'
 Author: Finn Deike
 
 
-Welcome to this interactive RTutor problemset! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the working paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
+Welcome to this interactive RTutor problem set! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the working paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
@@ -82,7 +82,7 @@ The experiment was carried out in three mailer waves of start dates grouped by d
 Each offer contains a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications are evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients are assigned a proportional loan size and maturity.
 The following graphic shows the operational steps of the experiment in detail:
 
-![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](figures/steps.png)
+![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](images/steps.png)
 
 Fig 1. Source: Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008)
 
@@ -290,7 +290,7 @@ library(dplyr)
 options(scipen=999)
 
 # reads the features from the shapefile
-mymap <- st_read("~/Documents/GitHub/thesis_code_rep/gadm36_ZAF_shp/gadm36_ZAF_1.shp", stringsAsFactors=FALSE)
+mymap <- st_read("data/gadm36_ZAF_shp/gadm36_ZAF_1.shp", stringsAsFactors=FALSE)
 
 # joining the data of the shapefile and our dataframe
 map_data <- inner_join(mymap, provinces)
