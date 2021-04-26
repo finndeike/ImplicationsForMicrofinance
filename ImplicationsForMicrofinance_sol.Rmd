@@ -749,13 +749,13 @@ We can illustrate the relationship between the monthly offer rate and an applica
 
 We use another `geom-` function called `geom_smooth()`, to illustrate the marginal effects with a smoothing line. We also have to add `se=FALSE` and `method="loess"` into the `geom_smooth()` command. We set `se=FALSE` because we would get an overflow otherwise, knowing our data set is quiet large.
 
-4.1.5) Replace the `geom_point()` function with the `geom_smooth()` and add the above mentioned conditions. Afterwards press `Check`.
+4.1.5) Replace the question marks with the `geom-` function. Afterwards press `Check`.
 ```{r "4.1.2 c) 2", error=FALSE}
 x_resid <- resid(lm(offer4 ~ low + med + waved2 + waved3, data=dat))
 y_resid <- resid(lm(applied ~ low + med + waved2 + waved3, data=dat))
 #< fill_in
 ggplot(dat, aes(x=x_resid, y=y_resid)) +
-  geom_smootht(method="???", se=???, span=0.5)
+  geom_smooth(method="???", se=???, span=0.5)
 #>
 ggplot(dat, aes(x=x_resid, y=y_resid)) +
   geom_smooth(method="loess", se=FALSE, span=0.5)
@@ -922,7 +922,7 @@ reg4_4 <- felm(loansize ~ offer4 + appscore + appscoresq + itcscore + itcscoresq
 
 reg4_5 <- censReg(loansize ~ offer4 + low + med + waved2 + waved3 + appscore + appscoresq + itcscore + itcscoresq + trcount + age + dormancy + dependants + agesq + sales_grossincome + sales_grossincomesq + sales_netincome + sales_netincomesq + female + married  + rural + edhi + appscore0 + itczero + province, data = dat)
 
-stargazer(reg4_3, reg4_4, reg4_5, omit = c("low", "med", "waved2" ,"waved3","grossincome" , "grossincomesq" , "dormancy" , "trcount" , "female" , "dependants" , "married" ,"age" , "agesq" , "rural" ,"edhi" , "appscore", "appscoresq" , "appscore0" , "itcscore" , "itcscoresq" , "itczero" , "branchuse" , "province"), type="html", header = FALSE, digits=5)
+stargazer(reg4_3, reg4_4, reg4_5, omit = c("low", "med", "waved2" ,"waved3","grossincome" , "grossincomesq" , "dormancy" , "trcount" , "female" , "dependants" , "married" ,"age" , "agesq" , "rural" ,"edhi" , "appscore", "appscoresq" , "appscore0" , "itcscore" , "itcscoresq" , "itczero" , "branchuse" , "province", "sales_grossincome", "sales_grossincomesq"), type="html", header = FALSE, digits=5)
 #>
 ```
 
@@ -937,7 +937,10 @@ data_plot2 <- dat %>% filter(tookup==1)
 x_plot2 <- lm(offer4 ~ low + med + waved2 + waved3, data=data_plot2)
 y_plot2 <- lm(loansize ~ low + med + waved2 + waved3, data=data_plot2) 
  
-ggplot(data_plot2, aes(x=x_plot2$residuals, y=y_plot2$residuals)) + geom_smooth(method = "loess", span=0.5)
+ggplot(data_plot2, aes(x=x_plot2$residuals, y=y_plot2$residuals)) +
+  geom_smooth(method = "loess", span=0.5) +
+  ylab("Loansize") +
+  xlab("Offer Rate")
 
 ```
 
@@ -1032,7 +1035,7 @@ ggplot(data_plot3, aes(x=x_resid3, y=y_resid3)) +
 
 The lender's gross revenue curve is slightly upwards sloping over the range of rates below the ones under standard operations. However, at an increased offer of more then approximately 300-basis-points, the additional revenue from the price increase, decreases clearly. An explanation for this kink could be our obtained findings in exercise 4.1 that a higher interest rate reduces loan take-up at a certain point and therefore also the total revenue of the lender.
 
-Having said this, the lender could still raise the offer rate to a certain degree to increase his gross revenue. However, a higher loan price could also influence the clients solvency due to moral hazards, adverse selection or other shocks that the clients can not offset. Our regression in 5.1.4) suggests that the same loan price increase, increases loan default. In a narrow sense, the past-due amount increases by 12.1R per client for each 100-basis-point increase of the offer rate.
+Having said this, the lender could still raise the offer rate to a certain degree to increase his gross revenue. However, a higher loan price could also influence the clients solvency due to moral hazards, adverse selection or other shocks that the clients can not offset. Our regression in 5.1.4) suggests that the same loan price increase, increases loan default. In a narrow sense, the past-due amount increases by 12.2R per client for each 100-basis-point increase of the offer rate.
 
 5.1.4) Press the button with the `Check` label to show the regression results.
 ```{r "5.1.4)", warning=FALSE, results='asis'}
@@ -1054,7 +1057,7 @@ success: Your answer is correct, for the explanation check out below!
 failure: Your answer is wrong!
 #>
 
-The results of regression the regression in 5.1.3) suggest that a 100-basis-point lower loan price would lead to 2.6R less revenue per client, but increase the repayment by 12.6R. Knowing that the average take-up rate is 7.4 percent, an offer rate cut produces 0.9R (2.6R * 0.074) more repayment or rather revenue per client offered the loan, but in total a 1.7R (-2.6R + 0.9R) lower net revenue per client. 
+The results of regression the regression in 5.1.3) suggest that a 100-basis-point lower loan price would lead to 2.6R less revenue per client, but increase the repayment by 12.2R. Knowing that the average take-up rate is 7.4 percent, an offer rate cut produces 0.9R (2.6R * 0.074) more repayment or rather revenue per client offered the loan, but in total a 1.7R (-2.6R + 0.9R) lower net revenue per client. 
 
 Since our lender had no targeting objectives, our estimation suggests that nether, a loan price cut nor a loan price raise, offers an incentive for the lender. The cost of reducing the loan price or rather the interest rates slightly exceeded the benefits. Furthermore, it suggests that raising the rate would on the one hand decrease the revenue of the lender and on the other hand reduce repayment of the clients as well.
 
