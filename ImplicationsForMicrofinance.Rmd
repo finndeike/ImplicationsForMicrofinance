@@ -82,7 +82,7 @@ The experiment was carried out in three mailer waves of start dates grouped by d
 Each offer contains a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications are evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients are assigned a proportional loan size and maturity.
 The following graphic shows the operational steps of the experiment in detail:
 
-![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](steps.png)
+![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](figures/steps.png)
 
 Fig 1. Source: Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008)
 
@@ -930,6 +930,7 @@ However, the question if our results would apply to other settings still remains
 - https://www.risknet.de/wissen/whos-who/adrien-marie-legendre/, retrieved 19. January 2021
 - https://rstudio.com/speakers/j.j.-allaire/, retrieved 21. January 2021
 - https://stat.ethz.ch/R-manual/R-devel/library/foreign/html/read.dta.html, retrieved 22. January 2021
+- https://commons.wikimedia.org/wiki/File:Adrien-Marie_LEGENDRE,_mathématicien_français_du_XIXème_siècle.jpg
 - https://en.wikipedia.org/wiki/Gustav_Fechner, retrieved  12. March 2021
 - https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, retrieved 30. March 2021
 - https://www.youtube.com/channel/UC8wovsufF42uACug27bO3wQ, retrieved 15. April 2021
