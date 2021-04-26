@@ -316,8 +316,8 @@ For further information check: https://dplyr.tidyverse.org/reference/group_by.ht
 ___ <- ___ %>%
   filter(tookup == 1) %>%
   ___ %>%
-  ___("Average Interest Rate" = round(mean(offer4, na.rm=TRUE),3),
-                                                      "Average Offer Rate" = round(mean(final4, na.rm=TRUE),3),
+  ___("Average Offer Rate" = round(mean(offer4, na.rm=TRUE),3),
+                                                      "Average Interest Rate" = round(mean(final4, na.rm=TRUE),3),
                                                       "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
                                                       "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
                                                       "Average Maturity" = round(mean(term, na.rm=TRUE),3),
@@ -330,8 +330,8 @@ ___ <- ___ %>%
 zaf <- dat %>%
   filter(tookup == 1) %>%
   group_by(province) %>%
-  summarise("Average Interest Rate" = round(mean(offer4, na.rm=TRUE),3),
-                                                      "Average Offer Rate" = round(mean(final4, na.rm=TRUE),3),
+  summarise("Average Offer Rate" = round(mean(offer4, na.rm=TRUE),3),
+                                                      "Average Interest Rate" = round(mean(final4, na.rm=TRUE),3),
                                                       "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
                                                       "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
                                                       "Average Maturity" = round(mean(term, na.rm=TRUE),3),
@@ -391,7 +391,7 @@ provinces <- mutate(provinces, "Population" = c(6734001, 2928903, 15488137, 1153
 
 The population data is provided by the South African government. Check out https://www.gov.za/about-sa/south-africas-provinces# for more information.
 
-Now, we can create an interactive map of South Africa. The map gives us information about how the clients are geographically distributed. We can see that a majority of the clients are from the Gauteng and KwaZulu-Natal provinces which are also the provinces with the most residents which is portrayed by the size of the black bubbles. As mentioned earlier we have no clients in the Northern Cape and only 1 in the North West. If we take a look at the average interest rates, which is portrayed by color, we see that it varies from 7.18 in KwaZulu-Natal to 10.49 in North West. However, the average interest rate in North West is not very informative, because as we know, there is only one client in North West. The average interest rates of the remaining provinces are very similar. For further information, just click on the province you want to get more information about.
+Now, we can create an interactive map of South Africa. The map gives us information about how the clients are geographically distributed. We can see that a majority of the clients are from the Gauteng and KwaZulu-Natal provinces which are also the provinces with the most residents which is portrayed by the size of the black bubbles. As mentioned earlier we have no clients in the Northern Cape and only 1 in the North West. If we take a look at the average offer rates, which is portrayed by color, we see that it varies from 7.18 in KwaZulu-Natal to 10.49 in North West. However, the average offer rate in North West is not very informative, because as we know, there is only one client in North West. The average offer rates of the remaining provinces are very similar. For further information, just click on the province you want to get more information about.
 
 1.12) Press Check in order to get a interactive map of South Africa. The color portrays the average interest rate and the bubble size the population of the selected province. You ca get information about a province by just clicking on it.
 ```{r "1 g) 1", output="htmlwidget", widget="leaflet"}
@@ -416,7 +416,7 @@ map_data$`Average Interest Rate` <- as.numeric(map_data$`Average Interest Rate`)
 map_data$`Average Loansize` <- as.numeric(map_data$`Average Loansize`)
 
 mymap <- tm_shape(map_data) +
-  tm_polygons("Average Interest Rate",
+  tm_polygons("Average Offer Rate",
               id = "NAME_1",
               style = "quantile",
               palette="Greens",
@@ -983,7 +983,7 @@ Alfred Marshall was the first to develop the standard supply and demand graph. I
 
 ## Exercise 5 -- Pricing Stratgey
 
-In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment. In addition will exemplify a pricing strategy that could be used to pursue specific demographic objectives.
+In this section we want to determine the optimal pricing strategy for our lender. We combine the average price elasticities of demand results from our prior section with additional information on revenues and repayment.
 
 We already know what influence an adjusted offer rate has on the loan size and take-up for clients. Now we want to define the consequences for the lender or rather if an increased offer rate would be more profitable for the lender. We are in particular interested in the effects of an amended offer rate on the gross revenue of the lender and the loan defaults of the clients.
 Here we encounter an alleged point of criticism of microcredits. It is often assumed that for lenders the best strategy for profit maximization is to charge horrendous interest rates. Which seems logical at first sight. We want to evaluate this assumption and answer the question wether the lender should raise or cut offer rates.
@@ -1164,15 +1164,4 @@ However, the question if our results would apply to other settings still remains
 - https://en.wikipedia.org/wiki/Gustav_Fechner, retrieved  12. March 2021
 - https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, retrieved 30. March 2021
 - https://www.youtube.com/channel/UC8wovsufF42uACug27bO3wQ, retrieved 15. April 2021
-
-
-
-
-
-
-
-
-
-
-
 
