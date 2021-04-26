@@ -851,32 +851,32 @@ However, the question if our results would apply to other settings still remains
 
 ### Books & Papers
 
-- Dustan, A. (2010), "EEP/IAS 118 - Section Handout 13", Retrieved from https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf
+- Dustan, A. (2010), "EEP/IAS 118 - Section Handout 13", Retrieved from https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf.
 - Earne, J., Jansson, T., Koning, A., & Flaming, M. (2014): "Greenfield MFIs in Sub-Saharan Africa A Business Model for Advancing Access to Finance. In Access to Finance Forum", CGAP and Its Partners (No. 8).
-- Kahneman, D., & Tversky, A. (2013). Prospect theory: An analysis of decision under risk. In Handbook of the fundamentals of financial decision making: Part I, p.279).
+- Kahneman, D., & Tversky, A. (2013). Prospect theory: An analysis of decision under risk. In Handbook of the fundamentals of financial decision making: Part I, p.279.
 - Karlan, D. S., & Zinman, J. (2008). Credit elasticities in less-developed economies: Implications for microfinance. American Economic Review, 98(3), pp. 1040-68.
-- Wächter, L. (2017): "Marshall, Alfred. In Ökonomen auf einen Blick" (pp. 211-219), Springer Gabler, Wiesbaden
-- Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty", PublicAffairs
+- Wächter, L. (2017): "Marshall, Alfred. In Ökonomen auf einen Blick" (pp. 211-219), Springer Gabler, Wiesbaden.
+- Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty", PublicAffairs.
 
 
 ### Packages
 
 - Baptiste Auguie (2017). gridExtra: Miscellaneous Functions for "Grid" Graphics. R package
-  version 2.3. https://CRAN.R-project.org/package=gridExtra
+  version 2.3. https://CRAN.R-project.org/package=gridExtra.
 - Joe Cheng, Bhaskar Karambelkar and Yihui Xie (2021). leaflet: Create Interactive Web Maps
   with the JavaScript 'Leaflet' Library. R package version 2.0.4.1.
-  https://CRAN.R-project.org/package=leaflet
+  https://CRAN.R-project.org/package=leaflet.
 - Peter DeWitt (2020). qwraps2: Quick Wraps 2. R package version 0.5.0.
-  https://CRAN.R-project.org/package=qwraps2
-- S. Gaure. lfe: Linear group fixed effects. R package version 2.8-6, 2021
+  https://CRAN.R-project.org/package=qwraps2.
+- S. Gaure. lfe: Linear group fixed effects. R package version 2.8-6, 2021.
 - Matthieu Gomez (2020). statar: Tools Inspired by 'Stata' to Manipulate Tabular Data. R
-  package version 0.7.3. https://CRAN.R-project.org/package=statar
+  package version 0.7.3. https://CRAN.R-project.org/package=statar.
 - Arne Henningsen (2020). censReg: Censored Regression (Tobit) Models. R package version
-  0.5-32. https://CRAN.R-project.org/package=censReg
+  0.5-32. https://CRAN.R-project.org/package=censReg.
 - Marek Hlavac (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.
-  R package version 5.2.1. https://CRAN.R-project.org/package=stargazer
+  R package version 5.2.1. https://CRAN.R-project.org/package=stargazer.
 - Christian Kleiber and Achim Zeileis (2008). Applied Econometrics with R. New York:
-  Springer-Verlag. ISBN 978-0-387-77316-2. URL https://CRAN.R-project.org/package=AER
+  Springer-Verlag. ISBN 978-0-387-77316-2. URL https://CRAN.R-project.org/package=AER.
 - Sebastian Kranz (2018). regtools: Some tools for regressions and presentation of
   regressions results. R package version 2018.11.20.
 - Sebastian Kranz (2020). RTutor: Interactive R problem sets with automatic testing of
@@ -884,25 +884,25 @@ However, the question if our results would apply to other settings still remains
 - Josh Pasek, with some assistance from Alex Tahk, some code modified from R-core;
   Additional contributions by Gene Culter and Marcus Schwemmle. (2020). weights: Weighting
   and Weighted Statistics. R package version 1.0.1.
-  https://CRAN.R-project.org/package=weights
+  https://CRAN.R-project.org/package=weights.
 - E. Pebesma, 2018. Simple Features for R: Standardized Support for Spatial Vector Data.
-  The R Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009
+  The R Journal 10 (1), 439-446, https://doi.org/10.32614/RJ-2018-009.
 - Martijn Tennekes (2018). “tmap: Thematic Maps in R.”Journal of Statistical Software, 84(6),
   1-39. doi: 10.18637/jss.v084.i06 (URL: https://doi.org/10.18637/jss.v084.i06).
 - Martijn Tennekes (2021). tmaptools: Thematic Map Tools. R package version 3.1-1.
-  https://CRAN.R-project.org/package=tmaptools
+  https://CRAN.R-project.org/package=tmaptools.
 - Hadley Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
 - Hadley Wickham and Evan Miller (2020). haven: Import and Export 'SPSS', 'Stata' and 'SAS'
-  Files. R package version 2.3.1. https://CRAN.R-project.org/package=haven
+  Files. R package version 2.3.1. https://CRAN.R-project.org/package=haven.
 - Hadley Wickham, Romain François, Lionel Henry and Kirill Müller (2020). dplyr: A Grammar
-  of Data Manipulation. R package version 1.0.2. https://CRAN.R-project.org/package=dplyr
+  of Data Manipulation. R package version 1.0.2. https://CRAN.R-project.org/package=dplyr.
 - Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43),
-  1686, https://doi.org/10.21105/joss.01686
+  1686, https://doi.org/10.21105/joss.01686.
 - Hadley Wickham and Jim Hester (2020). readr: Read Rectangular Text Data. R package
-  version 1.4.0. https://CRAN.R-project.org/package=readr
+  version 1.4.0. https://CRAN.R-project.org/package=readr.
 - Thomas W. Yee (2020). VGAM: Vector Generalized Linear and Additive Models. R package
-  version 1.1-4. URL https://CRAN.R-project.org/package=VGAM
-- Achim Zeileis, Torsten Hothorn (2002). lmtest: Diagnostic Checking in Regression Relationships. R News 2(3), 7-10. URL https://CRAN.R-project.org/doc/Rnews/
+  version 1.1-4. URL https://CRAN.R-project.org/package=VGAM.
+- Achim Zeileis, Torsten Hothorn (2002). lmtest: Diagnostic Checking in Regression Relationships. R News 2(3), 7-10. URL https://CRAN.R-project.org/doc/Rnews/.
 
 
 ### Websites
