@@ -1057,7 +1057,7 @@ success: Your answer is correct, for the explanation check out below!
 failure: Your answer is wrong!
 #>
 
-The results of regression the regression in 5.1.3) suggest that a 100-basis-point lower loan price would lead to 2.6R less revenue per client, but increase the repayment by 12.2R. Knowing that the average take-up rate is 7.4 percent, an offer rate cut produces 0.9R (2.6R * 0.074) more repayment or rather revenue per client offered the loan, but in total a 1.7R (-2.6R + 0.9R) lower net revenue per client. 
+The results of regression the regression in 5.1.3) suggest that a 100-basis-point lower loan price would lead to 2.6R less revenue per client, but increase the repayment by 12.2R. Knowing that the average take-up rate is 7.4 percent, an offer rate cut produces 0.9R (12.2R * 0.074) more repayment or rather revenue per client offered the loan, but in total a 1.7R (-2.6R + 0.9R) lower net revenue per client. 
 
 Since our lender had no targeting objectives, our estimation suggests that nether, a loan price cut nor a loan price raise, offers an incentive for the lender. The cost of reducing the loan price or rather the interest rates slightly exceeded the benefits. Furthermore, it suggests that raising the rate would on the one hand decrease the revenue of the lender and on the other hand reduce repayment of the clients as well.
 
