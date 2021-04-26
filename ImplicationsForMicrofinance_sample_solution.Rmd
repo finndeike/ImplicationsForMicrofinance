@@ -324,7 +324,7 @@ We will take a look especially at the earlier utilized interest rate `offer4`.
 
 2.1.1) To load in the data just press `Check`.
 ```{r "4_1"}
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 dat <- dat %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)
 
 
@@ -483,7 +483,7 @@ So war far we talked a lot about our data set and our theoretical strategy. But 
 
 4.1.1) Since this is a new exercise, press `Check`to load in the data once again.
 ```{r "6_1"}
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 ```
 
 ### Extensive Margin - Loan Price
@@ -621,7 +621,7 @@ In this second section of exercise 4 we want to examine the price sensitivity of
 
 4.2.1) Press `Check`to load in the data once again.
 ```{r "7_1"}
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 ```
 
 ### Intensive Margin - Loan Size
@@ -723,7 +723,7 @@ Here we encounter an alleged point of criticism of microcredits. It is often ass
 
 5.1.1) Press `Check`to load in the data once again.
 ```{r "8_1"}
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 ```
 
 ### Short-Run Pricing Strategy

@@ -15,7 +15,7 @@ library(RTutor)
 library(yaml)
 #library(restorepoint)
 
-setwd("~/Documents/GitHub/thesis_code_rep/")
+setwd("~/Documents/GitHub/ImplicationsForMicrofinance/")
 
 ps.name = "ImplicationsForMicrofinance"
 sol.file = paste0(ps.name, "_sol.Rmd")
@@ -299,7 +299,7 @@ ggplot(aes(x=offer4, group=risk, fill=risk)) +
 
 The graphic shows the distribution of the offer rates of the clients in relation to their risk category. We can see that the interest rates of all clients are mostly under their categorical standard schedule. The lowest randomized offer rate is slightly higher than 3% per month and the highest is slightly lower than 15% per month. If we consider the different risk categories it becomes apparent that a offer rate of a low risk client has the highest density between slightly less than 6% and slightly more than 7% at around 0.3. If we now have a look at clients of the medium risk category we see that the offer rate has the highest density between 7% and a bit more than 9% having a ratio of about 0.22. Whereas the density of high risk category is the highest at about 7.5% and between 9% and 11% at 0.16.
 
-#### Geographic Analysis
+#### Geographical Display
 
 Another aspect that could by interesting is to analyze the geographic circumstances. Our data frame `dat` contains a column named `province`, which contains the province in which the applicant applied for a loan. Hence we can create a new data frame grouped by the provinces by using the functions `group_by()` and `summarise()`.
 
@@ -448,7 +448,7 @@ We will take a look especially at the earlier utilized interest rate `offer4`.
 2.1.1) To load in the data just press `Check`.
 ```{r "2 a) 1"}
 #< task_notest
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 dat <- dat %>% mutate(itcscore_100 = itcscore/100, appscore_100 = appscore/100)
 
 #>
@@ -664,7 +664,7 @@ So war far we talked a lot about our data set and our theoretical strategy. But 
 4.1.1) Since this is a new exercise, press `Check`to load in the data once again.
 ```{r "4.1 a) 1"}
 #< task_notest
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 #>
 ```
 
@@ -840,12 +840,14 @@ Our results on non-linearities in price sensitivity seem to be consistent with e
 
 ## Exercise 4.2 -- Price Elasticity of Loan Size
 
-In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (R). For your information: R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021). Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
+In this second section of exercise 4 we want to examine the price sensitivity of loan size. The loan size is expressed in South African Rand (*R*). For your information: R1.00 corresponds to approximately 0.067 US-Dollar (https://www.xe.com/currencyconverter/convert/?Amount=1&From=ZAR&To=USD, 03/30/2021).
+
+Our analysis in this part is dependent on three conditional traits and controls: *conditional on borrowing*, *branch fixed effects* and *additional controls for demos and credit risk*.
 
 4.2.1) Press `Check`to load in the data once again.
 ```{r "4.2 a) 1"}
 #< task_notest
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 #>
 ```
 
@@ -986,7 +988,7 @@ Here we encounter an alleged point of criticism of microcredits. It is often ass
 5.1.1) Press `Check`to load in the data once again.
 ```{r "5.1 a) 1"}
 #< task_notest
-dat <- read_dta("~/Documents/GitHub/thesis_code_rep/kz_demandelasts_aer08.dta")
+dat <- read_dta("kz_demandelasts_aer08.dta")
 #>
 ```
 
