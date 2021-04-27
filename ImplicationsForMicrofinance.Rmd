@@ -11,11 +11,14 @@ user.name = ''
 Author: Finn Deike
 
 
-Welcome to this interactive RTutor problem set! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the working paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
+Welcome to this interactive RTutor problem set! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the article **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
+
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
+
 - **Data:** https://assets.aeaweb.org/asset-server/articles-attachments/aer/data/june08/20070848_app.pdf
+
 - **Appendix:** https://assets.aeaweb.org/asset-server/articles-attachments/aer/data/june08/20070848_app.pdf
 
 
@@ -29,9 +32,9 @@ The paper, the data and a supplemental appendix are available online at the foll
 
 4.    Theoretical Model
 
-  4.1   Price Elasticities of Loan Take-Up
+4.1   Price Elasticities of Loan Take-Up
 
-  4.2   Price Elasticities of Loan Size
+4.2   Price Elasticities of Loan Size
 
 5.    Pricing Strategy
 
@@ -40,7 +43,7 @@ The paper, the data and a supplemental appendix are available online at the foll
 7.    References
 
 
-This interactive problem set consists of a reproduction of the results of the above-named paper. The results are reproduced in code chunks, theoretical explanations, info boxes and quizzes. The procedure is very simple. You will solve tasks by entering or editing R code chunks and/or answer short quizzes. Before solving any task you have to press the `Edit`-button to be able to edit the code chunk. After editing the chunk or answering a quiz question, you have to press `Check`-button to get a feedback whether you answer is correct or incorrect. Sometimes exercises are more difficult and you might need an advice to solve the task, in this case you can press the `Hint` button to get further advice. Besides code chunks and quizzes the problem set composes of info boxes. The info boxes provide you with additional information of variables and explanations of statistical models or R commands.
+This interactive problem set consists of a reproduction of the results of the article. The results are reproduced in code chunks, theoretical explanations, info boxes and quizzes. The procedure is very simple. You will solve tasks by entering or editing R code chunks and/or answer short quizzes. Before solving any task you have to press the `Edit`-button to be able to edit the code chunk. After editing the chunk or answering a quiz question, you have to press `Check`-button to get a feedback whether you answer is correct or incorrect. Sometimes exercises are more difficult and you might need an advice to solve the task, in this case you can press the `Hint` button to get further advice. Besides code chunks and quizzes the problem set composes of info boxes. The info boxes provide you with additional information of variables and explanations of statistical models or R commands.
 
 Good work and patience will be awarded with interesting awards which include some additional information on exercise related topics!
 
@@ -64,25 +67,26 @@ Another explanation for this could be, that microfinance institutions (MFI) are 
 
 Therefore we will replicate the testing of Sean S. Karlan and Jonathan Zinma on the hypotheses of price inelastic demand for consumer credit using randomized trials conducted by a high-risk consumer lender in South Africa. Furthermore, we will examine the optimal pricing strategy of the lender in terms of profit maximization. The field experiment is based on randomized individual interest rate and maturity direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate.
 
-The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section validates the integrity of the randomly assigned mail offer letters using different statistical tests. After that we will explain the theoretical model. Using the theoretical model, we will estimate price elasticities of demand for consumer credit in respect to price and loan size. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
+The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section will test if randomly assigned mail offer letters are indeed randomized using different statistical tests. In the fourth section we will estimate price elasticities for consumer credit in respect to price and loan size and explain the general model. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
  
 Good luck and have fun solving this interactive problem set to increase your knowledge about microcredit lending in South Africa!
 
 ## Exercise 2 -- Experimental Design and Data Overview
 
-In this first section we will explain the experiment and get to know the data we use in this interactive R-Problemset.
+In this section we will explain the experiment and get to know the data we use in this interactive R-Problemset.
 
 ### Experimental Design
 
-The cooperating lender of Karlan and Zinma operated for more than 20 years as one of the largest and most-profitable microlenders in South Africa. He competed in a cash loan industry segment that offer small, high-interest, short-term uncollateralized credit fixed monthly repayment schedules to the working poor population.
+The lender Karlan and Zinma cooperated with operated for more than 20 years as one of the largest and most-profitable microlenders in South Africa. He competed in a cash loan industry segment that offer small, high-interest, short-term uncollateralized credit fixed monthly repayment schedules to the working poor population.
 
-The experiment was conducted via a direct mail solicitation in form of pre-qualified limited-time offer letters that were mailed to 58,168 former clients of the lender with good repayment histories and which did not have a loan with the lender as of 30 days prior to the mailer. Each offer letter clearly states an interest rate and maturity, both randomized by the lender, and a loan size based on the clients last loan size. Most of the offers are at relatively low rates. The individual rate for each client is randomly assigned based on the distribution for each risk category because risk determined the loan price under standard operations. In particular, the categories for a standard risk schedule for four-month loans are subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). The maturity randomization is orthogonal to the offer rate randomization. But the difference is that only low- and medium-risk clients received the suggestion randomization. Those who were eligible for the suggestion randomization or in other words maturities longer than four month, received a randomized sample maturity of six or twelve month. High-risk clients were not able to choose higher maturities than 4 months. The only value which is presented on the offer letter and is not randomized is the loan size. It is equal to the last loan size of each client.
+The experiment was conducted via a direct mail solicitation in form of pre-qualified limited-time offer letters that were mailed to 58,168 former clients of the lender with good repayment histories and which did not have a loan with the lender as of 30 days prior to the mailer. Each offer letter clearly states an interest rate and maturity, both randomized by the lender, and a loan size based on the clients last loan size. Most of the offers are at relatively low rates. The individual rate for each client is randomly assigned based on the distribution for each risk category because risk determined the loan price under standard operations. In particular, the categories for a standard risk schedule for four-month loans are subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM).
+The maturity is also randomized and the process is orthogonal to the offer rate randomization. But the difference is that only low- and medium-risk clients received the suggestion randomization. Those who were eligible for the suggestion randomization or in other words maturities longer than four month, received a randomized sample maturity of six or twelve month. High-risk clients were not able to choose higher maturities than 4 months. The only value which is presented on the offer letter and is not randomized is the loan size. It is equal to the last loan size of each client.
 The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First, a pilot test in three branches in July 2003, and than the experiment was expanded to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. 
 
 Each offer contains a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications are evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients are assigned a proportional loan size and maturity.
 The following graphic shows the operational steps of the experiment in detail:
 
-![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](images/steps.png)
+![](images/steps.png)
 
 Fig 1. Source: Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008)
 
@@ -135,7 +139,7 @@ dat_takeup <- dat %>%
 head(dat_takeup)
 ```
 
-It shows us six rows of the sample data frame where each row typifies one of the 58,168 clients from 86 mostly urban branches who had borrowed from the lender in the past 24 months, and did not currently have a loan from the lender. Furthermore we can see 54 columns. Every column stands for one variable. We are going to take especially a look at series of experimental variables. These include inter alia the three rates which were assigned to each client: `offer4` the randomized individual interest rate directed mail offer, `final4` the contract rate that was slightly less than the offer rate and `yearlong` the dynamic repayment incentive that extended preferential contract rates for up to one year.
+It shows us six rows of the sample data frame where each row typifies one of the 58,168 clients from 86 mostly urban branches who had borrowed from the lender in the past 24 months, and did not currently have a loan from the lender. Furthermore we can see 54 columns. Every column stands for one variable. We are going to take especially a look at series of experimental variables. These include inter alia the three rates which were assigned to each client: `offer4` the randomized individual interest rate directed mail offer, `final4` the contract rate that was slightly less than the offer rate and `yearlong` the dynamic repayment incentive that extended preferential contract rates for up to one year. Clients who borrowed after the deadline are describe with the variable `tookuo_afterdead_enforced` and those who borrowed from another lender `tookup_outside_only`.
 In addition the three example maturities presented in some mailers `termshown4`, `termshown6` and `termshown12` (four, six and twelve month), which give a prediction of the actual maturity chosen.
 The variables `tookup`, `applied` and `onetermshown` presents those clients who borrowed, those who applied and those who were eligible for the maturity suggestion randomization. As well as described above, the loan size which is described by the variable `loansize`.
 
@@ -179,11 +183,11 @@ info("ggplot()")
 ```
 
 
-1.6) Replace the question marks with the missing values and functions to create a box plot of distribution of the offer rate. If you think your answer is right press the `Check` button.
+1.6) Replace the question marks with the missing values and functions to create a box plot of distribution of the offer rate for each risk category. If you think your answer is right press the `Check` button.
 ```{r "3_6"}
 dat %>%
-  ggplot(aes(x="Full Data Set", y=???)) +
-  ??? +
+  ggplot(aes(x=risk, y=___)) +
+  ___ +
   stat_summary(fun = mean, geom = "point", size=3, col="red", shape=18)
 
 ```
@@ -199,8 +203,8 @@ info("Mathematic Operations")
 1.7) Calculate the minimal (`min_value`) and maximum (`max_value`) values of the offer rate in regarding the risk categories by using the `group_by()` function and mathematic operations. To do so create a new data frame `values`. If you finished the task press `Check`.
 ```{r "3_7"}
 values <- dat %>%
-  group_by(???) %>%
-  summarise(min_value=???(offer4), max_value=???(offer4))
+  group_by(___) %>%
+  summarise(min_value=___(offer4), max_value=___(offer4))
 
 values
 
@@ -319,7 +323,7 @@ map_data$`Average Interest Rate` <- as.numeric(map_data$`Average Interest Rate`)
 map_data$`Average Loansize` <- as.numeric(map_data$`Average Loansize`)
 
 mymap <- tm_shape(map_data) +
-  tm_polygons("Average Interest Rate",
+  tm_polygons("Average Offer Rate",
               id = "NAME_1",
               style = "quantile",
               palette="Greens",
@@ -639,7 +643,7 @@ The results in columns 4 and 5 suggest that there is a positive relationship bet
 
 #### Borrowing after the Deadline
 
-There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher than the standard rate and than borrow at the lower rate. This is testable by examining the post-deadline borrowing behavior of the clients. A logical outcome would be that clients with a higher offer rate than the standard rate will borrow after the deadline expired. In order to test this hypothesis we will perform the regression once again, but this time solely with clients who borrowed after the deadline. To find out which variable describes those clients press the `data` button.
+There is another possible explanation for the kink in the demand curve. Clients could have borrowed after the deadline if their offer rate was higher than the standard rate and than borrow at the lower rate. This is testable by examining the post-deadline borrowing behavior of the clients. A logical outcome would be that clients with a higher offer rate than the standard rate will borrow after the deadline expired. In order to test this hypothesis we will perform the regression once again, but this time solely with clients who borrowed after the deadline. To find out which variable describes those clients think back to the first exercise.
 
 4.1.7) This time you only have to replace the question marks with the variable which indicates if clients borrowed after the deadline. If you think your answer is correct press `Check`. If you can not find the variable in `data` just press `hint`.
 ```{r "6_8",error=FALSE, results='asis'}

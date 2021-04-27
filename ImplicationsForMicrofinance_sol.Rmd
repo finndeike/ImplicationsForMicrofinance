@@ -30,11 +30,14 @@ stop()
 
 #>
 
-Welcome to this interactive RTutor problem set! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the working paper **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
+Welcome to this interactive RTutor problem set! This problem set is part of my bachelor’s thesis at Ulm University. It is based on the main results of the article **Credit Elasticities in Less-Developed Economies: Implications for Microfinance** by Dean S. Karlan (Department of Economics, Yale University) and Jonathan Zinma (Department of Economics, Dartmouth College) published in the American Economic Review, 98(3) in 2008.
 
 The paper, the data and a supplemental appendix are available online at the following websites:
+
 - **Paper:** https://www.aeaweb.org/articles?id=10.1257/aer.98.3.1040
+
 - **Data:** https://assets.aeaweb.org/asset-server/articles-attachments/aer/data/june08/20070848_app.pdf
+
 - **Appendix:** https://assets.aeaweb.org/asset-server/articles-attachments/aer/data/june08/20070848_app.pdf
 
 
@@ -48,9 +51,9 @@ The paper, the data and a supplemental appendix are available online at the foll
 
 4.    Theoretical Model
 
-  4.1   Price Elasticities of Loan Take-Up
+4.1   Price Elasticities of Loan Take-Up
 
-  4.2   Price Elasticities of Loan Size
+4.2   Price Elasticities of Loan Size
 
 5.    Pricing Strategy
 
@@ -59,7 +62,7 @@ The paper, the data and a supplemental appendix are available online at the foll
 7.    References
 
 
-This interactive problem set consists of a reproduction of the results of the above-named paper. The results are reproduced in code chunks, theoretical explanations, info boxes and quizzes. The procedure is very simple. You will solve tasks by entering or editing R code chunks and/or answer short quizzes. Before solving any task you have to press the `Edit`-button to be able to edit the code chunk. After editing the chunk or answering a quiz question, you have to press `Check`-button to get a feedback whether you answer is correct or incorrect. Sometimes exercises are more difficult and you might need an advice to solve the task, in this case you can press the `Hint` button to get further advice. Besides code chunks and quizzes the problem set composes of info boxes. The info boxes provide you with additional information of variables and explanations of statistical models or R commands.
+This interactive problem set consists of a reproduction of the results of the article. The results are reproduced in code chunks, theoretical explanations, info boxes and quizzes. The procedure is very simple. You will solve tasks by entering or editing R code chunks and/or answer short quizzes. Before solving any task you have to press the `Edit`-button to be able to edit the code chunk. After editing the chunk or answering a quiz question, you have to press `Check`-button to get a feedback whether you answer is correct or incorrect. Sometimes exercises are more difficult and you might need an advice to solve the task, in this case you can press the `Hint` button to get further advice. Besides code chunks and quizzes the problem set composes of info boxes. The info boxes provide you with additional information of variables and explanations of statistical models or R commands.
 
 Good work and patience will be awarded with interesting awards which include some additional information on exercise related topics!
 
@@ -83,25 +86,26 @@ Another explanation for this could be, that microfinance institutions (MFI) are 
 
 Therefore we will replicate the testing of Sean S. Karlan and Jonathan Zinma on the hypotheses of price inelastic demand for consumer credit using randomized trials conducted by a high-risk consumer lender in South Africa. Furthermore, we will examine the optimal pricing strategy of the lender in terms of profit maximization. The field experiment is based on randomized individual interest rate and maturity direct mail offers to more than 50,000 former clients of the lender based on the client's prior rate.
 
-The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section validates the integrity of the randomly assigned mail offer letters using different statistical tests. After that we will explain the theoretical model. Using the theoretical model, we will estimate price elasticities of demand for consumer credit in respect to price and loan size. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
+The problem set consists of various exercises, each exercise covers one or more topics. In the first exercise we will get to know the experiment and have a look at our data set. This includes information of the specific loan offers and client characteristics. The next section will test if randomly assigned mail offer letters are indeed randomized using different statistical tests. In the fourth section we will estimate price elasticities for consumer credit in respect to price and loan size and explain the general model. In the last section we will examine the optimal short-run pricing strategy for the lender by determining the costs of reducing and increasing the loan price.  
  
 Good luck and have fun solving this interactive problem set to increase your knowledge about microcredit lending in South Africa!
 
 ## Exercise 2 -- Experimental Design and Data Overview
 
-In this first section we will explain the experiment and get to know the data we use in this interactive R-Problemset.
+In this section we will explain the experiment and get to know the data we use in this interactive R-Problemset.
 
 ### Experimental Design
 
-The cooperating lender of Karlan and Zinma operated for more than 20 years as one of the largest and most-profitable microlenders in South Africa. He competed in a cash loan industry segment that offer small, high-interest, short-term uncollateralized credit fixed monthly repayment schedules to the working poor population.
+The lender Karlan and Zinma cooperated with operated for more than 20 years as one of the largest and most-profitable microlenders in South Africa. He competed in a cash loan industry segment that offer small, high-interest, short-term uncollateralized credit fixed monthly repayment schedules to the working poor population.
 
-The experiment was conducted via a direct mail solicitation in form of pre-qualified limited-time offer letters that were mailed to 58,168 former clients of the lender with good repayment histories and which did not have a loan with the lender as of 30 days prior to the mailer. Each offer letter clearly states an interest rate and maturity, both randomized by the lender, and a loan size based on the clients last loan size. Most of the offers are at relatively low rates. The individual rate for each client is randomly assigned based on the distribution for each risk category because risk determined the loan price under standard operations. In particular, the categories for a standard risk schedule for four-month loans are subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM). The maturity randomization is orthogonal to the offer rate randomization. But the difference is that only low- and medium-risk clients received the suggestion randomization. Those who were eligible for the suggestion randomization or in other words maturities longer than four month, received a randomized sample maturity of six or twelve month. High-risk clients were not able to choose higher maturities than 4 months. The only value which is presented on the offer letter and is not randomized is the loan size. It is equal to the last loan size of each client.
+The experiment was conducted via a direct mail solicitation in form of pre-qualified limited-time offer letters that were mailed to 58,168 former clients of the lender with good repayment histories and which did not have a loan with the lender as of 30 days prior to the mailer. Each offer letter clearly states an interest rate and maturity, both randomized by the lender, and a loan size based on the clients last loan size. Most of the offers are at relatively low rates. The individual rate for each client is randomly assigned based on the distribution for each risk category because risk determined the loan price under standard operations. In particular, the categories for a standard risk schedule for four-month loans are subdivided into low-risk (7.75% PM), medium-risk (9.75% PM) and high-risk (11.75% PM).
+The maturity is also randomized and the process is orthogonal to the offer rate randomization. But the difference is that only low- and medium-risk clients received the suggestion randomization. Those who were eligible for the suggestion randomization or in other words maturities longer than four month, received a randomized sample maturity of six or twelve month. High-risk clients were not able to choose higher maturities than 4 months. The only value which is presented on the offer letter and is not randomized is the loan size. It is equal to the last loan size of each client.
 The experiment was carried out in three mailer waves of start dates grouped by different branches geographically. First, a pilot test in three branches in July 2003, and than the experiment was expanded to the remaining 83 branches divided into two more mailer waves in September 2003 and October 2003. 
 
 Each offer contains a deadline between two to six weeks. An offer was accepted by a client by entering a branch office and filling out the application with an loan officer. The loan applications are evaluated per the lenders standard procedure independent of the experimental rates. Following the estimation of the loan officer the clients are assigned a proportional loan size and maturity.
 The following graphic shows the operational steps of the experiment in detail:
 
-![Fig. 1  | Operational Steps of Experiment. (Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008))](images/steps.png)
+![](images/steps.png)
 
 Fig 1. Source: Karlan, Dean S. and Zinman, Jonathan, "Credit Elasticities in Less-Developed Economies: Implications for Microfinance" (2008)
 
@@ -153,7 +157,7 @@ There are a variety of ways to get an overview on a data set. We will use the R 
 #>
 head(dat)
 #< hint
-display("head(...)")
+display("head(???)")
 #>
 ```
 
@@ -237,33 +241,43 @@ For further information check: https://datacarpentry.org/R-ecology-lesson/04-vis
 #>
 
 
-1.6) Replace the question marks with the missing values and functions to create a box plot of distribution of the offer rate. If you think your answer is right press the `Check` button.
+1.6) Replace the question marks with the missing values and functions to create a boxplot of distribution of the offer rate for each risk category. If you think your answer is right press the `Check` button.
 ```{r "1 d) 1"}
 #< fill_in
+dat$risk <- factor(dat$risk, levels=c("LOW", "MEDIUM", "HIGH"))
 dat %>%
-  ggplot(aes(x="Full Data Set", y=???)) +
-  ??? +
+  ggplot(aes(x=risk, y=___)) +
+  ___ +
   stat_summary(fun = mean, geom = "point", size=3, col="red", shape=18)
 #>
 dat %>%
-  ggplot(aes(x="Full Data Set", y=offer4)) +
+  ggplot(aes(x=risk, y=offer4)) +
   geom_boxplot() +
   stat_summary(fun = mean, geom = "point", size=3, col="red", shape=18)
 ```
-The box plot shows us the distribution of the offer rate. We can see that the median and average value of the offer rate are approximately at 8 percent per month. The minimum offer rate is at slightly above 3 percent and the maximum at slightly below 15 percent. Furthermore, the fist and third quartiles are at around 6 percent and 10 percent.
 
-These determinations are vague estimates of the graphic. But we can have a more detailed look at the distribution by using simple mathematical operations. But this time conditional on the risk category.
+The box plot shows us the distribution of the offer rate conditional on the risk category. The average offer rate value is displayed by the red diamonds. For clients who are classified as low risk the average offer rate lies at about 6 percent, for medium risk at slightly more then 7 percent and for those who are classified as high risk at about 8.5 percent. The median marks the mid-point of the data and is shown by the line that divides the box into two parts. Half the scores are greater than or equal to this value and half are less. We can see that the median offer rate for low risk clients are approximately at 6 percent per month for clients of the medium risk category at about 8 and for high risk clients at slightly above 9. The middle box represents the middle 50% of scores for the group. The range of scores from lower to upper quartile is referred to as the inter-quartile range. The middle 50% of scores fall within the inter-quartile range. Seventy-five percent of the scores fall below the upper quartile and twenty-five percent of scores fall below the lower quartile. Furthermore, the upper and lower whiskers represent scores outside the middle 50%. Any value that is higher or lower than the upper limit or lesser than the lower limit will be the outliers, those are displayed by the black points. The outliers show us that the offer rates are the most compressed distributed for low risk clients, slightly less for medium risk clients and most widely distributed for high risk clients.
+
+These determinations are vague estimates of the graphic. But we can have a more detailed look at the distribution by using simple mathematical operations conditional on the risk category.
 
 #< info "Mathematic Operations"
 There are a variety of mathematical operators which can be used in R with the basic tamplate , e.g. `mean(.data)` to calculate the average value of a data sequence, `min(.data)` to determine the minimal value or `max(.data)` to determine the maximum value of a data sequence, `sum(.data)` to calculate the sum of a data area, `nrow(.data)` to determine the length of a data vector or `(.data)^n` to potentiate a value by n.
+#>
+
+To determine the values for all three risk categories, we have to perform the operations on each client risk group. To do so we can use the function `group_by()` and `summarise()` of the `dplyr` package.
+
+#< info "group_by() and summarise()"
+The group_by(.data,...) function from the dplyr package takes an existing data frame and converts it into a grouped data frame where operations will be performed per group. The grouped data is often used with the function summarise() from the same package. summarise() applies an operations per each group.
+
+For further information check: https://dplyr.tidyverse.org/reference/group_by.html and https://dplyr.tidyverse.org/reference/summarise.html
 #>
 
 1.7) Calculate the minimal (`min_value`) and maximum (`max_value`) values of the offer rate in regarding the risk categories by using the `group_by()` function and mathematic operations. To do so create a new data frame `values`. If you finished the task press `Check`.
 ```{r "1 d) 2"}
 #< fill_in
 values <- dat %>%
-  group_by(???) %>%
-  summarise(min_value=???(offer4), max_value=???(offer4))
+  group_by(___) %>%
+  summarise(min_value=___(offer4), max_value=___(offer4))
 
 values
 #>
@@ -273,9 +287,9 @@ values <- dat %>%
 
 values
 #< hint
-display("??? <- dat %>%
+display("values <- dat %>%
         group_by(???) %>%
-        summarise(min_value=???(offer4), max_value=???(offer4))")
+        summarise(min_value=min(offer4), max_value=???(offer4))")
 #>
 ```
 
@@ -303,13 +317,6 @@ The graphic shows the distribution of the offer rates of the clients in relation
 
 Another aspect that could by interesting is to analyze the geographic circumstances. Our data frame `dat` contains a column named `province`, which contains the province in which the applicant applied for a loan. Hence we can create a new data frame grouped by the provinces by using the functions `group_by()` and `summarise()`.
 
-#< info "Function: group_by() & summarise()"
-The `group_by(.data,...)` function from the `dplyr` package takes an existing data frame and converts it into a grouped data frame where operations will be performed per group. The grouped data is often used with the function `summarise()` from the same package. `summarise()` applies an operations per each group.
-
-For further information check: https://dplyr.tidyverse.org/reference/group_by.html and https://dplyr.tidyverse.org/reference/summarise.html
-#>
-
-
 1.9) Group the data frame `data` by the `province` the applicant applied in using the function `group_by()`. The filter condition is already given. The new data frame should be named `zaf`. than use the function `summarise()` to apply the given operations for each group. Afterwards show the new data frame `provinces`. 
 ```{r "1 e) 1"}
 #< fill_in
@@ -317,12 +324,12 @@ ___ <- ___ %>%
   filter(tookup == 1) %>%
   ___ %>%
   ___("Average Offer Rate" = round(mean(offer4, na.rm=TRUE),3),
-                                                      "Average Interest Rate" = round(mean(final4, na.rm=TRUE),3),
-                                                      "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
-                                                      "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
-                                                      "Average Maturity" = round(mean(term, na.rm=TRUE),3),
-                                                      "Number of Clients" = sum(tookup)
-                                                      )
+      "Average Interest Rate" = round(mean(final4, na.rm=TRUE),3),
+      "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
+      "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
+      "Average Maturity" = round(mean(term, na.rm=TRUE),3),
+      "Number of Clients" = sum(tookup)
+      )
 
 # show the data frame
 
@@ -331,12 +338,12 @@ zaf <- dat %>%
   filter(tookup == 1) %>%
   group_by(province) %>%
   summarise("Average Offer Rate" = round(mean(offer4, na.rm=TRUE),3),
-                                                      "Average Interest Rate" = round(mean(final4, na.rm=TRUE),3),
-                                                      "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
-                                                      "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
-                                                      "Average Maturity" = round(mean(term, na.rm=TRUE),3),
-                                                      "Number of Clients" = sum(tookup)
-                                                      )
+            "Average Interest Rate" = round(mean(final4, na.rm=TRUE),3),
+            "Average Dynamic Repayment Incentive" = round(mean(yearlong, na.rm=TRUE),3),
+            "Average Loansize" = round(mean(loansize, na.rm=TRUE),3),
+            "Average Maturity" = round(mean(term, na.rm=TRUE),3),
+            "Number of Clients" = sum(tookup)
+            )
                                                       
 zaf
 
@@ -378,12 +385,12 @@ The `mutate()` function from the `dplyr` package is a function for creating new 
 For further information check: https://dplyr.tidyverse.org/reference/mutate.html
 #>
 
-1.11) Add a new column to our existing data frame `provinces` which includes the population of each province using the `mutate`function. You can use the given vector c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786) as the values we want to assign to the new variable `population`. If you finished the task, press `Check`.
+1.11) Add a new column to our existing data frame `provinces` which includes the population of each province using the `mutate`function. You can use the given vector: **c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786)** as the values we want to assign to the new variable `population`. If you finished the task, press `Check`.
 
 ```{r "1 f) 1"}
 #< fill_in
 # Replace the question marks with your answer
-provinces <- ???(??? = ???)
+provinces <- ___(___ = ___)
 #>
 provinces <- mutate(provinces, "Population" = c(6734001, 2928903, 15488137, 11531628, 5852553, 4679786, 4108816, 7005741, 1292786))
 
@@ -442,8 +449,7 @@ Great, you created a map of South Africa which shows the most important average 
 ## Exercise 3 -- Randomization Process Validation
 
 In the last section we loaded in the data file, got a rough look at our data and created a interactive map of South Africa. Furthermore, we explained the experiment.
-Hence, in this part we will perform a robustness check of the experiment.
-We will take a look especially at the earlier utilized interest rate `offer4`. 
+Hence, in this part we will check if the offer rate randomization process was successful using several statistical tests. There could be various reasons due to which randomization process may fail or may not have been proper. For example, other factors could have an effect on the dependent variable in the sense of being sufficient conditions for causal influence on the dependent variable. Furthermore, the validation prevents the selection bias and insures against the accidental bias.
 
 2.1.1) To load in the data just press `Check`.
 ```{r "2 a) 1"}
@@ -467,31 +473,31 @@ The basic R function `lm()` is used to fit linear models and determines whether 
 For further information check: https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm and https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/summary
 #>
 
-The p-value will give us information about the outcome of the randomization. If our hypothesis is correct, the p-value will be comparatively high for each variable and higher than the significance level.
+**The p-value will give us information about the outcome of the randomization. If our hypothesis is correct, the p-value will be comparatively high for each variable and higher than the significance level.**
 
 We will also add control variables of the month of the offer(`waved2`, `waved3`) and the lender-defined risk level of the client prior to the experiment (`low`,`med`) and further characteristics of the client, to avoid endogeniety problems. Control variables are variables which are hold constant during an experiment. They are neither dependent or independent variables. Control variables are not part of the experiment itself but yet they still may influence the outcome of the experiment.
 
 2.2.1) Task: Regress the offer rate `offer4` on the given variables using the `lm()` regression and store it in the variable `reg2_1`. To do so, replace the question marks of the given code with you answer.
 ```{r "2 a) 5"}
 #< fill_in
-reg2_1 <- ???(??? ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=dat)
+reg2_1 <- ___(___ ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=dat)
 
-summary(???)
+summary(___)
 #>
 reg2_1 <- lm(offer4 ~ dormancy + lntrcount + female + dependants + married + lnage + rural + edhi + itcscore_100 + itczero + appscore_100 + low + med + waved2 + waved3, data=dat)
 
 summary(reg2_1)
 ```
 
-#< info "Evaluation of a Linear Regression"
-The **p-value** is the level of marginal significance within a statistical hypothesis test, representing the probability of the occurrence of a given event or rather a measure of the probability that an observed difference could have occurred just by random chance. The value always lies between 1 and zero. The lower the **p-value** is, the stronger is the evidence that you should reject the null hypothesis. A p-value of 0.05 is generally speaking statistically significant. Moreover, the significance level is portrayed by little stars.
+#< info "p-value"
+The **p-value** is the smallest significance level which leads to a rejection of the null hypothesis $H_0$. If the actual significance level $\alpha$ is therefore lower then the **p-value** $p-value > \alpha$, the null hypothesis can not be rejected.  
 
-Check out https://www.investopedia.com/terms/p/p-value.asp for further information.
+Check out E.Spodarev (2021) for further information.
 #>
 
-In fact the p-value of all observable variables is significantly higher than the significance level. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful.
+In fact the p-value of all observable variables is significantly higher than the significance level. Therefore the null hypothesis $H_0$ can not be rejected. Which indicates that indeed the offer rate is highly likely independent of the other observable characteristics and thus the randomization process was successful 
 
-We can also portray the changes that different explanatory variables have on the dependent variable in a regression model with the function `effectplot()` of the `regtools` package. The basic concept of this plot is to compare the effects of the explanatory variables if they change from their 10 percent to their 90 percent quantile or for binary variable the effect of changing from 1 to 0. To createthis kind of plot, we just have to add our regression into the function braces `effectplot(.reg)` (For further information checkout: https://github.com/skranz/regtools/blob/master/man/effectplot.Rd).
+We can also portray the effect that different explanatory variables have on the dependent variable in a regression model with the function `effectplot()` of the `regtools` package. The basic concept of this plot is to compare the effects of the explanatory variables if they change from their 10 percent to their 90 percent quantile or for binary variable the effect of changing from 1 to 0. To create this kind of plot, we just have to add our regression into the function braces `effectplot(.reg)` (For further information checkout: https://github.com/skranz/regtools/blob/master/man/effectplot.Rd).
 
 2.2.2) Create an `effectplot()` of our regression `reg2_1`. Afterwards, press the `check` button.
 ```{r "2 b) 5"}
@@ -503,7 +509,11 @@ We can also portray the changes that different explanatory variables have on the
 
 The created plot confirms our assumption, that the randomization process was successful. The only explanatory variables which influence our response variable significantly are the control variables of the month of the offer and the risk category of the client.
 
-Since we just learned, that it is reasonable to assume that the randomization process was successful, we will no check if the offer rate below or at the standard rates did influence the clients who borrowed after the given deadline. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical.
+### The Offer and Loan Application Process
+
+#### Intertemporal Substitution
+
+Since we just learned, that it is reasonable to assume that the randomization process was successful, we will now check if intertemporal substitution is a problem. Clients could have borrowed after the deadline to the lender standard rates. For this we will use a **probit regression** which is very similar to simple linear regression. The difference is that a probit regression is a binomial regression which means the outcome is either a success (1) or a failure (0). Where in linear regressions the outcome is scale or rather numerical.
 
 #< info "Probit Regression with glm()"
 The `glm()`function from the `stats`-package is used to fit generalized linear models. It is similar structure to the `lm()`regression, with the exception that with the argument *family* we can specify what kind of linear model we want to use. In our case we want to use a probit link function. than the function looks as follows: *glm(<FORMULA>, family=binomial(link="probit"), <DATA>)*
@@ -511,7 +521,7 @@ The `glm()`function from the `stats`-package is used to fit generalized linear m
 Check out https://are.berkeley.edu/courses/EEP118/fall2010/section/13/Section%2013%20Handout%20Solved.pdf for further information.
 #>
 
-The theoretical model of a probit regression will be explained more in detail in exercise 3.
+The model of a probit regression will be explained more in detail in exercise 3.
 
 2.2.3) Use a generalized regression model to apply a probit regression on the `tookup_afterdead_enforced` (take-up after the deadline) with the offer rate. To Change the code from a simple linear regression to a generalized linear probit regression. If you need help press **hint**.
 ```{r "2 a) 6"}
@@ -523,24 +533,28 @@ reg2_2 <- glm(tookup_afterdead_enforced ~ offer4 + low + med + waved2 + waved3, 
 summary(reg2_2)
 ```
 
-As we can see the p-value is 0.851 which is considerably higher than the significance level which substantiates that offer rates at or below the standard rate did not influence the take-up after the deadline. This seems conclusive since the clients borrowed at the standard rate schedule after the deadline.
+**QUIZ**
 
-We can also observe the relationship between the take-up after the deadline and the offer rate from a graphical point of view. Therefore we will use the `ggplot()` function again to declare the input data frame, than we will utilize the `stat_smooth()` (will be explained later in detail) to plot our probit regression `reg2_2`.
+As we can see the p-value is 0.851 which is considerably higher than the significance level. Thus, the null hypothesis can not be rejected. Which substantiates that offer rates at or below the standard rate did not influence the take-up after the deadline significantly. This seems conclusive since the clients borrowed at the standard rate schedule after the deadline.
+
+We can also observe the relationship between the take-up after the deadline and the offer rate from a graphically. Therefore, we will use the `ggplot()` function again to declare the input data frame, than we will utilize the `stat_smooth()` (will be explained later in detail) to plot our probit regression `reg2_2`.
 
 2.2.4) Plot the probit regression `reg2_2`. Just press Check.
 ```{r "2 a) 7", error=FALSE, results='asis'}
 #< task_notest
 ggplot(dat,aes(x=offer4 + low + med + waved2 + waved3, y=tookup_afterdead_enforced)) + 
-  stat_smooth(method='glm',family=binomial(link='probit')) +
+  stat_smooth(method='glm',family=binomial(link='probit'), level=0.95) +
   ylim(min=0, max=1) +
   ylab("Borrowed after the deadline") +
   xlab("Offer Rate")
 #>
 ```
 
-The graph corroborates our thesis since there is no clear tendency that the probability of a take-up after the deadline increases or decreases with a higher offer rate.  
+The graph corroborates our thesis since there is no clear tendency that the probability of a take-up after the deadline increases or decreases with a higher offer rate. Moreover, the 95% confidence interval indicates a very small deviaton of the values from the median. 
 
-In addition we want to find out if the rejection decisions of the clients were correlated with the offer rate awarding process. The approach is the same as the previous regression. However this time we have to reduce the data frame to only clients who applied for a loan. Furthermore we will add a new function called `stargazer()` to get a nicer output table which holds the regression results of all three regressions.
+#### Rejection Decision
+
+In addition we want to find out if the rejection decisions of the clients were correlated with the offer rate awarding process. The approach is the same as the previous regression. However this time we have to reduce the data frame to only clients who applied for a loan. Furthermore we will add a new function called `stargazer()` to get a nicer output table which holds the regression results of the two regressions.
 
 #< info "stargazer()"
 `stargazer` is an R package that creates LATEX-/HTML code and ASCII text for regression tables, with multiple models side-by-side, as well as for summary statistics tables, data frames, vectors and matrices. We use `stargazer` because the output is well-formatted, it supports many models and it commands many beautiful aesthetics. To create summary statistics table we just have to run  `stargazer(.data)`. If we want to create a regression table we have to proceed in the same way but we want to make some adjustments. With the command `type=` we can determine the output data type. The `header=` command indicates whether a header (name and version of the package, author,...) should appear.
@@ -548,8 +562,7 @@ In addition we want to find out if the rejection decisions of the clients were c
 For further information check: https://cran.r-project.org/web/packages/stargazer/stargazer.pdf
 #>
 
-
-2.2.5) Execute the Regression `reg2_3` than use the function `stargazer()` to create a nicer-looking output table of the regression. We want to set `type="html"` and `header=FALSE`. If you need a little hint, press `hint`.
+2.2.5) Execute the Regression `reg2_3` than use the function `stargazer()` to create a nicer-looking output table of the two regressions. We want to set `type="html"` and `header=FALSE`. If you need a little hint, press `hint`.
 ```{r "2 a) 8", error=FALSE, results='asis'}
 #< fill_in
 reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(dat, applied == 1))
@@ -558,13 +571,13 @@ stargazer(???)
 #>
 reg2_3 <- glm(rejected ~ offer4 + low + med + waved2 + waved3, family = binomial(link = "probit"), data=filter(dat, applied == 1))
 
-stargazer(reg2_3, type="html", header=FALSE)
+stargazer(reg2_2, reg2_3, type="html", header=FALSE)
 #< hint
-display("stargazer(reg2_3, type=???, header=???)")
+display("stargazer(reg2_2, reg2_???, type=???, header=???)")
 #>
 ```
 
-We see that the p-value is once again substantially higher than the significance level which corroborates that the rejection decision was not influenced by the offer rate.
+We see that the p-value is once again substantially higher than the significance level. Therefore, the null hypothesis $H_0$ can not be rejected for both regressions, which corroborates that the rejection decision was also not influenced by the offer rate.
 
 To sum up everything that has been stated so far we found out that our randomization process is was successful not affected by other observable characteristics.
 
@@ -1085,6 +1098,7 @@ However, the question if our results would apply to other settings still remains
 - Earne, J., Jansson, T., Koning, A., & Flaming, M. (2014): "Greenfield MFIs in Sub-Saharan Africa A Business Model for Advancing Access to Finance. In Access to Finance Forum", CGAP and Its Partners (No. 8).
 - Kahneman, D., & Tversky, A. (2013). Prospect theory: An analysis of decision under risk. In Handbook of the fundamentals of financial decision making: Part I, p.279.
 - Karlan, D. S., & Zinman, J. (2008). Credit elasticities in less-developed economies: Implications for microfinance. American Economic Review, 98(3), pp. 1040-68.
+- Spodarev. E. (2021): "Mathematical Statistics", Ulm University
 - Wächter, L. (2017): "Marshall, Alfred. In Ökonomen auf einen Blick" (pp. 211-219), Springer Gabler, Wiesbaden.
 - Yunus, M. (2003): "Banker to the poor: Micro-lending and the battle against world poverty", PublicAffairs.
 
